@@ -31,6 +31,12 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "21ebe62b-c0b1-4924-89aa-0cd052cafd70"
+      }
+    },
+    "owner": "chachathuraabeygunawardhana"
   }
 }

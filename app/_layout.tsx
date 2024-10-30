@@ -1,6 +1,6 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import Home from './Home';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import AllProductsScreen from './AllProductsScreen';
 import Search from './Search';
 import Cart from './Cart';
 import Profile from './Profile';
@@ -27,7 +27,7 @@ export default function RootLayout() {
         },
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Home" component={AllProductsScreen} />
       <Tab.Screen name="Search" component={Search} />
       <Tab.Screen name="Cart" component={Cart} />
       <Tab.Screen name="Profile" component={Profile} />

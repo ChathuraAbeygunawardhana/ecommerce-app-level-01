@@ -1,5 +1,11 @@
-import AllProductsScreen from './AllProductsScreen';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import RootLayout from './_layout';
 
 export default function Index() {
-  return <AllProductsScreen />;
+  return (
+    <NavigationContainer>
+      <RootLayout />
+    </NavigationContainer>
+  );
 }

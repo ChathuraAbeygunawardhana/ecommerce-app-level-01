@@ -1,18 +1,22 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
 import React from 'react';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { RouteProp } from '@react-navigation/native';
+type Product = {
+  mainImage: string;
+  name: string;
+  price: number;
+  colour: string;
+  description: string;
+};
 
-type ProductDetailsScreenRouteProp = RouteProp<
-  { params: { product: { mainImage: string; name: string; price: number } } },
-  'params'
->;
+type RootStackParamList = {
+  ProductDetails: { product: Product };
+};
 
-const ProductDetailsScreen = ({
-  route,
-}: {
-  route: ProductDetailsScreenRouteProp;
-}) => {
+type Props = NativeStackScreenProps<RootStackParamList, 'ProductDetails'>;
+
+const ProductDetailsScreen: React.FC<Props> = ({ route }) => {
   const { product } = route.params;
 
   return (
@@ -20,7 +24,8 @@ const ProductDetailsScreen = ({
       <Image source={{ uri: product.mainImage }} style={styles.image} />
       <Text style={styles.name}>{product.name}</Text>
       <Text style={styles.price}>${product.price}</Text>
-      {/* Add more product details here */}
+      <Text style={styles.colour}>Colour: {product.colour}</Text>
+      <Text style={styles.description}>{product.description}</Text>
     </View>
   );
 };
@@ -31,6 +36,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: 'white',
   },
   image: {
     width: '100%',
@@ -44,7 +50,15 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 20,
-    color: 'green',
     marginBottom: 16,
+  },
+  colour: {
+    fontSize: 18,
+    marginBottom: 16,
+  },
+  description: {
+    fontSize: 16,
+    color: '#555',
+    textAlign: 'justify',
   },
 });

@@ -5,12 +5,12 @@ import AllProductsScreen from './AllProductsScreen';
 import Search from './Search';
 import Cart from './Cart';
 import Profile from './Profile';
-import ProductDetailsScreen from './ProductDetailsScreen'; // Import the new screen
+import ProductDetailsScreen from './ProductDetailsScreen';
 
 type RootStackParamList = {
   AllProducts: undefined;
   ProductDetails: {
-    product: { mainImage: string; name: string; price: number };
+    product: { mainImage: string; name: string; price: number; colour: string; description: string };
   };
 };
 
@@ -20,8 +20,16 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function ProductsStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="AllProducts" component={AllProductsScreen} />
-      <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
+      <Stack.Screen
+        name="AllProducts"
+        component={AllProductsScreen}
+        options={{ title: 'AllProductsScreen' }}
+      />
+      <Stack.Screen
+        name="ProductDetails"
+        component={ProductDetailsScreen}
+        options={{ title: 'Product Details' }}
+      />
     </Stack.Navigator>
   );
 }
@@ -46,7 +54,11 @@ export default function RootLayout() {
         },
       })}
     >
-      <Tab.Screen name="Home" component={ProductsStack} />
+      <Tab.Screen
+        name="Home"
+        component={ProductsStack}
+        options={{ headerShown: false }}
+      />
       <Tab.Screen name="Search" component={Search} />
       <Tab.Screen name="Cart" component={Cart} />
       <Tab.Screen name="Profile" component={Profile} />

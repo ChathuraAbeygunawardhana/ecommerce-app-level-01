@@ -1,8 +1,28 @@
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import productsData from '../assets/sample.json';
 
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  mainImage: string;
+}
+
+type RootStackParamList = {
+  ProductDetails: { product: Product };
+};
+
 const AllProductsScreen = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -13,19 +33,15 @@ const AllProductsScreen = () => {
     setProducts(formattedProducts);
   }, []);
 
-  interface Product {
-    id: string;
-    name: string;
-    price: number;
-    mainImage: string;
-  }
-
   const renderItem = ({ item }: { item: Product }) => (
-    <View style={styles.productContainer}>
+    <TouchableOpacity
+      style={styles.productContainer}
+      onPress={() => navigation.navigate('ProductDetails', { product: item })}
+    >
       <Image source={{ uri: item.mainImage }} style={styles.image} />
       <Text style={styles.name}>{item.name}</Text>
       <Text style={styles.price}>${item.price}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   return (

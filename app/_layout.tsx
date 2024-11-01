@@ -1,11 +1,30 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AllProductsScreen from './AllProductsScreen';
 import Search from './Search';
 import Cart from './Cart';
 import Profile from './Profile';
+import ProductDetailsScreen from './ProductDetailsScreen'; // Import the new screen
+
+type RootStackParamList = {
+  AllProducts: undefined;
+  ProductDetails: {
+    product: { mainImage: string; name: string; price: number };
+  };
+};
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+function ProductsStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="AllProducts" component={AllProductsScreen} />
+      <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
+    </Stack.Navigator>
+  );
+}
 
 export default function RootLayout() {
   return (
@@ -27,7 +46,7 @@ export default function RootLayout() {
         },
       })}
     >
-      <Tab.Screen name="Home" component={AllProductsScreen} />
+      <Tab.Screen name="Home" component={ProductsStack} />
       <Tab.Screen name="Search" component={Search} />
       <Tab.Screen name="Cart" component={Cart} />
       <Tab.Screen name="Profile" component={Profile} />

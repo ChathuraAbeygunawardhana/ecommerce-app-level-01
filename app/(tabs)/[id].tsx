@@ -27,10 +27,6 @@ const ProductDetails = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Ionicons name="arrow-back" size={24} onPress={() => router.back()} />
-        <Text style={styles.headerTitle}>Product Details</Text>
-      </View>
       <Image source={{ uri: product.mainImage }} style={styles.image} />
       <View style={styles.detailsContainer}>
         <Text style={styles.name}>{product.name}</Text>

@@ -1,5 +1,7 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
@@ -7,6 +9,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const router = useRouter();
 
   return (
     <Tabs
@@ -19,7 +22,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          headerShown: true, // Ensure header is shown
+          headerShown: true,
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? 'home' : 'home-outline'}
@@ -67,7 +70,16 @@ export default function TabLayout() {
       <Tabs.Screen
         name="[id]"
         options={{
-          title: 'Profile',
+          title: 'Product Details',
+          headerShown: true,
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={24}
+              onPress={() => router.back()}
+              style={{ marginLeft: 10 }}
+            />
+          ),
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? 'person' : 'person-outline'}

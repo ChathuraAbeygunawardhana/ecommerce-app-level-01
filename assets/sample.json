@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "name": "Nike Air Relentless 4 Mens Running Shoes",
+    "mainImage": "https://s3-eu-west-1.amazonaws.com/api.themeshplatform.com/media/7e386191b2ee40b290886a05d3e10e24_nike-air-relentless-a.jpg",
+    "price": "45.00",
+    "colour": "blue",
+    "description": "Hit the tracks in these Nike Air Relentless 4 featuring flexible forefoot sole and Reslon midsole underfoot cushioning for superior comfort at each step. The ridged outsole ensures excellent traction while the cushioned ankle collar and the anatomically shaped insole guarantee great support for the whole foot. The mesh upper panels provide breathability and airflow within the shoe."
+  },
+  {
+    "id": "2",
+    "name": "PUMA Future Disc Lite Op V2",
+    "mainImage": "https://s3-eu-west-1.amazonaws.com/api.themeshplatform.com/media/a752937bd1be4ca3b6ccba5f7649a21c_35685902_fr_puma_sc7.jpeg",
+    "price": "50.00",
+    "colour": "multicoloured",
+    "description": "A product of the 90s, the PUMA Future Disc Lite OP V2 features the PUMA disc, the fit system that offered those comfort-boosting clicks. Its modern reincarnation is more laid-back, but brings the technology of the original. Features a leather and mesh upper, EVA midsole, and rubber outsole"
+  },
+  {
+    "id": "3",
+    "name": "PUMA Soleil v2",
+    "mainImage": "https://s3-eu-west-1.amazonaws.com/api.themeshplatform.com/media/ce1fbd10feb64bd39816d03a45fa5346_35892701_fr_puma_sc7.jpeg",
+    "price": "100.00",
+    "colour": "black",
+    "description": "Simple and clean, the Soleil v2 exhibits iconic PUMA heritage.Synthetic upper with french piping embellishment and bold ghilles.Rubber outsole supplies durability and traction."
+  },
+  {
+    "id": "4",
+    "name": "PUMA Roma Basic",
+    "mainImage": "https://s3-eu-west-1.amazonaws.com/api.themeshplatform.com/media/44abed599ef04cf5b728cab676d57b5d_35857601_fr_puma_sc7.jpeg",
+    "price": "120.00",
+    "colour": "purple",
+    "description": "Complete that vintage 60’s look with the PUMA Roma Basic, a near carbon copy of the original.Features a leather, nubuck, or canvas upper for a range of style.EVA midsole adds cushioning.Rubber outsole supplies durable traction."
+  },
+  {
+    "id": "5",
+    "name": "PUMA RS100 Opulence",
+    "mainImage": "https://s3-eu-west-1.amazonaws.com/api.themeshplatform.com/media/86d1c3b3500645a3bb1312f945a9cf38_35686403_fr_puma_sc7.jpeg",
+    "price": "58.00",
+    "colour": "black",
+    "description": "Originally the running shoe of 1986, the PUMA RS100 Opulence features a retro running look that is a blast from the past. Featuring R-System cushioning for excellent impact protection, this shoe has a leather, nubuck, and nylon upper and a polyurethane midsole. The rubber outsole increases durability. Includes reflective shoe laces."
+  },
+  {
+    "id": "6",
+    "name": "Nike Air Max Wright",
+    "mainImage": "https://s3-eu-west-1.amazonaws.com/api.themeshplatform.com/media/9bec0cf649184bc0b034ddc03c392555_69bdb99f92e04b8592b1add74c231f72_17174066_fr_nike_sc7.jpg",
+    "price": "48.00",
+    "colour": "black",
+    "description": "Take it to the next level of comfort and style when you wear the Nike Air Max Wright casual shoe. This low-profile kick is perfect for your feet, creating an innovative fashion without compromising function. The upper is leather and synthetic, the heel has a visible Air-Max unit and the outsole is made of rubber for secure traction. Wt. 18.1 oz."
+  }
+]

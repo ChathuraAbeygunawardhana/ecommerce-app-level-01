@@ -19,6 +19,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
+          headerShown: true, // Ensure header is shown
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? 'home' : 'home-outline'}

@@ -10,7 +10,6 @@ import React from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import sampleData from '../../assets/sample.json';
 import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
 
 const ProductDetails = () => {
   const { id } = useLocalSearchParams();

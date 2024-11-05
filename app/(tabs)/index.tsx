@@ -64,6 +64,7 @@ const Home = () => {
       contentContainerStyle={styles.listContainer}
       numColumns={2}
       columnWrapperStyle={styles.columnWrapper}
+      showsVerticalScrollIndicator={false} // Hide the scrollbar
     />
   );
 };

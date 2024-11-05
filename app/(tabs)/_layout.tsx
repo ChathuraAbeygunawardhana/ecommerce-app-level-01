@@ -12,22 +12,44 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
   const router = useRouter();
 
-  const Header = () => (
+  const Header = ({
+    isProductDetails,
+    navigation,
+  }: {
+    isProductDetails?: boolean;
+    navigation?: any;
+  }) => (
     <View style={styles.headerWrapper}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity
-          onPress={() => console.log('Filter icon pressed')}
-          style={styles.icon}
-        >
-          <Ionicons name="filter" size={24} color="black" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Title</Text>
-        <TouchableOpacity
-          onPress={() => console.log('Cart icon pressed')}
-          style={styles.icon}
-        >
-          <Ionicons name="cart" size={24} color="black" />
-        </TouchableOpacity>
+        {isProductDetails ? (
+          <>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionicons
+                name="chevron-back"
+                size={24}
+                style={{ marginLeft: 10 }}
+              />
+            </TouchableOpacity>
+            <Text style={styles.productDetailsTitle}>Product Details</Text>
+            <View style={{ width: 24, marginRight: 10 }} />
+          </>
+        ) : (
+          <>
+            <TouchableOpacity
+              onPress={() => console.log('Filter icon pressed')}
+              style={styles.icon}
+            >
+              <Ionicons name="filter" size={24} color="black" />
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>Title</Text>
+            <TouchableOpacity
+              onPress={() => console.log('Cart icon pressed')}
+              style={styles.icon}
+            >
+              <Ionicons name="cart" size={24} color="black" />
+            </TouchableOpacity>
+          </>
+        )}
       </View>
     </View>
   );
@@ -37,7 +59,7 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: true,
-        header: () => <Header />,
+        header: ({ navigation }) => <Header navigation={navigation} />,
       }}
     >
       <Tabs.Screen
@@ -93,13 +115,8 @@ export default function TabLayout() {
         options={{
           title: 'Product Details',
           headerShown: true,
-          headerLeft: () => (
-            <Ionicons
-              name="arrow-back"
-              size={24}
-              onPress={() => router.back()}
-              style={{ marginLeft: 10 }}
-            />
+          header: ({ navigation }) => (
+            <Header isProductDetails={true} navigation={navigation} />
           ),
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
@@ -117,7 +134,7 @@ export default function TabLayout() {
 const styles = StyleSheet.create({
   headerWrapper: {
     backgroundColor: 'white',
-    paddingTop: 50,
+    paddingTop: 50, // Increased padding from 30 to 50
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
@@ -134,5 +151,11 @@ const styles = StyleSheet.create({
   },
   icon: {
     paddingHorizontal: 10,
+  },
+  productDetailsTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    flex: 1,
   },
 });

@@ -2,6 +2,7 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
@@ -11,18 +12,38 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
   const router = useRouter();
 
+  const Header = () => (
+    <View style={styles.headerWrapper}>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity
+          onPress={() => console.log('Filter icon pressed')}
+          style={styles.icon}
+        >
+          <Ionicons name="filter" size={24} color="black" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Title</Text>
+        <TouchableOpacity
+          onPress={() => console.log('Cart icon pressed')}
+          style={styles.icon}
+        >
+          <Ionicons name="cart" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
+        headerShown: true,
+        header: () => <Header />,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          headerShown: true,
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? 'home' : 'home-outline'}
@@ -92,3 +113,26 @@ export default function TabLayout() {
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  headerWrapper: {
+    backgroundColor: 'white',
+    paddingTop: 50,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    height: 50,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  icon: {
+    paddingHorizontal: 10,
+  },
+});

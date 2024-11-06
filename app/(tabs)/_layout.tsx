@@ -142,7 +142,7 @@ export default function TabLayout() {
 const styles = StyleSheet.create({
   headerWrapper: {
     backgroundColor: 'white',
-    paddingTop: 50, // Increased padding from 30 to 50
+    paddingTop: 50,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },

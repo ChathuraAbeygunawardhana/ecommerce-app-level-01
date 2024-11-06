@@ -54,6 +54,15 @@ const Home = () => {
     setModalVisible(false);
   };
 
+  const clearFilters = () => {
+    setBrand('');
+    setColor('');
+    setMinPrice('');
+    setMaxPrice('');
+    setFilterCriteria({});
+    setModalVisible(false);
+  };
+
   useEffect(() => {
     setData(sampleData);
   }, []);
@@ -149,8 +158,12 @@ const Home = () => {
               onChangeText={setMaxPrice}
             />
             <View style={styles.buttonContainer}>
-              <Button title="Apply Filters" onPress={applyFilters} />
-              <Button title="Close" onPress={() => setModalVisible(false)} />
+              <View style={styles.button}>
+                <Button title="Apply Filters" onPress={applyFilters} />
+              </View>
+              <View style={styles.button}>
+                <Button title="Clear" onPress={clearFilters} />
+              </View>
             </View>
           </View>
         </View>
@@ -242,6 +255,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
+  },
+  button: {
+    width: '48%',
   },
   brandContainer: {
     flexDirection: 'row',

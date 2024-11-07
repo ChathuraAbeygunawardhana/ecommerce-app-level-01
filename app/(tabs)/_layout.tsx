@@ -21,9 +21,11 @@ export default function TabLayout() {
   const Header = ({
     isProductDetails,
     navigation,
+    routeName,
   }: {
     isProductDetails?: boolean;
     navigation?: any;
+    routeName?: string;
   }) => (
     <View style={styles.headerWrapper}>
       <View style={styles.headerContainer}>
@@ -39,7 +41,7 @@ export default function TabLayout() {
             <Text style={styles.productDetailsTitle}>Product Details</Text>
             <View style={{ width: 24, marginRight: 10 }} />
           </>
-        ) : (
+        ) : routeName === 'index' ? (
           <>
             <TouchableOpacity
               onPress={() => setModalVisible(true)}
@@ -55,6 +57,10 @@ export default function TabLayout() {
               <Ionicons name="cart" size={24} color="black" />
             </TouchableOpacity>
           </>
+        ) : (
+          <Text style={styles.headerTitle}>
+            {(routeName ?? '').charAt(0).toUpperCase() + (routeName ?? '').slice(1)}
+          </Text>
         )}
       </View>
     </View>
@@ -63,11 +69,13 @@ export default function TabLayout() {
   return (
     <ModalContext.Provider value={{ modalVisible, setModalVisible }}>
       <Tabs
-        screenOptions={{
+        screenOptions={({ route }) => ({
           tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
           headerShown: true,
-          header: ({ navigation }) => <Header navigation={navigation} />,
-        }}
+          header: ({ navigation }) => (
+            <Header navigation={navigation} routeName={route.name} />
+          ),
+        })}
       >
         <Tabs.Screen
           name="index"

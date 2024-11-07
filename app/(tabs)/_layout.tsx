@@ -75,7 +75,7 @@ export default function TabLayout() {
     <ModalContext.Provider value={{ modalVisible, setModalVisible }}>
       <Tabs
         screenOptions={({ route }) => ({
-          tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+          tabBarActiveTintColor: 'black', // Change the selected color to black
           headerShown: true,
           header: ({ navigation }) => (
             <Header navigation={navigation} routeName={route.name} />
@@ -107,6 +107,10 @@ export default function TabLayout() {
               />
             );
           },
+          tabBarStyle: {
+            height: 55, // Reduce the height of the bottom tabs bar a little bit more
+          },
+          tabBarShowLabel: false, // Remove the labels from the bottom tabs bar
         })}
       >
         <Tabs.Screen

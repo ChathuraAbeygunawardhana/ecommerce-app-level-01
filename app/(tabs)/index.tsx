@@ -172,6 +172,22 @@ const Home = () => {
                 </Text>
               </TouchableOpacity>
             </View>
+            <View style={styles.priceContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Min Price"
+                keyboardType="numeric"
+                value={minPrice}
+                onChangeText={setMinPrice}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Max Price"
+                keyboardType="numeric"
+                value={maxPrice}
+                onChangeText={setMaxPrice}
+              />
+            </View>
             <View style={styles.colorContainer}>
               {uniqueColors.map((colorOption) => (
                 <TouchableOpacity
@@ -193,25 +209,17 @@ const Home = () => {
                 </TouchableOpacity>
               ))}
             </View>
-            <TextInput
-              style={styles.input}
-              placeholder="Min Price"
-              keyboardType="numeric"
-              value={minPrice}
-              onChangeText={setMinPrice}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Max Price"
-              keyboardType="numeric"
-              value={maxPrice}
-              onChangeText={setMaxPrice}
-            />
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={[styles.button, styles.applyButton]} onPress={applyFilters}>
+              <TouchableOpacity
+                style={[styles.button, styles.applyButton]}
+                onPress={applyFilters}
+              >
                 <Text style={styles.buttonText}>Apply Filters</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.button, styles.clearButton]} onPress={clearFilters}>
+              <TouchableOpacity
+                style={[styles.button, styles.clearButton]}
+                onPress={clearFilters}
+              >
                 <Text style={styles.buttonText}>Clear</Text>
               </TouchableOpacity>
             </View>
@@ -293,13 +301,19 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
   },
+  priceContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   input: {
+    flex: 1,
     height: 40,
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 10,
     paddingHorizontal: 10,
+    marginHorizontal: 5,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -351,17 +365,20 @@ const styles = StyleSheet.create({
   },
   colorContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    justifyContent: 'flex-end',
     marginBottom: 10,
+    flexWrap: 'nowrap',
   },
   colorButton: {
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 0,
     margin: 5,
     borderWidth: 1,
     borderColor: 'black',
     backgroundColor: 'white',
     borderRadius: 5,
     alignItems: 'center',
+    width: 84,
   },
   selectedColorButton: {
     backgroundColor: 'black',
@@ -369,9 +386,11 @@ const styles = StyleSheet.create({
   colorButtonText: {
     color: 'black',
     fontWeight: 'bold',
+    fontSize: 12,
   },
   selectedColorButtonText: {
     color: 'white',
+    fontSize: 12,
   },
   brandImage: {
     width: 20,

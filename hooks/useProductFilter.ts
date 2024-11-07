@@ -47,7 +47,12 @@ const useProductFilter = (products: Product[], criteria: FilterCriteria) => {
     setFilteredProducts(filtered);
   }, [products, criteria]);
 
-  return filteredProducts;
+  const getUniqueColors = () => {
+    const colors = products.map(product => product.colour.toLowerCase());
+    return Array.from(new Set(colors));
+  };
+
+  return { filteredProducts, getUniqueColors };
 };
 
 export default useProductFilter;

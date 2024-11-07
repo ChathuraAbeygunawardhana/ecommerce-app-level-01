@@ -37,7 +37,8 @@ const Home = () => {
   const [filterCriteria, setFilterCriteria] = useState<FilterCriteria>({
     color: '',
   });
-  const filteredData = useProductFilter(data, filterCriteria);
+  const { filteredProducts, getUniqueColors } = useProductFilter(data, filterCriteria);
+  const uniqueColors = getUniqueColors();
   const router = useRouter();
   const { modalVisible, setModalVisible } = useContext(ModalContext);
   const [brand, setBrand] = useState('');
@@ -98,7 +99,7 @@ const Home = () => {
   return (
     <View style={{ flex: 1 }}>
       <FlatList
-        data={filteredData}
+        data={filteredProducts}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContainer}
@@ -137,12 +138,27 @@ const Home = () => {
                 <Text style={styles.brandButtonText}>Puma</Text>
               </TouchableOpacity>
             </View>
-            <TextInput
-              style={styles.input}
-              placeholder="Color"
-              value={color}
-              onChangeText={setColor}
-            />
+            <View style={styles.colorContainer}>
+              {uniqueColors.map((colorOption) => (
+                <TouchableOpacity
+                  key={colorOption}
+                  style={[
+                    styles.colorButton,
+                    color === colorOption && styles.selectedColorButton,
+                  ]}
+                  onPress={() => setColor(colorOption)}
+                >
+                  <Text
+                    style={[
+                      styles.colorButtonText,
+                      color === colorOption && styles.selectedColorButtonText,
+                    ]}
+                  >
+                    {colorOption}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
             <TextInput
               style={styles.input}
               placeholder="Min Price"
@@ -278,5 +294,29 @@ const styles = StyleSheet.create({
   brandButtonText: {
     color: '#fff',
     fontWeight: 'bold',
+  },
+  colorContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 10,
+  },
+  colorButton: {
+    padding: 10,
+    margin: 5,
+    borderWidth: 1,
+    borderColor: 'black',
+    backgroundColor: 'white',
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  selectedColorButton: {
+    backgroundColor: 'black',
+  },
+  colorButtonText: {
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  selectedColorButtonText: {
+    color: 'white',
   },
 });

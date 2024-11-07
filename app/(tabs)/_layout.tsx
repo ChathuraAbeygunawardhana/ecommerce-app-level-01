@@ -75,7 +75,7 @@ export default function TabLayout() {
     <ModalContext.Provider value={{ modalVisible, setModalVisible }}>
       <Tabs
         screenOptions={({ route }) => ({
-          tabBarActiveTintColor: 'black', // Change the selected color to black
+          tabBarActiveTintColor: 'black',
           headerShown: true,
           header: ({ navigation }) => (
             <Header navigation={navigation} routeName={route.name} />
@@ -108,9 +108,9 @@ export default function TabLayout() {
             );
           },
           tabBarStyle: {
-            height: 55, // Reduce the height of the bottom tabs bar a little bit more
+            height: 55,
           },
-          tabBarShowLabel: false, // Remove the labels from the bottom tabs bar
+          tabBarShowLabel: false,
         })}
       >
         <Tabs.Screen
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingTop: 50,
     borderBottomLeftRadius: 20,
-    paddingBottom: 20, // Add this line to add space at the bottom
+    paddingBottom: 20,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   cartIconContainer: {
-    marginRight: 10, // Add this line to move the cart icon to the right
+    marginRight: 10,
   },
   cartBadge: {
     position: 'absolute',

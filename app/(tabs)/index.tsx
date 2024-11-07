@@ -104,6 +104,9 @@ const Home = () => {
     </Pressable>
   );
 
+  const screenWidth = Dimensions.get('window').width;
+  const buttonWidth = (screenWidth - 60) / uniqueColors.length - 5;
+
   return (
     <View style={{ flex: 1 }}>
       <FlatList
@@ -126,11 +129,12 @@ const Home = () => {
         <View style={styles.modalOverlay}>
           <View style={styles.bottomSheet}>
             <Text style={styles.modalTitle}>Filter Products</Text>
-            <View style={styles.brandContainer}>
+            <View style={styles.row}>
               <TouchableOpacity
                 style={[
                   styles.brandButton,
                   brand === 'Nike' && styles.selectedBrandButton,
+                  { flex: 1 },
                 ]}
                 onPress={() => setBrand('Nike')}
               >
@@ -153,6 +157,7 @@ const Home = () => {
                 style={[
                   styles.brandButton,
                   brand === 'Puma' && styles.selectedBrandButton,
+                  { flex: 1 },
                 ]}
                 onPress={() => setBrand('Puma')}
               >
@@ -172,7 +177,8 @@ const Home = () => {
                 </Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.priceContainer}>
+            <View style={styles.spacing} />
+            <View style={styles.row}>
               <TextInput
                 style={styles.input}
                 placeholder="Min Price"
@@ -188,7 +194,8 @@ const Home = () => {
                 onChangeText={setMaxPrice}
               />
             </View>
-            <View style={styles.colorContainer}>
+            <View style={styles.spacing} />
+            <View style={styles.row}>
               {uniqueColors.map((colorOption) => (
                 <TouchableOpacity
                   key={colorOption}
@@ -209,7 +216,8 @@ const Home = () => {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={styles.buttonContainer}>
+            <View style={styles.largeSpacing} />
+            <View style={[styles.row, styles.buttonContainer]}>
               <TouchableOpacity
                 style={[styles.button, styles.applyButton]}
                 onPress={applyFilters}
@@ -282,6 +290,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 20,
+    paddingHorizontal: 20,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -318,7 +327,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
+    marginTop: 20,
   },
   button: {
     width: '48%',
@@ -334,7 +343,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontWeight: 'bold',
   },
   brandContainer: {
     flexDirection: 'row',
@@ -346,7 +354,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginHorizontal: 5,
     backgroundColor: 'white',
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: 'center',
     flexDirection: 'row',
     borderWidth: 1,
@@ -365,20 +373,18 @@ const styles = StyleSheet.create({
   },
   colorContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     marginBottom: 10,
-    flexWrap: 'nowrap',
   },
   colorButton: {
     paddingVertical: 10,
     paddingHorizontal: 0,
-    margin: 5,
+    marginHorizontal: 5,
     borderWidth: 1,
     borderColor: 'black',
     backgroundColor: 'white',
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: 'center',
-    width: 84,
   },
   selectedColorButton: {
     backgroundColor: 'black',
@@ -396,5 +402,16 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     marginRight: 5,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  spacing: {
+    height: 10,
+  },
+  largeSpacing: {
+    height: 20,
   },
 });

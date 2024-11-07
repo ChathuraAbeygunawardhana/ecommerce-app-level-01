@@ -63,7 +63,8 @@ export default function TabLayout() {
           </>
         ) : (
           <Text style={styles.headerTitle}>
-            {(routeName ?? '').charAt(0).toUpperCase() + (routeName ?? '').slice(1)}
+            {(routeName ?? '').charAt(0).toUpperCase() +
+              (routeName ?? '').slice(1)}
           </Text>
         )}
       </View>
@@ -97,7 +98,11 @@ export default function TabLayout() {
             }
             return (
               <TabBarIcon
-                name={focused ? (route.name as keyof typeof Ionicons.glyphMap) : (`${route.name}-outline` as keyof typeof Ionicons.glyphMap)}
+                name={
+                  focused
+                    ? (route.name as keyof typeof Ionicons.glyphMap)
+                    : (`${route.name}-outline` as keyof typeof Ionicons.glyphMap)
+                }
                 color={color}
               />
             );
@@ -133,10 +138,17 @@ export default function TabLayout() {
           options={{
             title: 'Cart',
             tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name={focused ? 'cart' : 'cart-outline'}
-                color={color}
-              />
+              <View style={styles.tabIconContainer}>
+                <TabBarIcon
+                  name={focused ? 'cart' : 'cart-outline'}
+                  color={color}
+                />
+                {cart.length > 0 && (
+                  <View style={styles.tabCartBadge}>
+                    <Text style={styles.tabCartBadgeText}>{cart.length}</Text>
+                  </View>
+                )}
+              </View>
             ),
           }}
         />
@@ -179,64 +191,57 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingTop: 50,
     borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    paddingBottom: 20, // Add this line to add space at the bottom
   },
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 10,
-    height: 50,
   },
   headerTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
   },
-  icon: {
-    paddingHorizontal: 10,
-  },
+  icon: {},
   productDetailsTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
-    flex: 1,
   },
   cartIconContainer: {
-    position: 'relative',
+    marginRight: 10, // Add this line to move the cart icon to the right
   },
   cartBadge: {
     position: 'absolute',
     top: -5,
     right: -10,
-    backgroundColor: 'red',
+    backgroundColor: 'black',
     borderRadius: 10,
     padding: 5,
     width: 20,
     height: 20,
     justifyContent: 'center',
-    alignItems: 'center',
   },
   cartBadgeText: {
     color: 'white',
-    fontSize: 12,
+    fontSize: 10,
+    textAlign: 'center',
+    justifyContent: 'center',
   },
-  tabIconContainer: {
-    position: 'relative',
-  },
+  tabIconContainer: {},
   tabCartBadge: {
     position: 'absolute',
     top: -5,
     right: -10,
-    backgroundColor: 'red',
+    backgroundColor: 'black',
     borderRadius: 10,
-    padding: 5,
     width: 20,
     height: 20,
     justifyContent: 'center',
-    alignItems: 'center',
+    paddingLeft: 7.5,
   },
   tabCartBadgeText: {
     color: 'white',
-    fontSize: 12,
+    fontSize: 9,
   },
 });

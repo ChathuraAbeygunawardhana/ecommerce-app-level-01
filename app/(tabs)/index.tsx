@@ -17,6 +17,11 @@ import sampleData from '../../assets/sample.json';
 import { ModalContext } from './_layout';
 import useProductFilter from '../../hooks/useProductFilter';
 
+const nikeBlackLogo = 'https://i.ibb.co/vHp5FV7/nikeblacklogo.png';
+const nikeWhiteLogo = 'https://i.ibb.co/C17pnkw/nikewhitelogo.png';
+const pumaBlackLogo = 'https://i.ibb.co/HT5F046/pumablacklogo.png';
+const pumaWhiteLogo = 'https://i.ibb.co/wzVBnzj/pumawhitelogo.png';
+
 type FilterCriteria = {
   brand?: string;
   color?: string;
@@ -37,7 +42,10 @@ const Home = () => {
   const [filterCriteria, setFilterCriteria] = useState<FilterCriteria>({
     color: '',
   });
-  const { filteredProducts, getUniqueColors } = useProductFilter(data, filterCriteria);
+  const { filteredProducts, getUniqueColors } = useProductFilter(
+    data,
+    filterCriteria
+  );
   const uniqueColors = getUniqueColors();
   const router = useRouter();
   const { modalVisible, setModalVisible } = useContext(ModalContext);
@@ -126,6 +134,12 @@ const Home = () => {
                 ]}
                 onPress={() => setBrand('Nike')}
               >
+                <Image
+                  source={{
+                    uri: brand === 'Nike' ? nikeWhiteLogo : nikeBlackLogo,
+                  }}
+                  style={styles.brandImage}
+                />
                 <Text style={styles.brandButtonText}>Nike</Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -135,6 +149,12 @@ const Home = () => {
                 ]}
                 onPress={() => setBrand('Puma')}
               >
+                <Image
+                  source={{
+                    uri: brand === 'Puma' ? pumaWhiteLogo : pumaBlackLogo,
+                  }}
+                  style={styles.brandImage}
+                />
                 <Text style={styles.brandButtonText}>Puma</Text>
               </TouchableOpacity>
             </View>
@@ -287,6 +307,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
     borderRadius: 5,
     alignItems: 'center',
+    flexDirection: 'row',
   },
   selectedBrandButton: {
     backgroundColor: '#007BFF',
@@ -318,5 +339,10 @@ const styles = StyleSheet.create({
   },
   selectedColorButtonText: {
     color: 'white',
+  },
+  brandImage: {
+    width: 20,
+    height: 20,
+    marginRight: 5,
   },
 });

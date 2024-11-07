@@ -1,26 +1,11 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  FlatList,
-  Pressable,
-  Dimensions,
-  Modal,
-  Button,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import { StyleSheet, View, FlatList, Modal, Dimensions } from 'react-native';
 import React, { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'expo-router';
 import sampleData from '../../assets/sample.json';
 import { ModalContext } from './_layout';
 import useProductFilter from '../../hooks/useProductFilter';
-
-const nikeBlackLogo = 'https://i.ibb.co/vHp5FV7/nikeblacklogo.png';
-const nikeWhiteLogo = 'https://i.ibb.co/C17pnkw/nikewhitelogo.png';
-const pumaBlackLogo = 'https://i.ibb.co/HT5F046/pumablacklogo.png';
-const pumaWhiteLogo = 'https://i.ibb.co/wzVBnzj/pumawhitelogo.png';
+import FilterModal from '@/components/FilterModal';
+import ProductItem from '@/components/ProductItem';
 
 type FilterCriteria = {
   brand?: string;
@@ -88,20 +73,12 @@ const Home = () => {
       description: string;
     };
   }) => (
-    <Pressable
-      style={styles.itemContainer}
+    <ProductItem
+      item={{ ...item, price: parseFloat(item.price) }}
       onPress={() =>
         router.push({ pathname: `/(tabs)/[id]`, params: { id: item.id } })
       }
-    >
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: item.mainImage }} style={styles.image} />
-      </View>
-      <Text style={styles.name} numberOfLines={1}>
-        {item.name}
-      </Text>
-      <Text style={styles.price}>${item.price}</Text>
-    </Pressable>
+    />
   );
 
   return (
@@ -123,100 +100,19 @@ const Home = () => {
           setModalVisible(!modalVisible);
         }}
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.bottomSheet}>
-            <Text style={styles.modalTitle}>Filter Products</Text>
-            <View style={styles.brandContainer}>
-              <TouchableOpacity
-                style={[
-                  styles.brandButton,
-                  brand === 'Nike' && styles.selectedBrandButton,
-                ]}
-                onPress={() => setBrand('Nike')}
-              >
-                <Image
-                  source={{
-                    uri: brand === 'Nike' ? nikeWhiteLogo : nikeBlackLogo,
-                  }}
-                  style={styles.brandImage}
-                />
-                <Text
-                  style={[
-                    styles.brandButtonText,
-                    brand === 'Nike' && styles.selectedBrandButtonText,
-                  ]}
-                >
-                  Nike
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  styles.brandButton,
-                  brand === 'Puma' && styles.selectedBrandButton,
-                ]}
-                onPress={() => setBrand('Puma')}
-              >
-                <Image
-                  source={{
-                    uri: brand === 'Puma' ? pumaWhiteLogo : pumaBlackLogo,
-                  }}
-                  style={styles.brandImage}
-                />
-                <Text
-                  style={[
-                    styles.brandButtonText,
-                    brand === 'Puma' && styles.selectedBrandButtonText,
-                  ]}
-                >
-                  Puma
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.colorContainer}>
-              {uniqueColors.map((colorOption) => (
-                <TouchableOpacity
-                  key={colorOption}
-                  style={[
-                    styles.colorButton,
-                    color === colorOption && styles.selectedColorButton,
-                  ]}
-                  onPress={() => setColor(colorOption)}
-                >
-                  <Text
-                    style={[
-                      styles.colorButtonText,
-                      color === colorOption && styles.selectedColorButtonText,
-                    ]}
-                  >
-                    {colorOption}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-            <TextInput
-              style={styles.input}
-              placeholder="Min Price"
-              keyboardType="numeric"
-              value={minPrice}
-              onChangeText={setMinPrice}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Max Price"
-              keyboardType="numeric"
-              value={maxPrice}
-              onChangeText={setMaxPrice}
-            />
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={[styles.button, styles.applyButton]} onPress={applyFilters}>
-                <Text style={styles.buttonText}>Apply Filters</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={[styles.button, styles.clearButton]} onPress={clearFilters}>
-                <Text style={styles.buttonText}>Clear</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
+        <FilterModal
+          uniqueColors={uniqueColors}
+          brand={brand}
+          setBrand={setBrand}
+          color={color}
+          setColor={setColor}
+          minPrice={minPrice}
+          setMinPrice={setMinPrice}
+          maxPrice={maxPrice}
+          setMaxPrice={setMaxPrice}
+          applyFilters={applyFilters}
+          clearFilters={clearFilters}
+        />
       </Modal>
     </View>
   );
@@ -233,149 +129,5 @@ const styles = StyleSheet.create({
   },
   columnWrapper: {
     justifyContent: 'space-between',
-  },
-  itemContainer: {
-    width: itemWidth,
-    marginBottom: 15,
-    padding: 8,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-  },
-  imageContainer: {
-    alignItems: 'center',
-  },
-  image: {
-    width: '100%',
-    height: 180,
-    borderRadius: 10,
-    resizeMode: 'cover',
-  },
-  name: {
-    fontSize: 14,
-    marginTop: 8,
-    fontWeight: '500',
-  },
-  price: {
-    fontSize: 14,
-    marginTop: 4,
-    color: '#666',
-  },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  bottomSheet: {
-    backgroundColor: 'white',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  input: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10,
-  },
-  button: {
-    width: '48%',
-    alignItems: 'center',
-    padding: 10,
-    borderRadius: 5,
-  },
-  applyButton: {
-    backgroundColor: 'black',
-  },
-  clearButton: {
-    backgroundColor: 'black',
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  brandContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-  },
-  brandButton: {
-    flex: 1,
-    padding: 10,
-    marginHorizontal: 5,
-    backgroundColor: 'white',
-    borderRadius: 5,
-    alignItems: 'center',
-    flexDirection: 'row',
-    borderWidth: 1,
-    borderColor: 'black',
-  },
-  selectedBrandButton: {
-    backgroundColor: 'black',
-    borderColor: 'black',
-  },
-  brandButtonText: {
-    color: 'black',
-    fontWeight: 'bold',
-  },
-  selectedBrandButtonText: {
-    color: 'white',
-  },
-  colorContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginBottom: 10,
-  },
-  colorButton: {
-    padding: 10,
-    margin: 5,
-    borderWidth: 1,
-    borderColor: 'black',
-    backgroundColor: 'white',
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  selectedColorButton: {
-    backgroundColor: 'black',
-  },
-  colorButtonText: {
-    color: 'black',
-    fontWeight: 'bold',
-  },
-  selectedColorButtonText: {
-    color: 'white',
-  },
-  brandImage: {
-    width: 20,
-    height: 20,
-    marginRight: 5,
   },
 });

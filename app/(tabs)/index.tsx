@@ -140,7 +140,14 @@ const Home = () => {
                   }}
                   style={styles.brandImage}
                 />
-                <Text style={styles.brandButtonText}>Nike</Text>
+                <Text
+                  style={[
+                    styles.brandButtonText,
+                    brand === 'Nike' && styles.selectedBrandButtonText,
+                  ]}
+                >
+                  Nike
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[
@@ -155,7 +162,14 @@ const Home = () => {
                   }}
                   style={styles.brandImage}
                 />
-                <Text style={styles.brandButtonText}>Puma</Text>
+                <Text
+                  style={[
+                    styles.brandButtonText,
+                    brand === 'Puma' && styles.selectedBrandButtonText,
+                  ]}
+                >
+                  Puma
+                </Text>
               </TouchableOpacity>
             </View>
             <View style={styles.colorContainer}>
@@ -194,12 +208,12 @@ const Home = () => {
               onChangeText={setMaxPrice}
             />
             <View style={styles.buttonContainer}>
-              <View style={styles.button}>
-                <Button title="Apply Filters" onPress={applyFilters} />
-              </View>
-              <View style={styles.button}>
-                <Button title="Clear" onPress={clearFilters} />
-              </View>
+              <TouchableOpacity style={[styles.button, styles.applyButton]} onPress={applyFilters}>
+                <Text style={styles.buttonText}>Apply Filters</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.button, styles.clearButton]} onPress={clearFilters}>
+                <Text style={styles.buttonText}>Clear</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -294,6 +308,19 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '48%',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 5,
+  },
+  applyButton: {
+    backgroundColor: 'black',
+  },
+  clearButton: {
+    backgroundColor: 'black',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
   brandContainer: {
     flexDirection: 'row',
@@ -304,17 +331,23 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     marginHorizontal: 5,
-    backgroundColor: '#ccc',
+    backgroundColor: 'white',
     borderRadius: 5,
     alignItems: 'center',
     flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: 'black',
   },
   selectedBrandButton: {
-    backgroundColor: '#007BFF',
+    backgroundColor: 'black',
+    borderColor: 'black',
   },
   brandButtonText: {
-    color: '#fff',
+    color: 'black',
     fontWeight: 'bold',
+  },
+  selectedBrandButtonText: {
+    color: 'white',
   },
   colorContainer: {
     flexDirection: 'row',

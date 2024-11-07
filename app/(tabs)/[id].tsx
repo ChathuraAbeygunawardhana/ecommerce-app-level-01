@@ -25,15 +25,23 @@ const ProductDetails = () => {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <Image source={{ uri: product.mainImage }} style={styles.image} />
-      <View style={styles.detailsContainer}>
-        <Text style={styles.name}>{product.name}</Text>
-        <Text style={styles.price}>${product.price}</Text>
-        <Text style={styles.colour}>Color: {product.colour}</Text>
-        <Text style={styles.description}>{product.description}</Text>
-      </View>
-    </ScrollView>
+    <View style={{ flex: 1 }}>
+      <ScrollView style={styles.container}>
+        <Image source={{ uri: product.mainImage }} style={styles.image} />
+        <View style={styles.detailsContainer}>
+          <Text style={styles.name}>{product.name}</Text>
+          <Text style={styles.price}>${product.price}</Text>
+          <Text style={styles.colour}>Color: {product.colour}</Text>
+          <Text style={styles.description}>{product.description}</Text>
+        </View>
+      </ScrollView>
+      <TouchableOpacity
+        style={styles.addToCartButton}
+        onPress={() => console.log('Add to Cart pressed')}
+      >
+        <Text style={styles.addToCartText}>Add to Cart</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -82,5 +90,22 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     color: '#333',
     textAlign: 'justify',
+  },
+  addToCartButton: {
+    backgroundColor: '#000',
+    margin: 20,
+    padding: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 5,
+    left: 1,
+    right: 1,
+    borderRadius: 10, 
+  },
+  addToCartText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });

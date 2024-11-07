@@ -217,16 +217,14 @@ const styles = StyleSheet.create({
     right: -10,
     backgroundColor: 'black',
     borderRadius: 10,
-    padding: 5,
     width: 20,
     height: 20,
     justifyContent: 'center',
+    paddingLeft: 7.5,
   },
   cartBadgeText: {
     color: 'white',
-    fontSize: 10,
-    textAlign: 'center',
-    justifyContent: 'center',
+    fontSize: 9,
   },
   tabIconContainer: {},
   tabCartBadge: {

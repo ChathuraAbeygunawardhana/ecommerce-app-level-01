@@ -6,8 +6,8 @@ interface CartItem {
   id: string;
   name: string;
   price: number;
-  image: string; // Add this line
-  quantity: number; // Add this line
+  image: string;
+  quantity: number;
 }
 
 const Cart = () => {

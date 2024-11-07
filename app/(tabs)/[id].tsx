@@ -23,7 +23,9 @@ interface Product {
 
 const ProductDetails = () => {
   const { id } = useLocalSearchParams();
-  const product = sampleData.find((item) => item.id === id) as unknown as Product;
+  const product = sampleData.find(
+    (item) => item.id === id
+  ) as unknown as Product;
   const router = useRouter();
   const { addToCart } = useCart();
 
@@ -48,7 +50,9 @@ const ProductDetails = () => {
       </ScrollView>
       <TouchableOpacity
         style={styles.addToCartButton}
-        onPress={() => addToCart(product)}
+        onPress={() =>
+          addToCart({ ...product, image: product.mainImage, quantity: 1 })
+        }
       >
         <Text style={styles.addToCartText}>Add to Cart</Text>
       </TouchableOpacity>
@@ -112,7 +116,7 @@ const styles = StyleSheet.create({
     bottom: 5,
     left: 1,
     right: 1,
-    borderRadius: 10, 
+    borderRadius: 10,
   },
   addToCartText: {
     color: '#fff',

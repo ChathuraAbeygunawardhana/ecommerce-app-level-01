@@ -7,6 +7,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useCart } from '@/contexts/CartContext';
 
 export const ModalContext = createContext({
   modalVisible: false,
@@ -17,6 +18,7 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
   const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
+  const { cart } = useCart();
 
   const Header = ({
     isProductDetails,
@@ -50,12 +52,14 @@ export default function TabLayout() {
               <Ionicons name="filter" size={24} color="black" />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>Title</Text>
-            <TouchableOpacity
-              onPress={() => console.log('Cart icon pressed')}
-              style={styles.icon}
-            >
+            <View style={styles.cartIconContainer}>
               <Ionicons name="cart" size={24} color="black" />
-            </TouchableOpacity>
+              {cart.length > 0 && (
+                <View style={styles.cartBadge}>
+                  <Text style={styles.cartBadgeText}>{cart.length}</Text>
+                </View>
+              )}
+            </View>
           </>
         ) : (
           <Text style={styles.headerTitle}>
@@ -75,6 +79,29 @@ export default function TabLayout() {
           header: ({ navigation }) => (
             <Header navigation={navigation} routeName={route.name} />
           ),
+          tabBarIcon: ({ color, focused }) => {
+            if (route.name === 'cart') {
+              return (
+                <View style={styles.tabIconContainer}>
+                  <TabBarIcon
+                    name={focused ? 'cart' : 'cart-outline'}
+                    color={color}
+                  />
+                  {cart.length > 0 && (
+                    <View style={styles.tabCartBadge}>
+                      <Text style={styles.tabCartBadgeText}>{cart.length}</Text>
+                    </View>
+                  )}
+                </View>
+              );
+            }
+            return (
+              <TabBarIcon
+                name={focused ? (route.name as keyof typeof Ionicons.glyphMap) : (`${route.name}-outline` as keyof typeof Ionicons.glyphMap)}
+                color={color}
+              />
+            );
+          },
         })}
       >
         <Tabs.Screen
@@ -173,5 +200,43 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     flex: 1,
+  },
+  cartIconContainer: {
+    position: 'relative',
+  },
+  cartBadge: {
+    position: 'absolute',
+    top: -5,
+    right: -10,
+    backgroundColor: 'red',
+    borderRadius: 10,
+    padding: 5,
+    width: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cartBadgeText: {
+    color: 'white',
+    fontSize: 12,
+  },
+  tabIconContainer: {
+    position: 'relative',
+  },
+  tabCartBadge: {
+    position: 'absolute',
+    top: -5,
+    right: -10,
+    backgroundColor: 'red',
+    borderRadius: 10,
+    padding: 5,
+    width: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tabCartBadgeText: {
+    color: 'white',
+    fontSize: 12,
   },
 });

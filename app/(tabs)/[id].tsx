@@ -10,11 +10,22 @@ import React from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import sampleData from '../../assets/sample.json';
 import { useRouter } from 'expo-router';
+import { useCart } from '@/contexts/CartContext';
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  mainImage: string;
+  colour: string;
+  description: string;
+}
 
 const ProductDetails = () => {
   const { id } = useLocalSearchParams();
-  const product = sampleData.find((item) => item.id === id);
+  const product = sampleData.find((item) => item.id === id) as unknown as Product;
   const router = useRouter();
+  const { addToCart } = useCart();
 
   if (!product) {
     return (
@@ -37,7 +48,7 @@ const ProductDetails = () => {
       </ScrollView>
       <TouchableOpacity
         style={styles.addToCartButton}
-        onPress={() => console.log('Add to Cart pressed')}
+        onPress={() => addToCart(product)}
       >
         <Text style={styles.addToCartText}>Add to Cart</Text>
       </TouchableOpacity>

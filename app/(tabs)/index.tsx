@@ -72,6 +72,14 @@ const Home = () => {
     setModalVisible(false);
   };
 
+  const toggleBrand = (selectedBrand: string) => {
+    setBrand((prevBrand) => (prevBrand === selectedBrand ? '' : selectedBrand));
+  };
+
+  const toggleColor = (selectedColor: string) => {
+    setColor((prevColor) => (prevColor === selectedColor ? '' : selectedColor));
+  };
+
   useEffect(() => {
     setData(sampleData);
   }, []);
@@ -136,7 +144,7 @@ const Home = () => {
                   brand === 'Nike' && styles.selectedBrandButton,
                   { flex: 1 },
                 ]}
-                onPress={() => setBrand('Nike')}
+                onPress={() => toggleBrand('Nike')}
               >
                 <Image
                   source={{
@@ -159,7 +167,7 @@ const Home = () => {
                   brand === 'Puma' && styles.selectedBrandButton,
                   { flex: 1 },
                 ]}
-                onPress={() => setBrand('Puma')}
+                onPress={() => toggleBrand('Puma')}
               >
                 <Image
                   source={{
@@ -202,8 +210,9 @@ const Home = () => {
                   style={[
                     styles.colorButton,
                     color === colorOption && styles.selectedColorButton,
+                    { width: buttonWidth }, // Set dynamic width
                   ]}
-                  onPress={() => setColor(colorOption)}
+                  onPress={() => toggleColor(colorOption)}
                 >
                   <Text
                     style={[
@@ -260,6 +269,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
+    elevation: 5, // Add elevation for Android shadow
   },
   imageContainer: {
     alignItems: 'center',

@@ -6,9 +6,9 @@ import {
 } from 'react-native';
 import React from 'react';
 import { useCart } from '@/contexts/CartContext';
-import CartItem from '@/components/CartItem';
-import CartTotal from '@/components/CartTotal';
-import CheckoutButton from '@/components/CheckoutButton';
+import CartItem from '@/components/Cart/CartItem';
+import CartTotal from '@/components/Cart/CartTotal';
+import CheckoutButton from '@/components/Cart/CheckoutButton';
 
 const Cart = () => {
   const {
@@ -47,7 +47,9 @@ const Cart = () => {
         />
       )}
       <CartTotal total={calculateTotal()} />
-      <CheckoutButton onPress={() => console.log('Checkout button pressed')} />
+      <View style={styles.checkoutButtonContainer}>
+        <CheckoutButton onPress={() => console.log('Checkout button pressed')} />
+      </View>
     </View>
   );
 };
@@ -63,5 +65,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  checkoutButtonContainer: {
+    alignItems: 'center',
+    marginBottom: 16,
   },
 });

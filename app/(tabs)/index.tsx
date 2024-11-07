@@ -4,8 +4,8 @@ import { useRouter } from 'expo-router';
 import sampleData from '../../assets/sample.json';
 import { ModalContext } from './_layout';
 import useProductFilter from '../../hooks/useProductFilter';
-import FilterModal from '@/components/FilterModal';
-import ProductItem from '@/components/ProductItem';
+import FilterModal from '@/components/Home/FilterModal';
+import ProductItem from '@/components/Home/ProductItem';
 
 type FilterCriteria = {
   brand?: string;
@@ -119,9 +119,6 @@ const Home = () => {
 };
 
 export default Home;
-
-const windowWidth = Dimensions.get('window').width;
-const itemWidth = (windowWidth - 30) / 2;
 
 const styles = StyleSheet.create({
   listContainer: {

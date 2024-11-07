@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 
-const itemWidth = 190;
+const itemWidth = 220;
 
 interface ProductItemProps {
   item: {
@@ -28,8 +28,9 @@ export default ProductItem;
 
 const styles = StyleSheet.create({
   itemContainer: {
-    width: itemWidth,
+    flex: 1,
     marginBottom: 15,
+    marginHorizontal: 5,
     padding: 8,
     backgroundColor: '#fff',
     borderRadius: 10,

@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 16,
     borderRadius: 8,
-    width: '100%',
+    width: '80%',
   },
   checkoutButtonText: {
     color: '#fff',

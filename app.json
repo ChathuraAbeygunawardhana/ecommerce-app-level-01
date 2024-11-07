@@ -27,7 +27,18 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-asset",
+        {
+          "assets": [
+            "assets/images/blacknikelogo.png",
+            "assets/images/whitenikelogo.png",
+            "assets/images/blackpumalogo.png",
+            "assets/images/whitepumalogo.png"
+          ]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

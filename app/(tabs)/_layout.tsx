@@ -5,7 +5,6 @@ import { useRouter } from 'expo-router';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useCart } from '@/contexts/CartContext';
 
@@ -52,8 +51,13 @@ export default function TabLayout() {
               <Ionicons name="filter" size={24} color="black" />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>Title</Text>
-            <View style={styles.cartIconContainer}>
-              <Ionicons name="cart" size={24} color="black" />
+            <View>
+              <Ionicons
+                name="cart"
+                size={24}
+                color="black"
+                style={{ marginRight: 7 }}
+              />
               {cart.length > 0 && (
                 <View style={styles.cartBadge}>
                   <Text style={styles.cartBadgeText}>{cart.length}</Text>
@@ -195,6 +199,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingTop: 50,
     borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20, // Add this line to make the other side curved
     paddingBottom: 20,
   },
   headerContainer: {
@@ -205,15 +210,15 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
+    textAlign: 'center', // Center the title
+    flex: 1, // Add flex to center the title
   },
   icon: {},
   productDetailsTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
-  },
-  cartIconContainer: {
-    marginRight: 10,
+    flex: 1, // Add flex to center the title
   },
   cartBadge: {
     position: 'absolute',

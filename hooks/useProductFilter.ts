@@ -15,34 +15,61 @@ interface FilterCriteria {
   color?: string;
 }
 
+interface Filter {
+  apply(products: Product[]): Product[];
+}
+
+class PriceRangeFilter implements Filter {
+  constructor(private priceRange: [number, number]) {}
+  apply(products: Product[]): Product[] {
+    return products.filter((product) => {
+      const price = parseFloat(product.price);
+      return price >= this.priceRange[0] && price <= this.priceRange[1];
+    });
+  }
+}
+
+class BrandFilter implements Filter {
+  constructor(private brand: string) {}
+  apply(products: Product[]): Product[] {
+    return products.filter((product) => {
+      const productBrand = product.name.split(' ')[0].toLowerCase();
+      return productBrand.includes(this.brand.toLowerCase());
+    });
+  }
+}
+
+class ColorFilter implements Filter {
+  constructor(private color: string) {}
+  apply(products: Product[]): Product[] {
+    return products.filter(
+      (product) => product.colour.toLowerCase() === this.color.toLowerCase()
+    );
+  }
+}
+
 const useProductFilter = (products: Product[], criteria: FilterCriteria) => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
 
   useEffect(() => {
-    let filtered = products;
+    let filters: Filter[] = [];
 
     if (criteria.priceRange) {
-      filtered = filtered.filter((product) => {
-        const price = parseFloat(product.price);
-        return (
-          price >= criteria.priceRange![0] && price <= criteria.priceRange![1]
-        );
-      });
+      filters.push(new PriceRangeFilter(criteria.priceRange));
     }
 
     if (criteria.brand) {
-      filtered = filtered.filter((product) => {
-        const productBrand = product.name.split(' ')[0].toLowerCase();
-        return productBrand.includes(criteria.brand!.toLowerCase());
-      });
+      filters.push(new BrandFilter(criteria.brand));
     }
 
     if (criteria.color) {
-      filtered = filtered.filter(
-        (product) =>
-          product.colour.toLowerCase() === criteria.color!.toLowerCase()
-      );
+      filters.push(new ColorFilter(criteria.color));
     }
+
+    let filtered = products;
+    filters.forEach((filter) => {
+      filtered = filter.apply(filtered);
+    });
 
     setFilteredProducts(filtered);
   }, [products, criteria]);

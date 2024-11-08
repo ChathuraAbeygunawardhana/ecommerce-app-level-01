@@ -14,9 +14,19 @@ import {
 import React, { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'expo-router';
 import sampleData from '../../assets/sample.json';
+
+type Product = {
+  id: string;
+  name: string;
+  mainImage: string;
+  price: string;
+  colour: string;
+  description: string;
+};
 import { ModalContext } from './_layout';
 import useProductFilter from '../../hooks/useProductFilter';
 import { Ionicons } from '@expo/vector-icons';
+import useProductSearch from '../../hooks/useProductSearch';
 
 const nikeBlackLogo = 'https://i.ibb.co/vHp5FV7/nikeblacklogo.png';
 const nikeWhiteLogo = 'https://i.ibb.co/C17pnkw/nikewhitelogo.png';
@@ -54,6 +64,8 @@ const Home = () => {
   const [color, setColor] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const { searchedProducts } = useProductSearch(filteredProducts, searchTerm);
 
   const applyFilters = () => {
     const priceRange: [number, number] | undefined =
@@ -116,16 +128,40 @@ const Home = () => {
   const screenWidth = Dimensions.get('window').width;
   const buttonWidth = (screenWidth - 60) / uniqueColors.length - 5;
 
+  const handleSearch = () => {};
+
+  const clearSearch = () => {
+    setSearchTerm('');
+  };
+
   return (
     <View style={{ flex: 1 }}>
-      {filteredProducts.length === 0 ? (
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search products..."
+          value={searchTerm}
+          onChangeText={setSearchTerm}
+        />
+        <TouchableOpacity
+          onPress={searchTerm ? clearSearch : handleSearch}
+          style={styles.searchButton}
+        >
+          <Ionicons
+            name={searchTerm ? 'close' : 'search'}
+            size={24}
+            color="black"
+          />
+        </TouchableOpacity>
+      </View>
+      {searchedProducts.length === 0 ? (
         <View style={styles.noProductsContainer}>
           <Ionicons name="alert-circle-outline" size={50} color="gray" />
           <Text style={styles.noProductsText}>No products to show</Text>
         </View>
       ) : (
         <FlatList
-          data={filteredProducts}
+          data={searchedProducts}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.listContainer}
@@ -262,7 +298,8 @@ const itemWidth = (windowWidth - 30) / 2;
 
 const styles = StyleSheet.create({
   listContainer: {
-    padding: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
   },
   columnWrapper: {
     justifyContent: 'space-between',
@@ -277,7 +314,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    elevation: 5, // Add elevation for Android shadow
+    elevation: 5,
   },
   imageContainer: {
     alignItems: 'center',
@@ -441,5 +478,27 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 18,
     color: 'gray',
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    padding: 10,
+    alignItems: 'center',
+  },
+  searchInput: {
+    flex: 1,
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    backgroundColor: 'white',
+  },
+  searchButton: {
+    marginLeft: 10,
+    padding: 5,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#ccc',
   },
 });

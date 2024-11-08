@@ -16,6 +16,7 @@ import { useRouter } from 'expo-router';
 import sampleData from '../../assets/sample.json';
 import { ModalContext } from './_layout';
 import useProductFilter from '../../hooks/useProductFilter';
+import { Ionicons } from '@expo/vector-icons';
 
 const nikeBlackLogo = 'https://i.ibb.co/vHp5FV7/nikeblacklogo.png';
 const nikeWhiteLogo = 'https://i.ibb.co/C17pnkw/nikewhitelogo.png';
@@ -117,15 +118,22 @@ const Home = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <FlatList
-        data={filteredProducts}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.listContainer}
-        numColumns={2}
-        columnWrapperStyle={styles.columnWrapper}
-        showsVerticalScrollIndicator={false}
-      />
+      {filteredProducts.length === 0 ? (
+        <View style={styles.noProductsContainer}>
+          <Ionicons name="alert-circle-outline" size={50} color="gray" />
+          <Text style={styles.noProductsText}>No products to show</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={filteredProducts}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.listContainer}
+          numColumns={2}
+          columnWrapperStyle={styles.columnWrapper}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
       <Modal
         animationType="slide"
         transparent={true}
@@ -423,5 +431,15 @@ const styles = StyleSheet.create({
   },
   largeSpacing: {
     height: 20,
+  },
+  noProductsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noProductsText: {
+    marginTop: 10,
+    fontSize: 18,
+    color: 'gray',
   },
 });

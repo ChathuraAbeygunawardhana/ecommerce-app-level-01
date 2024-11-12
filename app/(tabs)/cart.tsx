@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   },
   checkoutButton: {
     backgroundColor: '#000',
-    padding: 16,
+    padding: 15,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 16,

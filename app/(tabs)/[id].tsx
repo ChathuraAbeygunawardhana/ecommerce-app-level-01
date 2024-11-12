@@ -11,6 +11,7 @@ import { useLocalSearchParams } from 'expo-router';
 import sampleData from '../../assets/sample.json';
 import { useRouter } from 'expo-router';
 import { useCart } from '@/contexts/CartContext';
+import { useFonts } from 'expo-font';
 
 interface Product {
   id: string;
@@ -35,6 +36,15 @@ const ProductDetails = () => {
         <Text>Product not found</Text>
       </View>
     );
+  }
+
+  let [fontsLoaded] = useFonts({
+    Helvetica: require('../../assets/fonts/Helvetica.ttf'),
+    Novecentro: require('../../assets/fonts/Novecentro.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return null;
   }
 
   return (
@@ -86,11 +96,12 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   name: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily: 'Helvetica',
+    fontSize: 30,
     marginBottom: 10,
   },
   price: {
+    fontFamily: 'Novecentro',
     fontSize: 20,
     color: '#666',
     marginBottom: 10,
@@ -108,7 +119,8 @@ const styles = StyleSheet.create({
   },
   addToCartButton: {
     backgroundColor: '#000',
-    margin: 20,
+    marginHorizontal: 14,
+    marginBottom: 2,
     padding: 15,
     alignItems: 'center',
     justifyContent: 'center',

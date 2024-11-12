@@ -13,14 +13,20 @@ const useProductSearch = (data: Product[], searchTerm: string) => {
   const [searchedProducts, setSearchedProducts] = useState(data);
 
   useEffect(() => {
-    if (searchTerm) {
-      const filtered = data.filter((product: { name: string }) =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setSearchedProducts(filtered);
-    } else {
-      setSearchedProducts(data);
-    }
+    const handler = setTimeout(() => {
+      if (searchTerm) {
+        const filtered = data.filter((product: { name: string }) =>
+          product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setSearchedProducts(filtered);
+      } else {
+        setSearchedProducts(data);
+      }
+    }, 300);
+
+    return () => {
+      clearTimeout(handler);
+    };
   }, [data, searchTerm]);
 
   return { searchedProducts };

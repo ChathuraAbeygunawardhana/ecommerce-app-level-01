@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingTop: 50,
     borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20, // Add this line to make the other side curved
+    borderBottomRightRadius: 20,
     paddingBottom: 20,
   },
   headerContainer: {
@@ -210,15 +210,15 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    textAlign: 'center', // Center the title
-    flex: 1, // Add flex to center the title
+    textAlign: 'center',
+    flex: 1,
   },
   icon: {},
   productDetailsTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
-    flex: 1, // Add flex to center the title
+    flex: 1,
   },
   cartBadge: {
     position: 'absolute',

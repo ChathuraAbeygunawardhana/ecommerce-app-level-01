@@ -19,7 +19,6 @@ describe('Home Screen', () => {
       </ModalContext.Provider>
     );
 
-    // Check if sample data is rendered
     sampleData.forEach((item) => {
       expect(getByText(item.name)).toBeTruthy();
     });

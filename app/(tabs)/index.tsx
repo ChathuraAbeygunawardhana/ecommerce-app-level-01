@@ -14,7 +14,7 @@ import {
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useRouter } from 'expo-router';
 import sampleData from '../../assets/sample.json';
-import { useFavourites } from '@/contexts/FavouritesContext'; // Add this line
+import { useFavourites } from '@/contexts/FavouritesContext';
 
 type Product = {
   id: string;
@@ -69,7 +69,7 @@ const Home = () => {
   const [maxPrice, setMaxPrice] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const { searchedProducts } = useProductSearch(filteredProducts, searchTerm);
-  const { favourites, addToFavourites, removeFromFavourites } = useFavourites(); // Add this line
+  const { favourites, addToFavourites, removeFromFavourites } = useFavourites();
 
   const applyFilters = () => {
     const priceRange: [number, number] | undefined =

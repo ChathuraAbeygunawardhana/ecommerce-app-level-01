@@ -30,19 +30,21 @@ const Favourites = () => {
         router.push({ pathname: `/(tabs)/[id]`, params: { id: item.id } })
       }
     >
-      <View style={styles.imageContainer}>
+      <View style={styles.leftContainer}>
         <Image source={{ uri: item.mainImage }} style={styles.image} />
-        <TouchableOpacity
-          style={styles.heartIcon}
-          onPress={() => removeFromFavourites(item.id)}
-        >
-          <Ionicons name="heart" size={24} color="black" />
-        </TouchableOpacity>
+        <View style={styles.textContainer}>
+          <Text style={styles.name} numberOfLines={1}>
+            {item.name.length > 19 ? `${item.name.substring(0, 19)}...` : item.name}
+          </Text>
+          <Text style={styles.price}>${item.price}</Text>
+        </View>
       </View>
-      <Text style={styles.name} numberOfLines={1}>
-        {item.name}
-      </Text>
-      <Text style={styles.price}>${item.price}</Text>
+      <TouchableOpacity
+        style={styles.removeButton} 
+        onPress={() => removeFromFavourites(item.id)}
+      >
+        <Text style={styles.removeButtonText}>Remove</Text>
+      </TouchableOpacity>
     </Pressable>
   );
 
@@ -79,6 +81,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 10,
     marginVertical: 5,
     backgroundColor: '#f9f9f9',
@@ -89,8 +92,15 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
   },
+  leftContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   imageContainer: {
-    position: 'relative',
+  },
+  textContainer: {
+    marginLeft: 10,
+    flexShrink: 1,
   },
   image: {
     width: 80,
@@ -98,10 +108,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginRight: 10,
   },
-  heartIcon: {
-    position: 'absolute',
-    top: 5,
-    right: 5,
+  removeButton: {
+    backgroundColor: '#000', // Black background
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    justifyContent: 'center', // Center vertically
+    alignItems: 'center',
+  },
+  removeButtonText: {
+    color: '#fff', // Ensure text is visible on black background
+    fontSize: 12,
+    fontWeight: 'bold',
   },
   name: {
     fontSize: 16,

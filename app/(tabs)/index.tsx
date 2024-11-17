@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useRouter } from 'expo-router';
 import sampleData from '../../assets/sample.json';
 
@@ -23,7 +23,7 @@ type Product = {
   colour: string;
   description: string;
 };
-import { ModalContext } from './_layout';
+import { ModalContext, TabBarContext } from './_layout';
 import useProductFilter from '../../hooks/useProductFilter';
 import { Ionicons } from '@expo/vector-icons';
 import useProductSearch from '../../hooks/useProductSearch';
@@ -60,6 +60,8 @@ const Home = () => {
   const uniqueColors = getUniqueColors();
   const router = useRouter();
   const { modalVisible, setModalVisible } = useContext(ModalContext);
+  const { setTabBarVisible } = useContext(TabBarContext);
+  const lastOffset = useRef(0);
   const [brand, setBrand] = useState('');
   const [color, setColor] = useState('');
   const [minPrice, setMinPrice] = useState('');
@@ -134,6 +136,16 @@ const Home = () => {
     setSearchTerm('');
   };
 
+  const handleScroll = (event: any) => {
+    const currentOffset = event.nativeEvent.contentOffset.y;
+    if (currentOffset > lastOffset.current && currentOffset > 0) {
+      setTabBarVisible(false);
+    } else {
+      setTabBarVisible(true);
+    }
+    lastOffset.current = currentOffset;
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.searchContainer}>
@@ -168,6 +180,8 @@ const Home = () => {
           numColumns={2}
           columnWrapperStyle={styles.columnWrapper}
           showsVerticalScrollIndicator={false}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
         />
       )}
       <Modal

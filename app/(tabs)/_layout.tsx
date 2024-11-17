@@ -1,8 +1,8 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useRef, useEffect } from 'react';
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Animated } from 'react-native';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -13,11 +13,26 @@ export const ModalContext = createContext({
   setModalVisible: (visible: boolean) => {},
 });
 
+export const TabBarContext = createContext({
+  tabBarVisible: true,
+  setTabBarVisible: (visible: boolean) => {},
+});
+
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
   const { cart } = useCart();
+  const [tabBarVisible, setTabBarVisible] = useState(true);
+  const translateY = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(translateY, {
+      toValue: tabBarVisible ? 0 : 100,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  }, [tabBarVisible]);
 
   const Header = ({
     isProductDetails,
@@ -77,16 +92,77 @@ export default function TabLayout() {
 
   return (
     <ModalContext.Provider value={{ modalVisible, setModalVisible }}>
-      <Tabs
-        screenOptions={({ route }) => ({
-          tabBarActiveTintColor: 'black',
-          headerShown: true,
-          header: ({ navigation }) => (
-            <Header navigation={navigation} routeName={route.name} />
-          ),
-          tabBarIcon: ({ color, focused }) => {
-            if (route.name === 'cart') {
+      <TabBarContext.Provider value={{ tabBarVisible, setTabBarVisible }}>
+        <Tabs
+          screenOptions={({ route }) => ({
+            tabBarActiveTintColor: 'black',
+            headerShown: true,
+            header: ({ navigation }) => (
+              <Header navigation={navigation} routeName={route.name} />
+            ),
+            tabBarIcon: ({ color, focused }) => {
+              if (route.name === 'cart') {
+                return (
+                  <View style={styles.tabIconContainer}>
+                    <TabBarIcon
+                      name={focused ? 'cart' : 'cart-outline'}
+                      color={color}
+                    />
+                    {cart.length > 0 && (
+                      <View style={styles.tabCartBadge}>
+                        <Text style={styles.tabCartBadgeText}>{cart.length}</Text>
+                      </View>
+                    )}
+                  </View>
+                );
+              }
               return (
+                <TabBarIcon
+                  name={
+                    focused
+                      ? (route.name as keyof typeof Ionicons.glyphMap)
+                      : (`${route.name}-outline` as keyof typeof Ionicons.glyphMap)
+                  }
+                  color={color}
+                />
+              );
+            },
+            tabBarStyle: {
+              transform: [{ translateY }],
+              height: 55,
+            },
+            tabBarShowLabel: false,
+          })}
+        >
+          <Tabs.Screen
+            name="index"
+            options={{
+              title: 'Home',
+              tabBarIcon: ({ color, focused }) => (
+                <TabBarIcon
+                  name={focused ? 'home' : 'home-outline'}
+                  color={color}
+                />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="explore"
+            options={{
+              title: 'Explore',
+              tabBarIcon: ({ color, focused }) => (
+                <TabBarIcon
+                  name={focused ? 'search' : 'search-outline'}
+                  color={color}
+                />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="cart"
+            options={{
+              title: 'Cart',
+              tabBarIcon: ({ color, focused }) => (
                 <View style={styles.tabIconContainer}>
                   <TabBarIcon
                     name={focused ? 'cart' : 'cart-outline'}
@@ -98,98 +174,40 @@ export default function TabLayout() {
                     </View>
                   )}
                 </View>
-              );
-            }
-            return (
-              <TabBarIcon
-                name={
-                  focused
-                    ? (route.name as keyof typeof Ionicons.glyphMap)
-                    : (`${route.name}-outline` as keyof typeof Ionicons.glyphMap)
-                }
-                color={color}
-              />
-            );
-          },
-          tabBarStyle: {
-            height: 55,
-          },
-          tabBarShowLabel: false,
-        })}
-      >
-        <Tabs.Screen
-          name="index"
-          options={{
-            title: 'Home',
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name={focused ? 'home' : 'home-outline'}
-                color={color}
-              />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="explore"
-          options={{
-            title: 'Explore',
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name={focused ? 'search' : 'search-outline'}
-                color={color}
-              />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="cart"
-          options={{
-            title: 'Cart',
-            tabBarIcon: ({ color, focused }) => (
-              <View style={styles.tabIconContainer}>
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="profile"
+            options={{
+              title: 'Profile',
+              tabBarIcon: ({ color, focused }) => (
                 <TabBarIcon
-                  name={focused ? 'cart' : 'cart-outline'}
+                  name={focused ? 'person' : 'person-outline'}
                   color={color}
                 />
-                {cart.length > 0 && (
-                  <View style={styles.tabCartBadge}>
-                    <Text style={styles.tabCartBadgeText}>{cart.length}</Text>
-                  </View>
-                )}
-              </View>
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="profile"
-          options={{
-            title: 'Profile',
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name={focused ? 'person' : 'person-outline'}
-                color={color}
-              />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="[id]"
-          options={{
-            title: 'Product Details',
-            headerShown: true,
-            header: ({ navigation }) => (
-              <Header isProductDetails={true} navigation={navigation} />
-            ),
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name={focused ? 'person' : 'person-outline'}
-                color={color}
-              />
-            ),
-            tabBarButton: () => null,
-          }}
-        />
-      </Tabs>
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="[id]"
+            options={{
+              title: 'Product Details',
+              headerShown: true,
+              header: ({ navigation }) => (
+                <Header isProductDetails={true} navigation={navigation} />
+              ),
+              tabBarIcon: ({ color, focused }) => (
+                <TabBarIcon
+                  name={focused ? 'person' : 'person-outline'}
+                  color={color}
+                />
+              ),
+              tabBarButton: () => null,
+            }}
+          />
+        </Tabs>
+      </TabBarContext.Provider>
     </ModalContext.Provider>
   );
 }

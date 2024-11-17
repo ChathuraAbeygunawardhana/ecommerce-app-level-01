@@ -14,6 +14,7 @@ import {
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useRouter } from 'expo-router';
 import sampleData from '../../assets/sample.json';
+import { useFavourites } from '@/contexts/FavouritesContext'; // Add this line
 
 type Product = {
   id: string;
@@ -68,6 +69,7 @@ const Home = () => {
   const [maxPrice, setMaxPrice] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const { searchedProducts } = useProductSearch(filteredProducts, searchTerm);
+  const { favourites, addToFavourites, removeFromFavourites } = useFavourites(); // Add this line
 
   const applyFilters = () => {
     const priceRange: [number, number] | undefined =
@@ -95,6 +97,14 @@ const Home = () => {
     setColor((prevColor) => (prevColor === selectedColor ? '' : selectedColor));
   };
 
+  const toggleFavorite = (item: Product) => {
+    if (favourites.some((fav) => fav.id === item.id)) {
+      removeFromFavourites(item.id);
+    } else {
+      addToFavourites(item);
+    }
+  };
+
   useEffect(() => {
     setData(sampleData);
   }, []);
@@ -119,6 +129,22 @@ const Home = () => {
     >
       <View style={styles.imageContainer}>
         <Image source={{ uri: item.mainImage }} style={styles.image} />
+        <TouchableOpacity
+          style={styles.heartIcon}
+          onPress={() => toggleFavorite(item)}
+        >
+          <Ionicons
+            name={
+              favourites.some((fav) => fav.id === item.id)
+                ? 'heart'
+                : 'heart-outline'
+            }
+            size={24}
+            color={
+              favourites.some((fav) => fav.id === item.id) ? 'black' : 'black'
+            }
+          />
+        </TouchableOpacity>
       </View>
       <Text style={styles.name} numberOfLines={1}>
         {item.name}
@@ -268,7 +294,7 @@ const Home = () => {
                   style={[
                     styles.colorButton,
                     color === colorOption && styles.selectedColorButton,
-                    { width: buttonWidth }, // Set dynamic width
+                    { width: buttonWidth },
                   ]}
                   onPress={() => toggleColor(colorOption)}
                 >
@@ -329,6 +355,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
+    position: 'relative',
   },
   imageContainer: {
     alignItems: 'center',
@@ -514,5 +541,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#ccc',
+  },
+  heartIcon: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
   },
 });

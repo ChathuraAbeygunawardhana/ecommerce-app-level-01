@@ -10,7 +10,6 @@ import {
   Animated,
 } from 'react-native';
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useCart } from '@/contexts/CartContext';
 import { FavouritesProvider } from '@/contexts/FavouritesContext';
@@ -112,8 +111,9 @@ export default function TabLayout() {
                 if (route.name === 'cart') {
                   return (
                     <View style={styles.tabIconContainer}>
-                      <TabBarIcon
+                      <Ionicons
                         name={focused ? 'cart' : 'cart-outline'}
+                        size={24}
                         color={color}
                       />
                       {cart.length > 0 && (
@@ -127,13 +127,14 @@ export default function TabLayout() {
                   );
                 }
                 return (
-                  <TabBarIcon
+                  <Ionicons
                     name={
                       focused
                         ? (route.name as keyof typeof Ionicons.glyphMap)
                         : (`${route.name}-outline` as keyof typeof Ionicons.glyphMap)
                     }
                     color={color}
+                    size={24}
                   />
                 );
               },
@@ -149,9 +150,10 @@ export default function TabLayout() {
               options={{
                 title: 'Home',
                 tabBarIcon: ({ color, focused }) => (
-                  <TabBarIcon
+                  <Ionicons
                     name={focused ? 'home' : 'home-outline'}
                     color={color}
+                    size={24}
                   />
                 ),
               }}
@@ -161,9 +163,10 @@ export default function TabLayout() {
               options={{
                 title: 'Explore',
                 tabBarIcon: ({ color, focused }) => (
-                  <TabBarIcon
+                  <Ionicons
                     name={focused ? 'search' : 'search-outline'}
                     color={color}
+                    size={24}
                   />
                 ),
               }}
@@ -174,8 +177,9 @@ export default function TabLayout() {
                 title: 'Cart',
                 tabBarIcon: ({ color, focused }) => (
                   <View style={styles.tabIconContainer}>
-                    <TabBarIcon
+                    <Ionicons
                       name={focused ? 'cart' : 'cart-outline'}
+                      size={24}
                       color={color}
                     />
                     {cart.length > 0 && (
@@ -194,9 +198,10 @@ export default function TabLayout() {
               options={{
                 title: 'Favourites',
                 tabBarIcon: ({ color, focused }) => (
-                  <TabBarIcon
+                  <Ionicons
                     name={focused ? 'heart' : 'heart-outline'}
                     color={color}
+                    size={24}
                   />
                 ),
               }}
@@ -206,9 +211,10 @@ export default function TabLayout() {
               options={{
                 title: 'Profile',
                 tabBarIcon: ({ color, focused }) => (
-                  <TabBarIcon
+                  <Ionicons
                     name={focused ? 'person' : 'person-outline'}
                     color={color}
+                    size={24}
                   />
                 ),
               }}
@@ -222,9 +228,10 @@ export default function TabLayout() {
                   <Header isProductDetails={true} navigation={navigation} />
                 ),
                 tabBarIcon: ({ color, focused }) => (
-                  <TabBarIcon
+                  <Ionicons
                     name={focused ? 'person' : 'person-outline'}
                     color={color}
+                    size={24}
                   />
                 ),
                 tabBarButton: () => null,

@@ -1,9 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
-interface CartTotalProps {
-  total: string;
-}
+import { CartTotalProps } from '@/types/CartTypes';
 
 const CartTotal = ({ total }: CartTotalProps) => {
   return (

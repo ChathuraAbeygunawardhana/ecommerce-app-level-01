@@ -1,21 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { CartItemProps } from '@/types/CartTypes';
 
-interface CartItemProps {
-  item: {
-    id: string;
-    name: string;
-    price: number;
-    image: string;
-    quantity: number;
-  };
-  removeFromCart: (id: string) => void;
-  increaseQuantity: (id: string) => void;
-  decreaseQuantity: (id: string) => void;
-}
-
-const CartItem = ({ item, removeFromCart, increaseQuantity, decreaseQuantity }: CartItemProps) => {
+const CartItem = ({
+  item,
+  removeFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+}: CartItemProps) => {
   return (
     <View style={styles.item}>
       <Image source={{ uri: item.image }} style={styles.image} />

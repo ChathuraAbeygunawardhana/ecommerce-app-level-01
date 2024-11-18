@@ -8,8 +8,9 @@ import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useCart } from '@/contexts/CartContext';
+import { ModalContextType } from '@/types/ModalTypes';
 
-export const ModalContext = createContext({
+export const ModalContext = createContext<ModalContextType>({
   modalVisible: false,
   setModalVisible: (visible: boolean) => {},
 });
@@ -191,7 +192,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingTop: 50,
     borderBottomLeftRadius: 20,
-    paddingBottom: 20, 
+    paddingBottom: 20,
   },
   headerContainer: {
     flexDirection: 'row',

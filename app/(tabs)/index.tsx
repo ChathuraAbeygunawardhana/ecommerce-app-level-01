@@ -40,6 +40,7 @@ const Home = () => {
   const [maxPrice, setMaxPrice] = useState('');
 
   const applyFilters = () => {
+    console.log('Applying filters:', { brand, color, minPrice, maxPrice });
     const priceRange: [number, number] | undefined =
       minPrice && maxPrice
         ? [parseFloat(minPrice), parseFloat(maxPrice)]
@@ -49,6 +50,7 @@ const Home = () => {
   };
 
   const clearFilters = () => {
+    console.log('Clearing filters');
     setBrand('');
     setColor('');
     setMinPrice('');
@@ -58,6 +60,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    console.log('Setting data from sampleData');
     setData(sampleData);
   }, []);
 
@@ -72,14 +75,17 @@ const Home = () => {
       colour: string;
       description: string;
     };
-  }) => (
-    <ProductItem
-      item={{ ...item, price: parseFloat(item.price) }}
-      onPress={() =>
-        router.push({ pathname: `/(tabs)/[id]`, params: { id: item.id } })
-      }
-    />
-  );
+  }) => {
+    console.log('Rendering item:', item);
+    return (
+      <ProductItem
+        item={{ ...item, price: parseFloat(item.price) }}
+        onPress={() =>
+          router.push({ pathname: `/(tabs)/[id]`, params: { id: item.id } })
+        }
+      />
+    );
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -97,6 +103,7 @@ const Home = () => {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
+          console.log('Modal closed');
           setModalVisible(!modalVisible);
         }}
       >

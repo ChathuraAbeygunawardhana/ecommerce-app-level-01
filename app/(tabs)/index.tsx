@@ -272,14 +272,20 @@ const Home = () => {
             <View style={styles.spacing} />
             <View style={styles.row}>
               <TextInput
-                style={styles.input}
+                style={[
+                  styles.input,
+                  minPrice !== '' && { borderColor: 'black' },
+                ]}
                 placeholder="Min Price"
                 keyboardType="numeric"
                 value={minPrice}
                 onChangeText={setMinPrice}
               />
               <TextInput
-                style={styles.input}
+                style={[
+                  styles.input,
+                  maxPrice !== '' && { borderColor: 'black' },
+                ]}
                 placeholder="Max Price"
                 keyboardType="numeric"
                 value={maxPrice}

@@ -5,8 +5,9 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Animated,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import sampleData from '../../assets/sample.json';
 import { useRouter } from 'expo-router';
@@ -29,6 +30,16 @@ const ProductDetails = () => {
   ) as unknown as Product;
   const router = useRouter();
   const { addToCart } = useCart();
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    fadeAnim.setValue(0);
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  }, [id]);
 
   if (!product) {
     return (
@@ -49,7 +60,7 @@ const ProductDetails = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView style={styles.container}>
+      <Animated.ScrollView style={[styles.container, { opacity: fadeAnim }]}>
         <Image source={{ uri: product.mainImage }} style={styles.image} />
         <View style={styles.detailsContainer}>
           <Text style={styles.name}>{product.name}</Text>
@@ -57,7 +68,7 @@ const ProductDetails = () => {
           <Text style={styles.colour}>Color: {product.colour}</Text>
           <Text style={styles.description}>{product.description}</Text>
         </View>
-      </ScrollView>
+      </Animated.ScrollView>
       <TouchableOpacity
         style={styles.addToCartButton}
         onPress={() =>

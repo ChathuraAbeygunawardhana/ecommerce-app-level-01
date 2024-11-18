@@ -2,6 +2,15 @@ import { StyleSheet, View, FlatList, Modal, Dimensions } from 'react-native';
 import React, { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'expo-router';
 import sampleData from '../../assets/sample.json';
+
+type Product = {
+  id: string;
+  name: string;
+  mainImage: string;
+  price: string;
+  colour: string;
+  description: string;
+};
 import { ModalContext } from './_layout';
 import useProductFilter from '../../hooks/useProductFilter';
 import FilterModal from '@/components/Home/FilterModal';
@@ -38,6 +47,8 @@ const Home = () => {
   const [color, setColor] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const { searchedProducts } = useProductSearch(filteredProducts, searchTerm);
 
   const applyFilters = () => {
     console.log('Applying filters:', { brand, color, minPrice, maxPrice });
@@ -57,6 +68,14 @@ const Home = () => {
     setMaxPrice('');
     setFilterCriteria({});
     setModalVisible(false);
+  };
+
+  const toggleBrand = (selectedBrand: string) => {
+    setBrand((prevBrand) => (prevBrand === selectedBrand ? '' : selectedBrand));
+  };
+
+  const toggleColor = (selectedColor: string) => {
+    setColor((prevColor) => (prevColor === selectedColor ? '' : selectedColor));
   };
 
   useEffect(() => {
@@ -87,17 +106,51 @@ const Home = () => {
     );
   };
 
+  const screenWidth = Dimensions.get('window').width;
+  const buttonWidth = (screenWidth - 60) / uniqueColors.length - 5;
+
+  const handleSearch = () => {};
+
+  const clearSearch = () => {
+    setSearchTerm('');
+  };
+
   return (
     <View style={{ flex: 1 }}>
-      <FlatList
-        data={filteredProducts}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.listContainer}
-        numColumns={2}
-        columnWrapperStyle={styles.columnWrapper}
-        showsVerticalScrollIndicator={false}
-      />
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search products..."
+          value={searchTerm}
+          onChangeText={setSearchTerm}
+        />
+        <TouchableOpacity
+          onPress={searchTerm ? clearSearch : handleSearch}
+          style={styles.searchButton}
+        >
+          <Ionicons
+            name={searchTerm ? 'close' : 'search'}
+            size={24}
+            color="black"
+          />
+        </TouchableOpacity>
+      </View>
+      {searchedProducts.length === 0 ? (
+        <View style={styles.noProductsContainer}>
+          <Ionicons name="alert-circle-outline" size={50} color="gray" />
+          <Text style={styles.noProductsText}>No products to show</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={searchedProducts}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.listContainer}
+          numColumns={2}
+          columnWrapperStyle={styles.columnWrapper}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
       <Modal
         animationType="slide"
         transparent={true}
@@ -129,7 +182,8 @@ export default Home;
 
 const styles = StyleSheet.create({
   listContainer: {
-    padding: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
   },
   columnWrapper: {
     justifyContent: 'space-between',

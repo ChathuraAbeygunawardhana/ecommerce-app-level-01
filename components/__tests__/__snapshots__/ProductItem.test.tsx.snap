@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductItem renders correctly 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "backgroundColor": "#fff",
+      "borderRadius": 10,
+      "flex": 1,
+      "marginBottom": 15,
+      "marginHorizontal": 5,
+      "padding": 8,
+      "shadowColor": "#000",
+      "shadowOffset": {
+        "height": 2,
+        "width": 0,
+      },
+      "shadowOpacity": 0.8,
+      "shadowRadius": 2,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+      }
+    }
+  >
+    <Image
+      source={
+        {
+          "uri": "https://example.com/image.jpg",
+        }
+      }
+      style={
+        {
+          "borderRadius": 10,
+          "height": 180,
+          "resizeMode": "cover",
+          "width": "100%",
+        }
+      }
+    />
+  </View>
+  <Text
+    numberOfLines={1}
+    style={
+      {
+        "fontSize": 14,
+        "fontWeight": "500",
+        "marginTop": 8,
+      }
+    }
+  >
+    Product Name
+  </Text>
+  <Text
+    style={
+      {
+        "color": "#666",
+        "fontSize": 14,
+        "marginTop": 4,
+      }
+    }
+  >
+    $
+    100
+  </Text>
+</View>
+`;

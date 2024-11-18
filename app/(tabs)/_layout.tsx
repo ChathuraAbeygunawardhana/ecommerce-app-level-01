@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingTop: 50,
     borderBottomLeftRadius: 20,
-    paddingBottom: 20, // Add this line to add space at the bottom
+    paddingBottom: 20, 
   },
   headerContainer: {
     flexDirection: 'row',
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   cartIconContainer: {
-    marginRight: 10, // Add this line to move the cart icon to the right
+    marginRight: 10,
   },
   cartBadge: {
     position: 'absolute',

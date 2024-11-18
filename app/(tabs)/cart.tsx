@@ -1,9 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-} from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import React from 'react';
 import { useCart } from '@/contexts/CartContext';
 import CartItem from '@/components/Cart/CartItem';
@@ -11,12 +6,8 @@ import CartTotal from '@/components/Cart/CartTotal';
 import CheckoutButton from '@/components/Cart/CheckoutButton';
 
 const Cart = () => {
-  const {
-    cart,
-    removeFromCart,
-    increaseQuantity,
-    decreaseQuantity,
-  } = useCart();
+  const { cart, removeFromCart, increaseQuantity, decreaseQuantity } =
+    useCart();
 
   const calculateTotal = () => {
     return cart
@@ -48,7 +39,9 @@ const Cart = () => {
       )}
       <CartTotal total={calculateTotal()} />
       <View style={styles.checkoutButtonContainer}>
-        <CheckoutButton onPress={() => console.log('Checkout button pressed')} />
+        <CheckoutButton
+          onPress={() => console.log('Checkout button pressed')}
+        />
       </View>
     </View>
   );

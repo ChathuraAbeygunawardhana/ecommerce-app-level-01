@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CartTotal renders correctly 1`] = `
+<View
+  style={
+    {
+      "backgroundColor": "#fff",
+      "borderTopColor": "#ddd",
+      "flexDirection": "row",
+      "justifyContent": "space-between",
+      "padding": 16,
+    }
+  }
+>
+  <View>
+    <Text
+      style={
+        {
+          "fontSize": 18,
+        }
+      }
+    >
+      Total Amount:
+    </Text>
+  </View>
+  <View>
+    <Text
+      style={
+        {
+          "fontSize": 18,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      $
+      200
+    </Text>
+  </View>
+</View>
+`;

@@ -5,10 +5,12 @@ import { useRouter } from 'expo-router';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
+import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useCart } from '@/contexts/CartContext';
+import { ModalContextType } from '@/types/ModalTypes';
 
-export const ModalContext = createContext({
+export const ModalContext = createContext<ModalContextType>({
   modalVisible: false,
   setModalVisible: (visible: boolean) => {},
 });
@@ -51,13 +53,8 @@ export default function TabLayout() {
               <Ionicons name="filter" size={24} color="black" />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>Title</Text>
-            <View>
-              <Ionicons
-                name="cart"
-                size={24}
-                color="black"
-                style={{ marginRight: 7 }}
-              />
+            <View style={styles.cartIconContainer}>
+              <Ionicons name="cart" size={24} color="black" />
               {cart.length > 0 && (
                 <View style={styles.cartBadge}>
                   <Text style={styles.cartBadgeText}>{cart.length}</Text>
@@ -79,7 +76,7 @@ export default function TabLayout() {
     <ModalContext.Provider value={{ modalVisible, setModalVisible }}>
       <Tabs
         screenOptions={({ route }) => ({
-          tabBarActiveTintColor: 'black',
+          tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
           headerShown: true,
           header: ({ navigation }) => (
             <Header navigation={navigation} routeName={route.name} />
@@ -111,10 +108,6 @@ export default function TabLayout() {
               />
             );
           },
-          tabBarStyle: {
-            height: 55,
-          },
-          tabBarShowLabel: false,
         })}
       >
         <Tabs.Screen
@@ -199,7 +192,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingTop: 50,
     borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20, // Add this line to make the other side curved
     paddingBottom: 20,
   },
   headerContainer: {
@@ -210,15 +202,15 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    textAlign: 'center', // Center the title
-    flex: 1, // Add flex to center the title
   },
   icon: {},
   productDetailsTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
-    flex: 1, // Add flex to center the title
+  },
+  cartIconContainer: {
+    marginRight: 10,
   },
   cartBadge: {
     position: 'absolute',

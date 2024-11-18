@@ -11,15 +11,7 @@ import { useLocalSearchParams } from 'expo-router';
 import sampleData from '../../assets/sample.json';
 import { useRouter } from 'expo-router';
 import { useCart } from '@/contexts/CartContext';
-
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  mainImage: string;
-  colour: string;
-  description: string;
-}
+import { Product } from '@/types/ProductTypes';
 
 const ProductDetails = () => {
   const { id } = useLocalSearchParams();

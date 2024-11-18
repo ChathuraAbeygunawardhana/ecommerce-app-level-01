@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CheckoutButton renders correctly 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "#000",
+      "borderRadius": 8,
+      "justifyContent": "center",
+      "marginBottom": 16,
+      "opacity": 1,
+      "padding": 16,
+      "width": "80%",
+    }
+  }
+>
+  <View>
+    <Text
+      style={
+        {
+          "color": "#fff",
+          "fontSize": 18,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Checkout
+    </Text>
+  </View>
+</View>
+`;

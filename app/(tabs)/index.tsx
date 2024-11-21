@@ -10,6 +10,7 @@ import {
   Button,
   TouchableOpacity,
   TextInput,
+  Animated,
 } from 'react-native';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useRouter } from 'expo-router';
@@ -552,5 +553,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 10,
+  },
+  splashContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+  splashText: {
+    fontSize: 32,
+    fontWeight: 'bold',
   },
 });

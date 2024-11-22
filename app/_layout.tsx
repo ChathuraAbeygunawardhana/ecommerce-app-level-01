@@ -9,7 +9,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import { CartProvider } from '@/contexts/CartContext';
 import { FavouritesProvider } from '@/contexts/FavouritesContext';
 import { useState, useEffect, useRef } from 'react';
-import { Animated, View, Text, StyleSheet } from 'react-native';
+import { Animated, View, Text, StyleSheet, Image } from 'react-native';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -27,9 +27,12 @@ export default function RootLayout() {
   if (loading) {
     return (
       <View style={styles.splashContainer}>
-        <Animated.Text style={[styles.splashText, { opacity: fadeAnim }]}>
-          PickSneak
-        </Animated.Text>
+        <Animated.Image
+          source={{
+            uri: 'https://i.ibb.co/tQjGz7z/Leonardo-Phoenix-Create-a-logo-for-a-sneaker-shop-mobile-app-f-3.jpg',
+          }}
+          style={[styles.splashImage, { opacity: fadeAnim }]}
+        />
       </View>
     );
   }
@@ -55,6 +58,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
+  },
+  splashImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'stretch',
   },
   splashText: {
     fontSize: 32,

@@ -22,29 +22,49 @@ const Home = () => {
   const logos = [
     { name: 'Nike', uri: 'https://i.ibb.co/27gF6n7/NikeLogo.png' },
     { name: 'Puma', uri: 'https://i.ibb.co/4V6MFGf/PumaLogo.png' },
-    { name: 'Under Armour', uri: 'https://i.ibb.co/yF5wdQ4/Under-Armour-Logo.png' },
+    {
+      name: 'Under Armour',
+      uri: 'https://i.ibb.co/yF5wdQ4/Under-Armour-Logo.png',
+    },
     { name: 'Converse', uri: 'https://i.ibb.co/WDQLZmS/Converse-Logo.png' },
     { name: 'Adidas', uri: 'https://i.ibb.co/Y7nWm7X/Adidas-Logo.png' },
   ];
 
   return (
-    <View style={[styles.container, { backgroundColor: currentColors.background_01 }]}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: currentColors.background_01 },
+      ]}
+    >
       <View style={styles.header}>
         <TouchableOpacity style={styles.iconBackground} onPress={toggleTheme}>
           <Ionicons name="moon" size={24} color={currentColors.text} />
         </TouchableOpacity>
         <View style={styles.textContainer}>
-          <Text style={[styles.storeLocationText, { color: currentColors.grey }]}>Store location</Text>
+          <Text
+            style={[styles.storeLocationText, { color: currentColors.grey }]}
+          >
+            Store location
+          </Text>
           <View style={styles.locationContainer}>
             <Ionicons name="location-sharp" size={18} color={Colors.orange} />
-            <Text style={[styles.locationText, { color: currentColors.text }]}> Colombo , Sri Lanka</Text>
+            <Text style={[styles.locationText, { color: currentColors.text }]}>
+              {' '}
+              Colombo , Sri Lanka
+            </Text>
           </View>
         </View>
         <TouchableOpacity style={styles.iconBackground}>
           <Feather name="shopping-bag" size={24} color={currentColors.text} />
         </TouchableOpacity>
       </View>
-      <View style={[styles.searchBar, { backgroundColor: currentColors.background_02 }]}>
+      <View
+        style={[
+          styles.searchBar,
+          { backgroundColor: currentColors.background_02 },
+        ]}
+      >
         <Ionicons name="search" size={20} color={currentColors.grey} />
         <TextInput
           style={[styles.searchInput, { color: currentColors.text }]}
@@ -68,20 +88,34 @@ const Home = () => {
               <View
                 style={[
                   styles.logoItem,
-                  selectedLogo === logo.name && { backgroundColor: currentColors.lightBlue, borderRadius: 20 },
+                  selectedLogo === logo.name && {
+                    backgroundColor: currentColors.lightBlue,
+                    borderRadius: 20,
+                  },
                 ]}
               >
                 <Image source={{ uri: logo.uri }} style={styles.logo} />
                 {selectedLogo === logo.name && (
-                  <Text style={[styles.logoText, { color: currentColors.background_02 }]}>{logo.name}</Text>
+                  <Text
+                    style={[
+                      styles.logoText,
+                      { color: currentColors.background_02 },
+                    ]}
+                  >
+                    {logo.name}
+                  </Text>
                 )}
               </View>
             </TouchableOpacity>
           ))}
         </ScrollView>
         <View style={styles.textRow}>
-          <Text style={[styles.text01, { color: currentColors.text }]}>Popular Shoes</Text>
-          <Text style={[styles.text02, { color: currentColors.lightBlue }]}>see all</Text>
+          <Text style={[styles.text01, { color: currentColors.text }]}>
+            Popular Shoes
+          </Text>
+          <Text style={[styles.text02, { color: currentColors.lightBlue }]}>
+            see all
+          </Text>
         </View>
         <ScrollView
           horizontal
@@ -90,21 +124,44 @@ const Home = () => {
         >
           {sampleData.map((product) => (
             <View key={product.id} style={styles.productItem}>
-              <View style={[styles.productContent, { backgroundColor: currentColors.background_02 }]}>
+              <View
+                style={[
+                  styles.productContent,
+                  { backgroundColor: currentColors.background_02 },
+                ]}
+              >
                 <Image
                   source={{ uri: product.mainImage }}
                   style={styles.productImage}
                 />
-                <Text style={[styles.bestSeller, { color: currentColors.lightBlue }]}>BEST SELLER</Text>
-                <Text style={[styles.productName, { color: currentColors.text }]}>
+                <Text
+                  style={[
+                    styles.bestSeller,
+                    { color: currentColors.lightBlue },
+                  ]}
+                >
+                  BEST SELLER
+                </Text>
+                <Text
+                  style={[styles.productName, { color: currentColors.text }]}
+                >
                   {product.name
                     .split(' ')
                     .slice(0, 3)
                     .join(' ')
                     .substring(0, 15)}
                 </Text>
-                <Text style={[styles.productPrice, { color: currentColors.grey }]}>${product.price}</Text>
-                <TouchableOpacity style={[styles.addIcon, { backgroundColor: currentColors.lightBlue }]}>
+                <Text
+                  style={[styles.productPrice, { color: currentColors.grey }]}
+                >
+                  ${product.price}
+                </Text>
+                <TouchableOpacity
+                  style={[
+                    styles.addIcon,
+                    { backgroundColor: currentColors.lightBlue },
+                  ]}
+                >
                   <Ionicons name="add" size={20} color="white" />
                 </TouchableOpacity>
               </View>
@@ -112,15 +169,39 @@ const Home = () => {
           ))}
         </ScrollView>
         <View style={styles.textRow}>
-          <Text style={[styles.text01, { color: currentColors.text }]}>New Arrivals</Text>
-          <Text style={[styles.text02, { color: currentColors.lightBlue }]}>see all</Text>
+          <Text style={[styles.text01, { color: currentColors.text }]}>
+            New Arrivals
+          </Text>
+          <Text style={[styles.text02, { color: currentColors.lightBlue }]}>
+            see all
+          </Text>
         </View>
-        <View style={[styles.newView, styles.newViewMargin, { backgroundColor: currentColors.background_02 }]}>
+        <View
+          style={[
+            styles.newView,
+            styles.newViewMargin,
+            { backgroundColor: currentColors.background_02 },
+          ]}
+        >
           <View style={styles.newViewContent}>
             <View style={styles.newViewTextContainer}>
-              <Text style={[styles.bestChoice, { color: currentColors.lightBlue }]}>BEST CHOICE</Text>
-              <Text style={[styles.newViewSubtitle, { color: currentColors.text }]}>Nike Air Jordan</Text>
-              <Text style={[styles.newViewPrice, styles.newViewPriceMargin, { color: currentColors.grey }]}>
+              <Text
+                style={[styles.bestChoice, { color: currentColors.lightBlue }]}
+              >
+                BEST CHOICE
+              </Text>
+              <Text
+                style={[styles.newViewSubtitle, { color: currentColors.text }]}
+              >
+                Nike Air Jordan
+              </Text>
+              <Text
+                style={[
+                  styles.newViewPrice,
+                  styles.newViewPriceMargin,
+                  { color: currentColors.grey },
+                ]}
+              >
                 $869.69
               </Text>
             </View>
@@ -210,6 +291,7 @@ const styles = StyleSheet.create({
   logoText: {
     marginLeft: 10,
     fontSize: 16,
+    color: Colors.light.text,
   },
   textRow: {
     flexDirection: 'row',

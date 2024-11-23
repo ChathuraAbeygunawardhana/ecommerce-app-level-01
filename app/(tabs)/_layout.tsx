@@ -59,6 +59,7 @@ export default function TabLayout() {
                 name="chevron-back"
                 size={24}
                 style={{ marginLeft: 10 }}
+                color={Colors.dark.text}
               />
             </TouchableOpacity>
             <Text style={styles.productDetailsTitle}>Product Details</Text>
@@ -70,14 +71,14 @@ export default function TabLayout() {
               onPress={() => setModalVisible(true)}
               style={styles.icon}
             >
-              <Ionicons name="filter" size={24} color="black" />
+              <Ionicons name="filter" size={24} color={Colors.dark.text} />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>Title</Text>
             <View>
               <Ionicons
                 name="cart"
                 size={24}
-                color="black"
+                color={Colors.dark.text}
                 style={{ marginRight: 7 }}
               />
               {cart.length > 0 && (
@@ -141,7 +142,7 @@ export default function TabLayout() {
                 height: 55,
                 borderTopLeftRadius: 20,
                 borderTopRightRadius: 20,
-                backgroundColor: Colors.light.background_02,
+                backgroundColor: Colors.dark.background_02,
                 position: 'absolute',
                 left: 0,
                 right: 0,
@@ -261,7 +262,7 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   headerWrapper: {
-    backgroundColor: Colors.light.background_01,
+    backgroundColor: Colors.dark.background_01,
     paddingTop: 50,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
@@ -277,7 +278,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     flex: 1,
-    color: Colors.light.text,
+    color: Colors.dark.text,
   },
   icon: {},
   productDetailsTitle: {
@@ -285,13 +286,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     flex: 1,
-    color: Colors.light.text,
+    color: Colors.dark.text,
   },
   cartBadge: {
     position: 'absolute',
     top: -5,
     right: -10,
-    backgroundColor: Colors.light.tint,
+    backgroundColor: Colors.dark.tint,
     borderRadius: 10,
     width: 20,
     height: 20,
@@ -299,7 +300,7 @@ const styles = StyleSheet.create({
     paddingLeft: 7.5,
   },
   cartBadgeText: {
-    color: Colors.light.background_01,
+    color: Colors.dark.background_01,
     fontSize: 9,
   },
   tabIconContainer: {},
@@ -307,7 +308,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -5,
     right: -10,
-    backgroundColor: Colors.light.tint,
+    backgroundColor: Colors.dark.tint,
     borderRadius: 10,
     width: 20,
     height: 20,
@@ -315,12 +316,12 @@ const styles = StyleSheet.create({
     paddingLeft: 7.5,
   },
   tabCartBadgeText: {
-    color: Colors.light.background_01,
+    color: Colors.dark.background_01,
     fontSize: 9,
   },
   tabBarBackground: {
     flex: 1,
-    backgroundColor: Colors.light.background_02,
+    backgroundColor: Colors.dark.background_02,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     position: 'absolute',

@@ -11,44 +11,45 @@ import React from 'react';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { Colors } from '../../constants/Colors';
 import sampleData from '../../assets/sample.json';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [selectedLogo, setSelectedLogo] = React.useState('Nike');
+  const { theme, toggleTheme } = useTheme();
+  const currentColors = Colors[theme as 'light' | 'dark'];
 
   const logos = [
     { name: 'Nike', uri: 'https://i.ibb.co/27gF6n7/NikeLogo.png' },
     { name: 'Puma', uri: 'https://i.ibb.co/4V6MFGf/PumaLogo.png' },
-    {
-      name: 'Under Armour',
-      uri: 'https://i.ibb.co/yF5wdQ4/Under-Armour-Logo.png',
-    },
+    { name: 'Under Armour', uri: 'https://i.ibb.co/yF5wdQ4/Under-Armour-Logo.png' },
     { name: 'Converse', uri: 'https://i.ibb.co/WDQLZmS/Converse-Logo.png' },
     { name: 'Adidas', uri: 'https://i.ibb.co/Y7nWm7X/Adidas-Logo.png' },
   ];
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: currentColors.background_01 }]}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.iconBackground}>
-          <Ionicons name="menu" size={24} color="black" />
+        <TouchableOpacity style={styles.iconBackground} onPress={toggleTheme}>
+          <Ionicons name="moon" size={24} color={currentColors.text} />
         </TouchableOpacity>
         <View style={styles.textContainer}>
-          <Text style={styles.storeLocationText}>Store location</Text>
+          <Text style={[styles.storeLocationText, { color: currentColors.grey }]}>Store location</Text>
           <View style={styles.locationContainer}>
             <Ionicons name="location-sharp" size={18} color={Colors.orange} />
-            <Text style={styles.locationText}> Colombo , Sri Lanka</Text>
+            <Text style={[styles.locationText, { color: currentColors.text }]}> Colombo , Sri Lanka</Text>
           </View>
         </View>
         <TouchableOpacity style={styles.iconBackground}>
-          <Feather name="shopping-bag" size={24} color="black" />
+          <Feather name="shopping-bag" size={24} color={currentColors.text} />
         </TouchableOpacity>
       </View>
-      <View style={styles.searchBar}>
-        <Ionicons name="search" size={20} color={Colors.light.grey} />
+      <View style={[styles.searchBar, { backgroundColor: currentColors.background_02 }]}>
+        <Ionicons name="search" size={20} color={currentColors.grey} />
         <TextInput
-          style={styles.searchInput}
+          style={[styles.searchInput, { color: currentColors.text }]}
           placeholder="Looking for shoes"
+          placeholderTextColor={currentColors.grey}
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
@@ -67,20 +68,20 @@ const Home = () => {
               <View
                 style={[
                   styles.logoItem,
-                  selectedLogo === logo.name && styles.selectedLogoItem,
+                  selectedLogo === logo.name && { backgroundColor: currentColors.lightBlue, borderRadius: 20 },
                 ]}
               >
                 <Image source={{ uri: logo.uri }} style={styles.logo} />
                 {selectedLogo === logo.name && (
-                  <Text style={styles.logoText}>{logo.name}</Text>
+                  <Text style={[styles.logoText, { color: currentColors.background_02 }]}>{logo.name}</Text>
                 )}
               </View>
             </TouchableOpacity>
           ))}
         </ScrollView>
         <View style={styles.textRow}>
-          <Text style={styles.text01}>Popular Shoes</Text>
-          <Text style={styles.text02}>see all</Text>
+          <Text style={[styles.text01, { color: currentColors.text }]}>Popular Shoes</Text>
+          <Text style={[styles.text02, { color: currentColors.lightBlue }]}>see all</Text>
         </View>
         <ScrollView
           horizontal
@@ -89,21 +90,21 @@ const Home = () => {
         >
           {sampleData.map((product) => (
             <View key={product.id} style={styles.productItem}>
-              <View style={styles.productContent}>
+              <View style={[styles.productContent, { backgroundColor: currentColors.background_02 }]}>
                 <Image
                   source={{ uri: product.mainImage }}
                   style={styles.productImage}
                 />
-                <Text style={styles.bestSeller}>BEST SELLER</Text>
-                <Text style={styles.productName}>
+                <Text style={[styles.bestSeller, { color: currentColors.lightBlue }]}>BEST SELLER</Text>
+                <Text style={[styles.productName, { color: currentColors.text }]}>
                   {product.name
                     .split(' ')
                     .slice(0, 3)
                     .join(' ')
                     .substring(0, 15)}
                 </Text>
-                <Text style={styles.productPrice}>${product.price}</Text>
-                <TouchableOpacity style={styles.addIcon}>
+                <Text style={[styles.productPrice, { color: currentColors.grey }]}>${product.price}</Text>
+                <TouchableOpacity style={[styles.addIcon, { backgroundColor: currentColors.lightBlue }]}>
                   <Ionicons name="add" size={20} color="white" />
                 </TouchableOpacity>
               </View>
@@ -111,15 +112,15 @@ const Home = () => {
           ))}
         </ScrollView>
         <View style={styles.textRow}>
-          <Text style={styles.text01}>New Arrivals</Text>
-          <Text style={styles.text02}>see all</Text>
+          <Text style={[styles.text01, { color: currentColors.text }]}>New Arrivals</Text>
+          <Text style={[styles.text02, { color: currentColors.lightBlue }]}>see all</Text>
         </View>
-        <View style={[styles.newView, styles.newViewMargin]}>
+        <View style={[styles.newView, styles.newViewMargin, { backgroundColor: currentColors.background_02 }]}>
           <View style={styles.newViewContent}>
             <View style={styles.newViewTextContainer}>
-              <Text style={styles.bestSeller}>BEST CHOICE</Text>
-              <Text style={styles.newViewSubtitle}>Nike Air Jordan</Text>
-              <Text style={[styles.newViewPrice, styles.newViewPriceMargin]}>
+              <Text style={[styles.bestChoice, { color: currentColors.lightBlue }]}>BEST CHOICE</Text>
+              <Text style={[styles.newViewSubtitle, { color: currentColors.text }]}>Nike Air Jordan</Text>
+              <Text style={[styles.newViewPrice, styles.newViewPriceMargin, { color: currentColors.grey }]}>
                 $869.69
               </Text>
             </View>
@@ -139,7 +140,6 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background_01,
   },
   header: {
     flexDirection: 'row',
@@ -173,21 +173,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   iconBackground: {
-    backgroundColor: Colors.light.background_02,
     padding: 15,
     borderRadius: 50,
   },
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.light.background_02,
     padding: 13,
     borderRadius: 50,
     margin: 16,
   },
   searchInput: {
     marginLeft: 10,
-    color: 'black',
   },
   logoContainer: {
     flexDirection: 'row',
@@ -202,7 +199,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   selectedLogoItem: {
-    backgroundColor: Colors.light.tint,
     borderRadius: 70,
     paddingHorizontal: 10,
   },
@@ -213,7 +209,6 @@ const styles = StyleSheet.create({
   },
   logoText: {
     marginLeft: 10,
-    color: Colors.light.background_02,
     fontSize: 16,
   },
   textRow: {
@@ -225,11 +220,9 @@ const styles = StyleSheet.create({
   },
   text01: {
     fontSize: 17,
-    color: Colors.light.text,
   },
   text02: {
     fontSize: 16,
-    color: Colors.light.lightBlue,
   },
   productContainer: {
     flexDirection: 'row',
@@ -251,7 +244,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   productContent: {
-    backgroundColor: Colors.light.background_02,
     borderRadius: 10,
     padding: 10,
     height: '100%',
@@ -259,7 +251,6 @@ const styles = StyleSheet.create({
   },
   bestSeller: {
     fontSize: 12,
-    color: Colors.light.tint,
     marginBottom: 5,
   },
   productImage: {
@@ -270,18 +261,15 @@ const styles = StyleSheet.create({
   productName: {
     marginTop: 5,
     fontSize: 14,
-    color: Colors.light.text,
   },
   productPrice: {
     fontSize: 14,
-    color: Colors.light.grey,
     marginTop: 5,
   },
   addIcon: {
     position: 'absolute',
     bottom: -6,
     right: -6,
-    backgroundColor: Colors.light.tint,
     borderRadius: 10,
     paddingRight: 10,
     paddingBottom: 10,
@@ -289,7 +277,6 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
   newView: {
-    backgroundColor: Colors.light.background_02,
     borderRadius: 10,
     width: '92%',
     height: 100,
@@ -319,12 +306,10 @@ const styles = StyleSheet.create({
   },
   newViewSubtitle: {
     fontSize: 18,
-    color: Colors.light.text,
     marginTop: 2,
   },
   newViewPrice: {
     fontSize: 14,
-    color: Colors.light.grey,
   },
   newViewPriceMargin: {
     marginTop: 10,
@@ -333,5 +318,9 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     resizeMode: 'cover',
+  },
+  bestChoice: {
+    fontSize: 12,
+    marginBottom: 5,
   },
 });

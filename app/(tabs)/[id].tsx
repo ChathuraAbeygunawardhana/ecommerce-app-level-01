@@ -87,7 +87,7 @@ export default ProductDetails;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background_01,
+    backgroundColor: Colors.dark.background_01,
   },
   header: {
     flexDirection: 'row',
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 10,
-    color: Colors.light.text,
+    color: Colors.dark.text,
   },
   image: {
     width: '100%',
@@ -112,27 +112,27 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica',
     fontSize: 30,
     marginBottom: 10,
-    color: Colors.light.text,
+    color: Colors.dark.text,
   },
   price: {
     fontFamily: 'Novecentro',
     fontSize: 20,
-    color: Colors.light.icon,
+    color: Colors.dark.icon,
     marginBottom: 10,
   },
   colour: {
     fontSize: 16,
-    color: Colors.light.icon,
+    color: Colors.dark.icon,
     marginBottom: 10,
   },
   description: {
     fontSize: 16,
     lineHeight: 24,
-    color: Colors.light.text,
+    color: Colors.dark.text,
     textAlign: 'justify',
   },
   addToCartButton: {
-    backgroundColor: Colors.light.tint,
+    backgroundColor: Colors.dark.tint,
     marginHorizontal: 14,
     marginBottom: 2,
     padding: 15,
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   addToCartText: {
-    color: Colors.light.background_01,
+    color: Colors.dark.background_01,
     fontSize: 18,
     fontWeight: 'bold',
   },

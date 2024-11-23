@@ -139,7 +139,24 @@ export default function TabLayout() {
               tabBarStyle: {
                 transform: [{ translateY }],
                 height: 55,
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+                backgroundColor: Colors.light.background_02,
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                bottom: 0,
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: -2 },
+                shadowOpacity: 0.1,
+                shadowRadius: 3.84,
+                elevation: 5,
+                borderTopWidth: 0,
+                overflow: 'hidden',
               },
+              tabBarBackground: () => (
+                <View style={styles.tabBarBackground} />
+              ),
               tabBarShowLabel: false,
             })}
           >
@@ -300,5 +317,17 @@ const styles = StyleSheet.create({
   tabCartBadgeText: {
     color: Colors.light.background_01,
     fontSize: 9,
+  },
+  tabBarBackground: {
+    flex: 1,
+    backgroundColor: Colors.light.background_02,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 55,
+    zIndex: -1,
   },
 });

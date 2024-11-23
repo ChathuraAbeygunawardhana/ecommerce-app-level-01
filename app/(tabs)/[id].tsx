@@ -87,7 +87,7 @@ export default ProductDetails;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
+    backgroundColor: Colors.light.background_01,
   },
   header: {
     flexDirection: 'row',
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   addToCartText: {
-    color: Colors.light.background,
+    color: Colors.light.background_01,
     fontSize: 18,
     fontWeight: 'bold',
   },

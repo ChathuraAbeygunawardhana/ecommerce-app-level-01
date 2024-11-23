@@ -104,10 +104,7 @@ export default function TabLayout() {
           <Tabs
             screenOptions={({ route }) => ({
               tabBarActiveTintColor: 'black',
-              headerShown: true,
-              header: ({ navigation }) => (
-                <Header navigation={navigation} routeName={route.name} />
-              ),
+              headerShown: route.name !== 'index', // Hide header for Home screen
               tabBarIcon: ({ color, focused }) => {
                 if (route.name === 'cart') {
                   return (
@@ -247,7 +244,7 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   headerWrapper: {
-    backgroundColor: Colors.light.background,
+    backgroundColor: Colors.light.background_01,
     paddingTop: 50,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
@@ -285,7 +282,7 @@ const styles = StyleSheet.create({
     paddingLeft: 7.5,
   },
   cartBadgeText: {
-    color: Colors.light.background,
+    color: Colors.light.background_01,
     fontSize: 9,
   },
   tabIconContainer: {},
@@ -301,7 +298,7 @@ const styles = StyleSheet.create({
     paddingLeft: 7.5,
   },
   tabCartBadgeText: {
-    color: Colors.light.background,
+    color: Colors.light.background_01,
     fontSize: 9,
   },
 });

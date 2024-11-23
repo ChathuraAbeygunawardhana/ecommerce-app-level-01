@@ -2,571 +2,161 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  FlatList,
-  Pressable,
-  Dimensions,
-  Modal,
-  Button,
   TouchableOpacity,
   TextInput,
-  Animated,
+  Image,
+  ScrollView,
 } from 'react-native';
-import React, { useEffect, useState, useContext, useRef } from 'react';
-import { useRouter } from 'expo-router';
-import sampleData from '../../assets/sample.json';
-import { useFavourites } from '@/contexts/FavouritesContext';
+import React from 'react';
+import { Ionicons, Feather } from '@expo/vector-icons';
 import { Colors } from '../../constants/Colors';
 
-type Product = {
-  id: string;
-  name: string;
-  mainImage: string;
-  price: string;
-  colour: string;
-  description: string;
-};
-import { ModalContext, TabBarContext } from './_layout';
-import useProductFilter from '../../hooks/useProductFilter';
-import { Ionicons } from '@expo/vector-icons';
-import useProductSearch from '../../hooks/useProductSearch';
-
-const nikeBlackLogo = 'https://i.ibb.co/vHp5FV7/nikeblacklogo.png';
-const nikeWhiteLogo = 'https://i.ibb.co/C17pnkw/nikewhitelogo.png';
-const pumaBlackLogo = 'https://i.ibb.co/HT5F046/pumablacklogo.png';
-const pumaWhiteLogo = 'https://i.ibb.co/wzVBnzj/pumawhitelogo.png';
-
-type FilterCriteria = {
-  brand?: string;
-  color?: string;
-  priceRange?: [number, number];
-};
-
 const Home = () => {
-  const [data, setData] = useState<
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [selectedLogo, setSelectedLogo] = React.useState('');
+
+  const logos = [
+    { name: 'Nike', uri: 'https://i.ibb.co/27gF6n7/NikeLogo.png' },
+    { name: 'Puma', uri: 'https://i.ibb.co/4V6MFGf/PumaLogo.png' },
     {
-      id: string;
-      name: string;
-      mainImage: string;
-      price: string;
-      colour: string;
-      description: string;
-    }[]
-  >([]);
-  const [filterCriteria, setFilterCriteria] = useState<FilterCriteria>({
-    color: '',
-  });
-  const { filteredProducts, getUniqueColors } = useProductFilter(
-    data,
-    filterCriteria
-  );
-  const uniqueColors = getUniqueColors();
-  const router = useRouter();
-  const { modalVisible, setModalVisible } = useContext(ModalContext);
-  const { setTabBarVisible } = useContext(TabBarContext);
-  const lastOffset = useRef(0);
-  const [brand, setBrand] = useState('');
-  const [color, setColor] = useState('');
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
-  const { searchedProducts } = useProductSearch(filteredProducts, searchTerm);
-  const { favourites, addToFavourites, removeFromFavourites } = useFavourites();
-
-  const applyFilters = () => {
-    const priceRange: [number, number] | undefined =
-      minPrice && maxPrice
-        ? [parseFloat(minPrice), parseFloat(maxPrice)]
-        : undefined;
-    setFilterCriteria({ brand, color, priceRange });
-    setModalVisible(false);
-  };
-
-  const clearFilters = () => {
-    setBrand('');
-    setColor('');
-    setMinPrice('');
-    setMaxPrice('');
-    setFilterCriteria({});
-    setModalVisible(false);
-  };
-
-  const toggleBrand = (selectedBrand: string) => {
-    setBrand((prevBrand) => (prevBrand === selectedBrand ? '' : selectedBrand));
-  };
-
-  const toggleColor = (selectedColor: string) => {
-    setColor((prevColor) => (prevColor === selectedColor ? '' : selectedColor));
-  };
-
-  const toggleFavorite = (item: Product) => {
-    if (favourites.some((fav) => fav.id === item.id)) {
-      removeFromFavourites(item.id);
-    } else {
-      addToFavourites(item);
-    }
-  };
-
-  useEffect(() => {
-    setData(sampleData);
-  }, []);
-
-  const renderItem = ({
-    item,
-  }: {
-    item: {
-      id: string;
-      name: string;
-      mainImage: string;
-      price: string;
-      colour: string;
-      description: string;
-    };
-  }) => (
-    <Pressable
-      style={styles.itemContainer}
-      onPress={() =>
-        router.push({ pathname: `/(tabs)/[id]`, params: { id: item.id } })
-      }
-    >
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: item.mainImage }} style={styles.image} />
-        <TouchableOpacity
-          style={styles.heartIcon}
-          onPress={() => toggleFavorite(item)}
-        >
-          <Ionicons
-            name={
-              favourites.some((fav) => fav.id === item.id)
-                ? 'heart'
-                : 'heart-outline'
-            }
-            size={24}
-            color={
-              favourites.some((fav) => fav.id === item.id) ? 'black' : 'black'
-            }
-          />
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.name} numberOfLines={1}>
-        {item.name}
-      </Text>
-      <Text style={styles.price}>${item.price}</Text>
-    </Pressable>
-  );
-
-  const screenWidth = Dimensions.get('window').width;
-  const buttonWidth = (screenWidth - 60) / uniqueColors.length - 5;
-
-  const handleSearch = () => {};
-
-  const clearSearch = () => {
-    setSearchTerm('');
-  };
-
-  const handleScroll = (event: any) => {
-    const currentOffset = event.nativeEvent.contentOffset.y;
-    if (currentOffset > lastOffset.current && currentOffset > 0) {
-      setTabBarVisible(false);
-    } else {
-      setTabBarVisible(true);
-    }
-    lastOffset.current = currentOffset;
-  };
+      name: 'Under Armour',
+      uri: 'https://i.ibb.co/yF5wdQ4/Under-Armour-Logo.png',
+    },
+    { name: 'Converse', uri: 'https://i.ibb.co/WDQLZmS/Converse-Logo.png' },
+    { name: 'Adidas', uri: 'https://i.ibb.co/Y7nWm7X/Adidas-Logo.png' },
+  ];
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search products..."
-          value={searchTerm}
-          onChangeText={setSearchTerm}
-        />
-        <TouchableOpacity
-          onPress={searchTerm ? clearSearch : handleSearch}
-          style={styles.searchButton}
-        >
-          <Ionicons
-            name={searchTerm ? 'close' : 'search'}
-            size={24}
-            color="black"
-          />
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.iconBackground}>
+          <Ionicons name="menu" size={24} color="black" />
         </TouchableOpacity>
-      </View>
-      {searchedProducts.length === 0 ? (
-        <View style={styles.noProductsContainer}>
-          <Ionicons name="alert-circle-outline" size={50} color="gray" />
-          <Text style={styles.noProductsText}>No products to show</Text>
-        </View>
-      ) : (
-        <FlatList
-          data={searchedProducts}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={styles.listContainer}
-          numColumns={2}
-          columnWrapperStyle={styles.columnWrapper}
-          showsVerticalScrollIndicator={false}
-          onScroll={handleScroll}
-          scrollEventThrottle={16}
-        />
-      )}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.bottomSheet}>
-            <Text style={styles.modalTitle}>Filter Products</Text>
-            <View style={styles.row}>
-              <TouchableOpacity
-                style={[
-                  styles.brandButton,
-                  brand === 'Nike' && styles.selectedBrandButton,
-                  { flex: 1 },
-                ]}
-                onPress={() => toggleBrand('Nike')}
-              >
-                <Image
-                  source={{
-                    uri: brand === 'Nike' ? nikeWhiteLogo : nikeBlackLogo,
-                  }}
-                  style={styles.brandImage}
-                />
-                <Text
-                  style={[
-                    styles.brandButtonText,
-                    brand === 'Nike' && styles.selectedBrandButtonText,
-                  ]}
-                >
-                  Nike
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  styles.brandButton,
-                  brand === 'Puma' && styles.selectedBrandButton,
-                  { flex: 1 },
-                ]}
-                onPress={() => toggleBrand('Puma')}
-              >
-                <Image
-                  source={{
-                    uri: brand === 'Puma' ? pumaWhiteLogo : pumaBlackLogo,
-                  }}
-                  style={styles.brandImage}
-                />
-                <Text
-                  style={[
-                    styles.brandButtonText,
-                    brand === 'Puma' && styles.selectedBrandButtonText,
-                  ]}
-                >
-                  Puma
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.spacing} />
-            <View style={styles.row}>
-              <TextInput
-                style={[
-                  styles.input,
-                  minPrice !== '' && { borderColor: 'black' },
-                ]}
-                placeholder="Min Price"
-                keyboardType="numeric"
-                value={minPrice}
-                onChangeText={setMinPrice}
-              />
-              <TextInput
-                style={[
-                  styles.input,
-                  maxPrice !== '' && { borderColor: 'black' },
-                ]}
-                placeholder="Max Price"
-                keyboardType="numeric"
-                value={maxPrice}
-                onChangeText={setMaxPrice}
-              />
-            </View>
-            <View style={styles.spacing} />
-            <View style={styles.row}>
-              {uniqueColors.map((colorOption) => (
-                <TouchableOpacity
-                  key={colorOption}
-                  style={[
-                    styles.colorButton,
-                    color === colorOption && styles.selectedColorButton,
-                    { width: buttonWidth },
-                  ]}
-                  onPress={() => toggleColor(colorOption)}
-                >
-                  <Text
-                    style={[
-                      styles.colorButtonText,
-                      color === colorOption && styles.selectedColorButtonText,
-                    ]}
-                  >
-                    {colorOption}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-            <View style={styles.largeSpacing} />
-            <View style={[styles.row, styles.buttonContainer]}>
-              <TouchableOpacity
-                style={[styles.button, styles.applyButton]}
-                onPress={applyFilters}
-              >
-                <Text style={styles.buttonText}>Apply Filters</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, styles.clearButton]}
-                onPress={clearFilters}
-              >
-                <Text style={styles.buttonText}>Clear</Text>
-              </TouchableOpacity>
-            </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.storeLocationText}>Store location</Text>
+          <View style={styles.locationContainer}>
+            <Ionicons name="location-sharp" size={18} color={Colors.orange} />
+            <Text style={styles.locationText}> Colombo , Sri Lanka</Text>
           </View>
         </View>
-      </Modal>
+        <TouchableOpacity style={styles.iconBackground}>
+          <Feather name="shopping-bag" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.searchBar}>
+        <Ionicons name="search" size={20} color={Colors.light.grey} />
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Looking for shoes"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+      </View>
+      <ScrollView horizontal style={styles.logoContainer}>
+        {logos.map((logo) => (
+          <TouchableOpacity
+            key={logo.name}
+            onPress={() => setSelectedLogo(logo.name)}
+          >
+            <View
+              style={[
+                styles.logoItem,
+                selectedLogo === logo.name && styles.selectedLogoItem,
+              ]}
+            >
+              <Image source={{ uri: logo.uri }} style={styles.logo} />
+              {selectedLogo === logo.name && (
+                <Text style={styles.logoText}>{logo.name}</Text>
+              )}
+            </View>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
     </View>
   );
 };
 
 export default Home;
 
-const windowWidth = Dimensions.get('window').width;
-const itemWidth = (windowWidth - 30) / 2;
-
 const styles = StyleSheet.create({
-  listContainer: {
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+  container: {
+    flex: 1,
+    backgroundColor: Colors.light.background_01,
   },
-  columnWrapper: {
+  header: {
+    flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    marginTop: 30,
   },
-  itemContainer: {
-    width: itemWidth,
-    marginBottom: 15,
-    padding: 8,
-    backgroundColor: Colors.light.background,
-    borderRadius: 10,
-    shadowColor: Colors.light.text,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
-    position: 'relative',
-  },
-  imageContainer: {
+  textContainer: {
     alignItems: 'center',
   },
-  image: {
-    width: '100%',
-    height: 180,
-    borderRadius: 10,
-    resizeMode: 'cover',
-  },
-  name: {
+  storeLocationText: {
     fontSize: 14,
-    marginTop: 8,
-    fontWeight: '500',
-    color: Colors.light.text,
-  },
-  price: {
-    fontSize: 14,
-    marginTop: 4,
-    color: Colors.light.icon,
-  },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  bottomSheet: {
-    backgroundColor: Colors.light.background,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
-    paddingHorizontal: 20,
-    shadowColor: Colors.light.text,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  modalText: {
-    marginBottom: 15,
+    fontWeight: 'normal',
     textAlign: 'center',
   },
-  modalTitle: {
-    fontSize: 18,
+  locationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  locationText: {
+    fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 15,
     textAlign: 'center',
-    color: Colors.light.text,
   },
-  priceContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    borderColor: Colors.light.icon,
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-    marginHorizontal: 5,
-    backgroundColor: Colors.light.background,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-  },
-  button: {
-    width: '48%',
-    alignItems: 'center',
-    padding: 10,
-    borderRadius: 5,
-  },
-  applyButton: {
-    backgroundColor: Colors.light.tint,
-  },
-  clearButton: {
-    backgroundColor: Colors.light.tint,
-  },
-  buttonText: {
-    color: Colors.light.background,
-  },
-  brandContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-  },
-  brandButton: {
-    flex: 1,
-    padding: 10,
-    marginHorizontal: 5,
-    backgroundColor: Colors.light.background,
-    borderRadius: 10,
-    alignItems: 'center',
-    flexDirection: 'row',
-    borderWidth: 1,
-    borderColor: Colors.light.tint,
-  },
-  selectedBrandButton: {
-    backgroundColor: Colors.light.tint,
-    borderColor: Colors.light.tint,
-  },
-  brandButtonText: {
-    color: Colors.light.tint,
-    fontWeight: 'bold',
-  },
-  selectedBrandButtonText: {
-    color: Colors.light.background,
-  },
-  colorContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-  },
-  colorButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 0,
-    marginHorizontal: 5,
-    borderWidth: 1,
-    borderColor: Colors.light.tint,
-    backgroundColor: Colors.light.background,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  selectedColorButton: {
-    backgroundColor: Colors.light.tint,
-  },
-  colorButtonText: {
-    color: Colors.light.tint,
-    fontWeight: 'bold',
-    fontSize: 12,
-  },
-  selectedColorButtonText: {
-    color: Colors.light.background,
-    fontSize: 12,
-  },
-  brandImage: {
-    width: 20,
-    height: 20,
-    marginRight: 5,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-  },
-  spacing: {
-    height: 10,
-  },
-  largeSpacing: {
-    height: 20,
-  },
-  noProductsContainer: {
+  text: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    fontSize: 24,
+    fontWeight: 'bold',
   },
-  noProductsText: {
-    marginTop: 10,
-    fontSize: 18,
-    color: Colors.light.icon,
+  iconBackground: {
+    backgroundColor: Colors.light.background_02,
+    padding: 15,
+    borderRadius: 50,
   },
-  searchContainer: {
+  searchBar: {
     flexDirection: 'row',
-    padding: 10,
     alignItems: 'center',
+    backgroundColor: Colors.light.background_02,
+    padding: 13,
+    borderRadius: 50,
+    margin: 16,
   },
   searchInput: {
-    flex: 1,
-    height: 40,
-    borderColor: Colors.light.icon,
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    backgroundColor: Colors.light.background,
-  },
-  searchButton: {
     marginLeft: 10,
-    padding: 5,
-    backgroundColor: Colors.light.background,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: Colors.light.icon,
-  },
-  heartIcon: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-  },
-  splashContainer: {
+    color: 'black',
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.light.background,
   },
-  splashText: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: Colors.light.text,
+  logoContainer: {
+    flexDirection: 'row',
+    marginTop: 10,
+    marginRight: 10,
+    paddingHorizontal: 16,
+  },
+  logoItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 10,
+    padding: 5,
+    borderRadius: 10,
+  },
+  selectedLogoItem: {
+    backgroundColor: Colors.light.tint,
+    borderRadius: 20,
+    paddingHorizontal: 10,
+  },
+  logo: {
+    width: 55,
+    height: 55,
+    resizeMode: 'contain',
+  },
+  logoText: {
+    marginLeft: 10,
+    color: Colors.light.background_02,
   },
 });

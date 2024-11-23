@@ -9,6 +9,7 @@ import {
 import React from 'react';
 import { useCart } from '@/contexts/CartContext';
 import { Ionicons } from '@expo/vector-icons';
+import { Colors } from '../../constants/Colors';
 
 interface CartItem {
   id: string;
@@ -113,19 +114,19 @@ export default Cart;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: Colors.light.background,
   },
   item: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    backgroundColor: '#fff',
+    borderBottomColor: Colors.light.icon,
+    backgroundColor: Colors.light.background,
     marginVertical: 8,
     marginHorizontal: 16,
     borderRadius: 8,
-    shadowColor: '#000',
+    shadowColor: Colors.light.text,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
@@ -144,10 +145,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 8,
+    color: Colors.light.text,
   },
   price: {
     fontSize: 16,
-    color: '#666',
+    color: Colors.light.icon,
     marginBottom: 8,
   },
   quantityContainer: {
@@ -157,14 +159,14 @@ const styles = StyleSheet.create({
   },
   quantity: {
     fontSize: 16,
-    color: '#666',
+    color: Colors.light.icon,
     marginHorizontal: 10,
   },
   iconContainer: {
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#ddd',
+    backgroundColor: Colors.light.icon,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -182,18 +184,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
-    borderTopColor: '#ddd',
-    backgroundColor: '#fff',
+    borderTopColor: Colors.light.icon,
+    backgroundColor: Colors.light.background,
   },
   totalText: {
     fontSize: 18,
+    color: Colors.light.text,
   },
   totalAmount: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: Colors.light.text,
   },
   checkoutButton: {
-    backgroundColor: '#000',
+    backgroundColor: Colors.light.tint,
     padding: 15,
     alignItems: 'center',
     justifyContent: 'center',
@@ -202,7 +206,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   checkoutButtonText: {
-    color: '#fff',
+    color: Colors.light.background,
     fontSize: 18,
     fontWeight: 'bold',
   },

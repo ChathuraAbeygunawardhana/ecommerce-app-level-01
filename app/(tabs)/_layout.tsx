@@ -13,6 +13,7 @@ import {
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useCart } from '@/contexts/CartContext';
 import { FavouritesProvider } from '@/contexts/FavouritesContext';
+import { Colors } from '../../constants/Colors';
 
 export const ModalContext = createContext({
   modalVisible: false,
@@ -246,7 +247,7 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   headerWrapper: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.light.background,
     paddingTop: 50,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
@@ -262,6 +263,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     flex: 1,
+    color: Colors.light.text,
   },
   icon: {},
   productDetailsTitle: {
@@ -269,12 +271,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     flex: 1,
+    color: Colors.light.text,
   },
   cartBadge: {
     position: 'absolute',
     top: -5,
     right: -10,
-    backgroundColor: 'black',
+    backgroundColor: Colors.light.tint,
     borderRadius: 10,
     width: 20,
     height: 20,
@@ -282,7 +285,7 @@ const styles = StyleSheet.create({
     paddingLeft: 7.5,
   },
   cartBadgeText: {
-    color: 'white',
+    color: Colors.light.background,
     fontSize: 9,
   },
   tabIconContainer: {},
@@ -290,7 +293,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -5,
     right: -10,
-    backgroundColor: 'black',
+    backgroundColor: Colors.light.tint,
     borderRadius: 10,
     width: 20,
     height: 20,
@@ -298,7 +301,7 @@ const styles = StyleSheet.create({
     paddingLeft: 7.5,
   },
   tabCartBadgeText: {
-    color: 'white',
+    color: Colors.light.background,
     fontSize: 9,
   },
 });

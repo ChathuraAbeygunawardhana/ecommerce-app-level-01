@@ -13,6 +13,7 @@ import sampleData from '../../assets/sample.json';
 import { useRouter } from 'expo-router';
 import { useCart } from '@/contexts/CartContext';
 import { useFonts } from 'expo-font';
+import { Colors } from '../../constants/Colors';
 
 interface Product {
   id: string;
@@ -86,7 +87,7 @@ export default ProductDetails;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.light.background,
   },
   header: {
     flexDirection: 'row',
@@ -97,6 +98,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 10,
+    color: Colors.light.text,
   },
   image: {
     width: '100%',
@@ -110,26 +112,27 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica',
     fontSize: 30,
     marginBottom: 10,
+    color: Colors.light.text,
   },
   price: {
     fontFamily: 'Novecentro',
     fontSize: 20,
-    color: '#666',
+    color: Colors.light.icon,
     marginBottom: 10,
   },
   colour: {
     fontSize: 16,
-    color: '#666',
+    color: Colors.light.icon,
     marginBottom: 10,
   },
   description: {
     fontSize: 16,
     lineHeight: 24,
-    color: '#333',
+    color: Colors.light.text,
     textAlign: 'justify',
   },
   addToCartButton: {
-    backgroundColor: '#000',
+    backgroundColor: Colors.light.tint,
     marginHorizontal: 14,
     marginBottom: 2,
     padding: 15,
@@ -142,7 +145,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   addToCartText: {
-    color: '#fff',
+    color: Colors.light.background,
     fontSize: 18,
     fontWeight: 'bold',
   },

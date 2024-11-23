@@ -16,6 +16,7 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useRouter } from 'expo-router';
 import sampleData from '../../assets/sample.json';
 import { useFavourites } from '@/contexts/FavouritesContext';
+import { Colors } from '../../constants/Colors';
 
 type Product = {
   id: string;
@@ -355,9 +356,9 @@ const styles = StyleSheet.create({
     width: itemWidth,
     marginBottom: 15,
     padding: 8,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.light.background,
     borderRadius: 10,
-    shadowColor: '#000',
+    shadowColor: Colors.light.text,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
@@ -377,11 +378,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 8,
     fontWeight: '500',
+    color: Colors.light.text,
   },
   price: {
     fontSize: 14,
     marginTop: 4,
-    color: '#666',
+    color: Colors.light.icon,
   },
   modalOverlay: {
     flex: 1,
@@ -389,12 +391,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   bottomSheet: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.light.background,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 20,
     paddingHorizontal: 20,
-    shadowColor: '#000',
+    shadowColor: Colors.light.text,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -412,6 +414,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 15,
     textAlign: 'center',
+    color: Colors.light.text,
   },
   priceContainer: {
     flexDirection: 'row',
@@ -420,12 +423,13 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: 40,
-    borderColor: '#ccc',
+    borderColor: Colors.light.icon,
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 10,
     paddingHorizontal: 10,
     marginHorizontal: 5,
+    backgroundColor: Colors.light.background,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -439,13 +443,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   applyButton: {
-    backgroundColor: 'black',
+    backgroundColor: Colors.light.tint,
   },
   clearButton: {
-    backgroundColor: 'black',
+    backgroundColor: Colors.light.tint,
   },
   buttonText: {
-    color: 'white',
+    color: Colors.light.background,
   },
   brandContainer: {
     flexDirection: 'row',
@@ -456,23 +460,23 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     marginHorizontal: 5,
-    backgroundColor: 'white',
+    backgroundColor: Colors.light.background,
     borderRadius: 10,
     alignItems: 'center',
     flexDirection: 'row',
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: Colors.light.tint,
   },
   selectedBrandButton: {
-    backgroundColor: 'black',
-    borderColor: 'black',
+    backgroundColor: Colors.light.tint,
+    borderColor: Colors.light.tint,
   },
   brandButtonText: {
-    color: 'black',
+    color: Colors.light.tint,
     fontWeight: 'bold',
   },
   selectedBrandButtonText: {
-    color: 'white',
+    color: Colors.light.background,
   },
   colorContainer: {
     flexDirection: 'row',
@@ -484,21 +488,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     marginHorizontal: 5,
     borderWidth: 1,
-    borderColor: 'black',
-    backgroundColor: 'white',
+    borderColor: Colors.light.tint,
+    backgroundColor: Colors.light.background,
     borderRadius: 10,
     alignItems: 'center',
   },
   selectedColorButton: {
-    backgroundColor: 'black',
+    backgroundColor: Colors.light.tint,
   },
   colorButtonText: {
-    color: 'black',
+    color: Colors.light.tint,
     fontWeight: 'bold',
     fontSize: 12,
   },
   selectedColorButtonText: {
-    color: 'white',
+    color: Colors.light.background,
     fontSize: 12,
   },
   brandImage: {
@@ -525,7 +529,7 @@ const styles = StyleSheet.create({
   noProductsText: {
     marginTop: 10,
     fontSize: 18,
-    color: 'gray',
+    color: Colors.light.icon,
   },
   searchContainer: {
     flexDirection: 'row',
@@ -535,19 +539,19 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     height: 40,
-    borderColor: '#ccc',
+    borderColor: Colors.light.icon,
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
-    backgroundColor: 'white',
+    backgroundColor: Colors.light.background,
   },
   searchButton: {
     marginLeft: 10,
     padding: 5,
-    backgroundColor: 'white',
+    backgroundColor: Colors.light.background,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: Colors.light.icon,
   },
   heartIcon: {
     position: 'absolute',
@@ -558,10 +562,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: Colors.light.background,
   },
   splashText: {
     fontSize: 32,
     fontWeight: 'bold',
+    color: Colors.light.text,
   },
 });

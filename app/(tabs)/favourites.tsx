@@ -11,6 +11,7 @@ import {
 import { useRouter } from 'expo-router';
 import { useFavourites } from '@/contexts/FavouritesContext';
 import { Ionicons } from '@expo/vector-icons';
+import { Colors } from '../../constants/Colors';
 
 type Product = {
   id: string;
@@ -72,7 +73,7 @@ export default Favourites;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.light.background,
     padding: 10,
   },
   listContainer: {
@@ -84,9 +85,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 10,
     marginVertical: 5,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: Colors.light.background,
     borderRadius: 8,
-    shadowColor: '#000',
+    shadowColor: Colors.light.text,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
@@ -109,25 +110,26 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   removeButton: {
-    backgroundColor: '#000', // Black background
+    backgroundColor: Colors.light.tint,
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
-    justifyContent: 'center', // Center vertically
+    justifyContent: 'center',
     alignItems: 'center',
   },
   removeButtonText: {
-    color: '#fff', // Ensure text is visible on black background
+    color: Colors.light.background,
     fontSize: 12,
     fontWeight: 'bold',
   },
   name: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: Colors.light.text,
   },
   price: {
     fontSize: 14,
-    color: '#666',
+    color: Colors.light.icon,
   },
   emptyFavourites: {
     flex: 1,
@@ -137,6 +139,6 @@ const styles = StyleSheet.create({
   emptyText: {
     marginTop: 10,
     fontSize: 18,
-    color: 'gray',
+    color: Colors.light.icon,
   },
 });

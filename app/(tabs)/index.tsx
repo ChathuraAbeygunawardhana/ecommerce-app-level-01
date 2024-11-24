@@ -39,7 +39,11 @@ const Home = () => {
     >
       <View style={styles.header}>
         <TouchableOpacity style={styles.iconBackground} onPress={toggleTheme}>
-          <Ionicons name="moon" size={24} color={currentColors.text} />
+          <Ionicons
+            name={theme === 'light' ? 'moon' : 'sunny'}
+            size={24}
+            color={currentColors.text}
+          />
         </TouchableOpacity>
         <View style={styles.textContainer}>
           <Text

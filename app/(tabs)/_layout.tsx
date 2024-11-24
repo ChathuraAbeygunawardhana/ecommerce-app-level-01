@@ -14,6 +14,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import { useCart } from '@/contexts/CartContext';
 import { FavouritesProvider } from '@/contexts/FavouritesContext';
 import { Colors } from '../../constants/Colors';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export const ModalContext = createContext({
   modalVisible: false,
@@ -32,6 +33,7 @@ export default function TabLayout() {
   const { cart } = useCart();
   const [tabBarVisible, setTabBarVisible] = useState(true);
   const translateY = useRef(new Animated.Value(0)).current;
+  const { tabBarBackground } = useTheme();
 
   useEffect(() => {
     Animated.timing(translateY, {
@@ -104,8 +106,8 @@ export default function TabLayout() {
         <FavouritesProvider>
           <Tabs
             screenOptions={({ route }) => ({
-              tabBarActiveTintColor: 'black',
-              headerShown: route.name !== 'index', // Hide header for Home screen
+              tabBarActiveTintColor: Colors.lightBlue,
+              headerShown: route.name !== 'index',
               tabBarIcon: ({ color, focused }) => {
                 if (route.name === 'cart') {
                   return (
@@ -155,9 +157,7 @@ export default function TabLayout() {
                 borderTopWidth: 0,
                 overflow: 'hidden',
               },
-              tabBarBackground: () => (
-                <View style={styles.tabBarBackground} />
-              ),
+              tabBarBackground: () => <View style={[styles.tabBarBackground, { backgroundColor: tabBarBackground }]} />,
               tabBarShowLabel: false,
             })}
           >
@@ -321,7 +321,6 @@ const styles = StyleSheet.create({
   },
   tabBarBackground: {
     flex: 1,
-    backgroundColor: Colors.dark.background_02,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     position: 'absolute',

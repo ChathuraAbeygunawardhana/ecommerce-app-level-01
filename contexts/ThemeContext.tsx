@@ -1,9 +1,10 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { Colors } from '../constants/Colors';
 
 const ThemeContext = createContext({
   theme: 'light',
   toggleTheme: () => {},
+  tabBarBackground: Colors.light.background_02,
 });
 
 import { ReactNode } from 'react';
@@ -14,13 +15,18 @@ interface ThemeProviderProps {
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = useState('light');
+  const [tabBarBackground, setTabBarBackground] = useState(Colors.light.background_02);
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    setTheme((prevTheme) => {
+      const newTheme = prevTheme === 'light' ? 'dark' : 'light';
+      setTabBarBackground(newTheme === 'light' ? Colors.light.background_02 : Colors.dark.background_02);
+      return newTheme;
+    });
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, tabBarBackground }}>
       {children}
     </ThemeContext.Provider>
   );

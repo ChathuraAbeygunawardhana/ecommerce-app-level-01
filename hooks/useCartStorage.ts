@@ -11,31 +11,37 @@ interface CartItem {
 
 export const useCartStorage = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [isOnboarded, setIsOnboarded] = useState<boolean>(false);
 
   useEffect(() => {
-    const loadCart = async () => {
+    const loadData = async () => {
       try {
         const storedCart = await AsyncStorage.getItem('@cart');
+        const storedIsOnboarded = await AsyncStorage.getItem('@isOnboarded');
         if (storedCart) {
           setCart(JSON.parse(storedCart));
         }
+        if (storedIsOnboarded !== null) {
+          setIsOnboarded(JSON.parse(storedIsOnboarded));
+        }
       } catch (error) {
-        console.error('Failed to load cart', error);
+        console.error('Failed to load data', error);
       }
     };
-    loadCart();
+    loadData();
   }, []);
 
   useEffect(() => {
-    const saveCart = async () => {
+    const saveData = async () => {
       try {
         await AsyncStorage.setItem('@cart', JSON.stringify(cart));
+        await AsyncStorage.setItem('@isOnboarded', JSON.stringify(isOnboarded));
       } catch (error) {
-        console.error('Failed to save cart', error);
+        console.error('Failed to save data', error);
       }
     };
-    saveCart();
-  }, [cart]);
+    saveData();
+  }, [cart, isOnboarded]);
 
-  return { cart, setCart };
+  return { cart, setCart, isOnboarded, setIsOnboarded };
 };

@@ -15,12 +15,14 @@ interface CartContextType {
   removeFromCart: (productId: string) => void;
   increaseQuantity: (productId: string) => void;
   decreaseQuantity: (productId: string) => void;
+  isOnboarded: boolean;
+  setIsOnboarded: (value: boolean) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const { cart, setCart } = useCartStorage();
+  const { cart, setCart, isOnboarded, setIsOnboarded } = useCartStorage();
 
   const addToCart = (product: CartItem) => {
     setCart((prevCart) => {
@@ -57,7 +59,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity }}>
+    <CartContext.Provider value={{
+      cart,
+      addToCart,
+      removeFromCart,
+      increaseQuantity,
+      decreaseQuantity,
+      isOnboarded,
+      setIsOnboarded
+    }}>
       {children}
     </CartContext.Provider>
   );

@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -5,
     right: -10,
-    backgroundColor: Colors.dark.tint,
+    backgroundColor: Colors.lightBlue,
     borderRadius: 10,
     width: 20,
     height: 20,
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
     paddingLeft: 7.5,
   },
   tabCartBadgeText: {
-    color: Colors.dark.background_01,
+    color: Colors.white,
     fontSize: 9,
   },
   tabBarBackground: {

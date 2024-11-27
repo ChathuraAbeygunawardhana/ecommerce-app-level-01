@@ -54,7 +54,12 @@ const Cart = () => {
               onPress={() => decreaseQuantity(item.id)}
               disabled={item.quantity === 1}
             >
-              <View style={[styles.iconContainer, { backgroundColor: currentColors.background_01 }]}>
+              <View
+                style={[
+                  styles.iconContainer,
+                  { backgroundColor: currentColors.background_01 },
+                ]}
+              >
                 <Ionicons name="remove" size={15} color={currentColors.text} />
               </View>
             </TouchableOpacity>
@@ -62,7 +67,12 @@ const Cart = () => {
               {item.quantity}
             </Text>
             <TouchableOpacity onPress={() => increaseQuantity(item.id)}>
-              <View style={[styles.iconContainer, { backgroundColor: Colors.lightBlue }]}>
+              <View
+                style={[
+                  styles.iconContainer,
+                  { backgroundColor: Colors.lightBlue },
+                ]}
+              >
                 <Ionicons name="add" size={15} color={Colors.white} />
               </View>
             </TouchableOpacity>
@@ -137,14 +147,12 @@ export default Cart;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20, // Added space at the top
+    paddingTop: 20,
   },
   item: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
-    // borderBottomWidth: 1,
-    // borderBottomColor: Colors.light.icon,
     marginVertical: 8,
     marginHorizontal: 16,
     borderRadius: 8,
@@ -171,7 +179,6 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 16,
-    // color is now set dynamically
     marginBottom: 8,
   },
   quantityContainer: {
@@ -181,7 +188,6 @@ const styles = StyleSheet.create({
   },
   quantity: {
     fontSize: 16,
-    // color is now set dynamically
     marginHorizontal: 10,
   },
   iconContainer: {
@@ -193,8 +199,8 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     position: 'absolute',
-    top: 3, 
-    right: 2, 
+    top: 3,
+    right: 2,
   },
   emptyCart: {
     flex: 1,

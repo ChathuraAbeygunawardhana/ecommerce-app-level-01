@@ -191,7 +191,7 @@ export default function TabLayout() {
               name="cart"
               options={{
                 title: 'Cart',
-                headerShown: false, // Hide the header for cart screen
+                headerShown: false, 
                 tabBarIcon: ({ color, focused }) => (
                   <View style={styles.tabIconContainer}>
                     <Ionicons

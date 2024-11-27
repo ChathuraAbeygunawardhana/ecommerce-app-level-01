@@ -105,7 +105,7 @@ const Home = () => {
                   <Text
                     style={[
                       styles.logoText,
-                      { color: Colors.white }, // Changed color to Colors.white
+                      { color: Colors.white },
                     ]}
                   >
                     {logo.name}
@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
   bestSeller: {
     fontSize: 12,
     marginBottom: 5,
-    marginTop: 10, // Increased space above 'BEST SELLER'
+    marginTop: 10,
   },
   productImage: {
     width: '100%',
@@ -350,7 +350,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   productName: {
-    marginTop: 2, // Reduced space below 'BEST SELLER'
+    marginTop: 2,
     fontSize: 14,
   },
   productPrice: {

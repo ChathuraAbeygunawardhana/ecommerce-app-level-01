@@ -34,7 +34,7 @@ const ProductDetails = () => {
   const router = useRouter();
   const { addToCart } = useCart();
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const { theme } = useTheme(); // Ensure theme is obtained from context
+  const { theme } = useTheme();
   const currentColors = Colors[theme as 'light' | 'dark'];
 
   useEffect(() => {
@@ -73,7 +73,6 @@ const ProductDetails = () => {
         <View style={{ width: 24 }} />
       </View>
 
-      {/* Existing Content */}
       <Animated.ScrollView style={[styles.container, { opacity: fadeAnim }]}>
         <Image source={{ uri: product.mainImage }} style={styles.image} />
         <View style={styles.detailsContainer}>
@@ -102,7 +101,6 @@ export default ProductDetails;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: Colors.dark.background_01, // Removed to use dynamic background
   },
   header: {
     flexDirection: 'row',
@@ -113,7 +111,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 10,
-    // color: Colors.dark.text, // Removed to use dynamic color
   },
   image: {
     width: '100%',
@@ -127,40 +124,36 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica',
     fontSize: 30,
     marginBottom: 10,
-    // color: Colors.dark.text, // Removed to use dynamic color
   },
   price: {
     fontFamily: 'Novecentro',
     fontSize: 20,
-    // color: Colors.dark.icon, // Removed to use dynamic color
     marginBottom: 10,
   },
   colour: {
     fontSize: 16,
-    // color: Colors.dark.icon, // Removed to use dynamic color
     marginBottom: 10,
   },
   description: {
     fontSize: 16,
     lineHeight: 24,
-    // color: Colors.dark.text, // Removed to use dynamic color
     textAlign: 'justify',
   },
   addToCartButton: {
-    backgroundColor: Colors.lightBlue, // Changed background color to lightBlue
+    backgroundColor: Colors.lightBlue,
     marginHorizontal: 14,
     marginBottom: 2,
     padding: 15,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    bottom: 80, // Moved up further by increasing the bottom value
+    bottom: 80,
     left: 1,
     right: 1,
     borderRadius: 10,
   },
   addToCartText: {
-    color: Colors.white, // Changed text color to white
+    color: Colors.white,
     fontSize: 18,
     fontWeight: 'bold',
   },
@@ -171,6 +164,5 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: Colors.grey,
     paddingTop: 40,
-    // backgroundColor: Colors.dark.background_01, // Removed to use dynamic background
   },
 });

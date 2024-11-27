@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import { useCart } from '@/contexts/CartContext';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '../../constants/Colors';
+import { Colors } from '@/constants/Colors';
 
 interface CartItem {
   id: string;
@@ -95,14 +95,12 @@ const Cart = () => {
           <Text style={styles.totalAmount}>${calculateTotal()}</Text>
         </View>
       </View>
-      <View style={styles.totalContainer}>
+      <View style={styles.checkoutContainer}>
         <TouchableOpacity
           style={styles.checkoutButton}
           onPress={() => console.log('Checkout button pressed')}
         >
-          <View>
-            <Text style={styles.checkoutButtonText}>Checkout</Text>
-          </View>
+          <Text style={styles.checkoutButtonText}>Checkout</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -114,7 +112,7 @@ export default Cart;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
+    backgroundColor: Colors.light.background_01,
   },
   item: {
     flexDirection: 'row',
@@ -122,7 +120,7 @@ const styles = StyleSheet.create({
     padding: 16,
     borderBottomWidth: 1,
     borderBottomColor: Colors.light.icon,
-    backgroundColor: Colors.light.background,
+    backgroundColor: Colors.light.background_02,
     marginVertical: 8,
     marginHorizontal: 16,
     borderRadius: 8,
@@ -184,8 +182,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
-    borderTopColor: Colors.light.icon,
-    backgroundColor: Colors.light.background,
+    backgroundColor: Colors.light.background_01,
+    marginTop: 0,
+    marginBottom: 8,
   },
   totalText: {
     fontSize: 18,
@@ -196,17 +195,22 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.light.text,
   },
+  checkoutContainer: {
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+    backgroundColor: Colors.light.background_02,
+    marginTop: 4,
+    marginBottom: 60,
+  },
   checkoutButton: {
     backgroundColor: Colors.light.tint,
     padding: 15,
     alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 16,
     borderRadius: 8,
     width: '100%',
   },
   checkoutButtonText: {
-    color: Colors.light.background,
+    color: Colors.light.background_02,
     fontSize: 18,
     fontWeight: 'bold',
   },

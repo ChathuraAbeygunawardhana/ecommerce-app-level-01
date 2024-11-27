@@ -27,4 +27,5 @@ export const Colors = {
   grey: '#707B81',
   orange: '#F87265',
   lightBlue: '#5B9EE1',
+  white: 'white',
 };

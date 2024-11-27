@@ -12,12 +12,14 @@ import { Ionicons, Feather } from '@expo/vector-icons';
 import { Colors } from '../../constants/Colors';
 import sampleData from '../../assets/sample.json';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useRouter } from 'expo-router';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [selectedLogo, setSelectedLogo] = React.useState('Nike');
   const { theme, toggleTheme } = useTheme();
   const currentColors = Colors[theme as 'light' | 'dark'];
+  const router = useRouter();
 
   const logos = [
     { name: 'Nike', uri: 'https://i.ibb.co/27gF6n7/NikeLogo.png' },
@@ -103,7 +105,7 @@ const Home = () => {
                   <Text
                     style={[
                       styles.logoText,
-                      { color: currentColors.background_02 },
+                      { color: Colors.white }, // Changed color to Colors.white
                     ]}
                   >
                     {logo.name}
@@ -127,49 +129,51 @@ const Home = () => {
           showsHorizontalScrollIndicator={false}
         >
           {sampleData.map((product) => (
-            <View key={product.id} style={styles.productItem}>
-              <View
-                style={[
-                  styles.productContent,
-                  { backgroundColor: currentColors.background_02 },
-                ]}
-              >
-                <Image
-                  source={{ uri: product.mainImage }}
-                  style={styles.productImage}
-                />
-                <Text
+            <TouchableOpacity key={product.id} onPress={() => router.push(`/${product.id}`)}>
+              <View key={product.id} style={styles.productItem}>
+                <View
                   style={[
-                    styles.bestSeller,
-                    { color: currentColors.lightBlue },
+                    styles.productContent,
+                    { backgroundColor: currentColors.background_02 },
                   ]}
                 >
-                  BEST SELLER
-                </Text>
-                <Text
-                  style={[styles.productName, { color: currentColors.text }]}
-                >
-                  {product.name
-                    .split(' ')
-                    .slice(0, 3)
-                    .join(' ')
-                    .substring(0, 15)}
-                </Text>
-                <Text
-                  style={[styles.productPrice, { color: currentColors.grey }]}
-                >
-                  ${product.price}
-                </Text>
-                <TouchableOpacity
-                  style={[
-                    styles.addIcon,
-                    { backgroundColor: currentColors.lightBlue },
-                  ]}
-                >
-                  <Ionicons name="add" size={20} color="white" />
-                </TouchableOpacity>
+                  <Image
+                    source={{ uri: product.mainImage }}
+                    style={styles.productImage}
+                  />
+                  <Text
+                    style={[
+                      styles.bestSeller,
+                      { color: currentColors.lightBlue },
+                    ]}
+                  >
+                    BEST SELLER
+                  </Text>
+                  <Text
+                    style={[styles.productName, { color: currentColors.text }]}
+                  >
+                    {product.name
+                      .split(' ')
+                      .slice(0, 3)
+                      .join(' ')
+                      .substring(0, 15)}
+                  </Text>
+                  <Text
+                    style={[styles.productPrice, { color: currentColors.grey }]}
+                  >
+                    ${product.price}
+                  </Text>
+                  <TouchableOpacity
+                    style={[
+                      styles.addIcon,
+                      { backgroundColor: currentColors.lightBlue },
+                    ]}
+                  >
+                    <Ionicons name="add" size={20} color="white" />
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
         <View style={styles.textRow}>
@@ -338,6 +342,7 @@ const styles = StyleSheet.create({
   bestSeller: {
     fontSize: 12,
     marginBottom: 5,
+    marginTop: 10, // Increased space above 'BEST SELLER'
   },
   productImage: {
     width: '100%',
@@ -345,7 +350,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   productName: {
-    marginTop: 5,
+    marginTop: 2, // Reduced space below 'BEST SELLER'
     fontSize: 14,
   },
   productPrice: {

@@ -239,7 +239,7 @@ export default function TabLayout() {
               name="[id]"
               options={{
                 title: 'Product Details',
-                headerShown: true,
+                headerShown: false, // Hide the default header
                 header: ({ navigation }) => (
                   <Header isProductDetails={true} navigation={navigation} />
                 ),

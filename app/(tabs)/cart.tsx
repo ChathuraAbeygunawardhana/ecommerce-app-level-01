@@ -10,6 +10,7 @@ import React from 'react';
 import { useCart } from '@/contexts/CartContext';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface CartItem {
   id: string;
@@ -32,13 +33,22 @@ const Cart = () => {
     decreaseQuantity: (id: string) => void;
   } = useCart();
 
+  const { theme } = useTheme();
+  const currentColors = Colors[theme as 'light' | 'dark'];
+
   const renderItem = ({ item }: { item: CartItem }) => {
     return (
-      <View style={styles.item}>
+      <View
+        style={[styles.item, { backgroundColor: currentColors.background_02 }]}
+      >
         <Image source={{ uri: item.image }} style={styles.image} />
         <View style={styles.details}>
-          <Text style={styles.name}>{item.name}</Text>
-          <Text style={styles.price}>${item.price}</Text>
+          <Text style={[styles.name, { color: currentColors.text }]}>
+            {item.name}
+          </Text>
+          <Text style={[styles.price, { color: currentColors.grey }]}>
+            ${item.price}
+          </Text>
           <View style={styles.quantityContainer}>
             <TouchableOpacity
               onPress={() => decreaseQuantity(item.id)}
@@ -48,7 +58,9 @@ const Cart = () => {
                 <Ionicons name="remove" size={15} color="black" />
               </View>
             </TouchableOpacity>
-            <Text style={styles.quantity}>{item.quantity}</Text>
+            <Text style={[styles.quantity, { color: currentColors.text }]}>
+              {item.quantity}
+            </Text>
             <TouchableOpacity onPress={() => increaseQuantity(item.id)}>
               <View style={styles.iconContainer}>
                 <Ionicons name="add" size={15} color="black" />
@@ -59,7 +71,11 @@ const Cart = () => {
             onPress={() => removeFromCart(item.id)}
             style={styles.deleteButton}
           >
-            <Ionicons name="trash-outline" size={24} color="black" />
+            <Ionicons
+              name="trash-outline"
+              size={24}
+              color={currentColors.grey}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -73,7 +89,15 @@ const Cart = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: currentColors.background_01, paddingTop: 40 },
+      ]}
+    >
+      <Text style={[styles.headerText, { color: currentColors.text }]}>
+        Your Cart
+      </Text>
       {cart.length === 0 ? (
         <View style={styles.emptyCart}>
           <View>
@@ -87,21 +111,22 @@ const Cart = () => {
           renderItem={renderItem}
         />
       )}
-      <View style={styles.totalContainer}>
+      <View
+        style={[
+          styles.totalContainer,
+          { backgroundColor: currentColors.background_01 },
+        ]}
+      >
         <View>
-          <Text style={styles.totalText}>Total Amount:</Text>
+          <Text style={[styles.totalText, { color: currentColors.text }]}>
+            Total Amount:
+          </Text>
         </View>
         <View>
-          <Text style={styles.totalAmount}>${calculateTotal()}</Text>
+          <Text style={[styles.totalAmount, { color: currentColors.text }]}>
+            ${calculateTotal()}
+          </Text>
         </View>
-      </View>
-      <View style={styles.checkoutContainer}>
-        <TouchableOpacity
-          style={styles.checkoutButton}
-          onPress={() => console.log('Checkout button pressed')}
-        >
-          <Text style={styles.checkoutButtonText}>Checkout</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -112,15 +137,14 @@ export default Cart;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background_01,
+    paddingTop: 20, // Added space at the top
   },
   item: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.light.icon,
-    backgroundColor: Colors.light.background_02,
+    // borderBottomWidth: 1,
+    // borderBottomColor: Colors.light.icon,
     marginVertical: 8,
     marginHorizontal: 16,
     borderRadius: 8,
@@ -147,7 +171,7 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 16,
-    color: Colors.light.icon,
+    // color is now set dynamically
     marginBottom: 8,
   },
   quantityContainer: {
@@ -157,7 +181,7 @@ const styles = StyleSheet.create({
   },
   quantity: {
     fontSize: 16,
-    color: Colors.light.icon,
+    // color is now set dynamically
     marginHorizontal: 10,
   },
   iconContainer: {
@@ -170,8 +194,8 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     position: 'absolute',
-    top: 8,
-    right: 8,
+    top: 3, 
+    right: 2, 
   },
   emptyCart: {
     flex: 1,
@@ -182,36 +206,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
-    backgroundColor: Colors.light.background_01,
+    backgroundColor: Colors.light.background_02,
     marginTop: 0,
     marginBottom: 8,
   },
   totalText: {
     fontSize: 18,
-    color: Colors.light.text,
   },
   totalAmount: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: Colors.light.text,
   },
-  checkoutContainer: {
-    paddingHorizontal: 16,
-    paddingBottom: 16,
-    backgroundColor: Colors.light.background_02,
-    marginTop: 4,
-    marginBottom: 60,
-  },
-  checkoutButton: {
-    backgroundColor: Colors.light.tint,
-    padding: 15,
-    alignItems: 'center',
-    borderRadius: 8,
-    width: '100%',
-  },
-  checkoutButtonText: {
-    color: Colors.light.background_02,
-    fontSize: 18,
+  headerText: {
+    fontSize: 20,
     fontWeight: 'bold',
+    margin: 16,
   },
 });

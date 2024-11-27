@@ -54,16 +54,16 @@ const Cart = () => {
               onPress={() => decreaseQuantity(item.id)}
               disabled={item.quantity === 1}
             >
-              <View style={styles.iconContainer}>
-                <Ionicons name="remove" size={15} color="black" />
+              <View style={[styles.iconContainer, { backgroundColor: currentColors.background_01 }]}>
+                <Ionicons name="remove" size={15} color={currentColors.text} />
               </View>
             </TouchableOpacity>
             <Text style={[styles.quantity, { color: currentColors.text }]}>
               {item.quantity}
             </Text>
             <TouchableOpacity onPress={() => increaseQuantity(item.id)}>
-              <View style={styles.iconContainer}>
-                <Ionicons name="add" size={15} color="black" />
+              <View style={[styles.iconContainer, { backgroundColor: Colors.lightBlue }]}>
+                <Ionicons name="add" size={15} color={Colors.white} />
               </View>
             </TouchableOpacity>
           </View>
@@ -188,7 +188,6 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: Colors.light.icon,
     justifyContent: 'center',
     alignItems: 'center',
   },

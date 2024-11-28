@@ -13,6 +13,7 @@ import { Colors } from '../../constants/Colors';
 import sampleData from '../../assets/sample.json';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useRouter } from 'expo-router';
+import { useOnboarding } from '../../contexts/OnboardingContext';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -20,6 +21,7 @@ const Home = () => {
   const { theme, toggleTheme } = useTheme();
   const currentColors = Colors[theme as 'light' | 'dark'];
   const router = useRouter();
+  const { isOnboardingVisible, setIsOnboardingVisible } = useOnboarding();
 
   const logos = [
     { name: 'Nike', uri: 'https://i.ibb.co/27gF6n7/NikeLogo.png' },
@@ -31,6 +33,20 @@ const Home = () => {
     { name: 'Converse', uri: 'https://i.ibb.co/WDQLZmS/Converse-Logo.png' },
     { name: 'Adidas', uri: 'https://i.ibb.co/Y7nWm7X/Adidas-Logo.png' },
   ];
+
+  if (isOnboardingVisible) {
+    return (
+      <View style={[styles.onboardingContainer, { backgroundColor: currentColors.background_01 }]}>
+        <Text style={[styles.onboardingText, { color: currentColors.text }]}>nike</Text>
+        <TouchableOpacity
+          style={[styles.onboardingButton, { backgroundColor: currentColors.lightBlue }]}
+          onPress={() => setIsOnboardingVisible(false)}
+        >
+          <Text style={styles.onboardingButtonText}>get started</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 
   return (
     <View
@@ -413,5 +429,23 @@ const styles = StyleSheet.create({
   bestChoice: {
     fontSize: 12,
     marginBottom: 5,
+  },
+  onboardingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  onboardingText: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  onboardingButton: {
+    padding: 15,
+    borderRadius: 10,
+  },
+  onboardingButtonText: {
+    color: Colors.white,
+    fontSize: 16,
   },
 });

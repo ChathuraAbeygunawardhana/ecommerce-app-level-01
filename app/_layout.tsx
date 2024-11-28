@@ -12,6 +12,7 @@ import { ThemeProvider } from '../contexts/ThemeContext';
 import { useState, useEffect, useRef } from 'react';
 import { Animated, View, Text, StyleSheet, Image } from 'react-native';
 import { Colors } from '../constants/Colors';
+import { OnboardingProvider } from '../contexts/OnboardingContext';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -20,13 +21,15 @@ export default function RootLayout() {
     <CartProvider>
       <FavouritesProvider>
         <ThemeProvider>
-          <NavigationThemeProvider
-            value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-          >
-            <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            </Stack>
-          </NavigationThemeProvider>
+          <OnboardingProvider>
+            <NavigationThemeProvider
+              value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+            >
+              <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              </Stack>
+            </NavigationThemeProvider>
+          </OnboardingProvider>
         </ThemeProvider>
       </FavouritesProvider>
     </CartProvider>

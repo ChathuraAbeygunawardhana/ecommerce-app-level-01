@@ -15,6 +15,7 @@ import { useCart } from '@/contexts/CartContext';
 import { FavouritesProvider } from '@/contexts/FavouritesContext';
 import { Colors } from '../../constants/Colors';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useOnboarding } from '../../contexts/OnboardingContext';
 
 export const ModalContext = createContext({
   modalVisible: false,
@@ -34,6 +35,7 @@ export default function TabLayout() {
   const [tabBarVisible, setTabBarVisible] = useState(true);
   const translateY = useRef(new Animated.Value(0)).current;
   const { tabBarBackground } = useTheme();
+  const { isOnboardingVisible } = useOnboarding();
 
   useEffect(() => {
     Animated.timing(translateY, {
@@ -42,6 +44,10 @@ export default function TabLayout() {
       useNativeDriver: true,
     }).start();
   }, [tabBarVisible]);
+
+  useEffect(() => {
+    setTabBarVisible(!isOnboardingVisible);
+  }, [isOnboardingVisible]);
 
   const Header = ({
     isProductDetails,

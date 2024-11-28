@@ -14,6 +14,7 @@ import sampleData from '../../assets/sample.json';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useRouter } from 'expo-router';
 import { useOnboarding } from '../../contexts/OnboardingContext';
+import OnboardingScreen from '../../components/OnboardingScreen';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -35,17 +36,7 @@ const Home = () => {
   ];
 
   if (isOnboardingVisible) {
-    return (
-      <View style={[styles.onboardingContainer, { backgroundColor: currentColors.background_01 }]}>
-        <Text style={[styles.onboardingText, { color: currentColors.text }]}>nike</Text>
-        <TouchableOpacity
-          style={[styles.onboardingButton, { backgroundColor: currentColors.lightBlue }]}
-          onPress={() => setIsOnboardingVisible(false)}
-        >
-          <Text style={styles.onboardingButtonText}>get started</Text>
-        </TouchableOpacity>
-      </View>
-    );
+    return <OnboardingScreen />;
   }
 
   return (

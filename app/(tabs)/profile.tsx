@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '../../constants/Colors';
+import { Colors } from '../../themes/Colors';
 import { useRouter } from 'expo-router';
 import { useTheme } from '../../contexts/ThemeContext';
 
@@ -11,39 +11,73 @@ const Profile = () => {
   const currentColors = Colors[theme as 'light' | 'dark'];
 
   return (
-    <View style={[styles.container, { backgroundColor: currentColors.background_01 }]}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: currentColors.background_01 },
+      ]}
+    >
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={24} color={currentColors.text} />
         </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: currentColors.text }]}>Profile</Text>
+        <Text style={[styles.headerTitle, { color: currentColors.text }]}>
+          Profile
+        </Text>
         <TouchableOpacity>
           <Ionicons name="create-outline" size={24} color={Colors.lightBlue} />
         </TouchableOpacity>
       </View>
       <View style={styles.profileImageContainer}>
-        <Image 
+        <Image
           source={{ uri: 'https://i.ibb.co/FbpDqkM/image.png' }}
           style={styles.profileImage}
         />
       </View>
       <View style={styles.fieldsContainer}>
         <View style={styles.fieldItem}>
-          <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>Full name</Text>
-          <View style={[styles.fieldValueContainer, { backgroundColor: currentColors.background_02 }]}>
-            <Text style={[styles.fieldValue, { color: currentColors.text }]}>John Doe</Text>
+          <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>
+            Full name
+          </Text>
+          <View
+            style={[
+              styles.fieldValueContainer,
+              { backgroundColor: currentColors.background_02 },
+            ]}
+          >
+            <Text style={[styles.fieldValue, { color: currentColors.text }]}>
+              John Doe
+            </Text>
           </View>
         </View>
         <View style={styles.fieldItem}>
-          <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>Email address</Text>
-          <View style={[styles.fieldValueContainer, { backgroundColor: currentColors.background_02 }]}>
-            <Text style={[styles.fieldValue, { color: currentColors.text }]}>johndoe@example.com</Text>
+          <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>
+            Email address
+          </Text>
+          <View
+            style={[
+              styles.fieldValueContainer,
+              { backgroundColor: currentColors.background_02 },
+            ]}
+          >
+            <Text style={[styles.fieldValue, { color: currentColors.text }]}>
+              johndoe@example.com
+            </Text>
           </View>
         </View>
         <View style={styles.fieldItem}>
-          <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>Password</Text>
-          <View style={[styles.fieldValueContainer, { backgroundColor: currentColors.background_02 }]}>
-            <Text style={[styles.fieldValue, { color: currentColors.text }]}>••••••••</Text>
+          <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>
+            Password
+          </Text>
+          <View
+            style={[
+              styles.fieldValueContainer,
+              { backgroundColor: currentColors.background_02 },
+            ]}
+          >
+            <Text style={[styles.fieldValue, { color: currentColors.text }]}>
+              ••••••••
+            </Text>
           </View>
         </View>
       </View>

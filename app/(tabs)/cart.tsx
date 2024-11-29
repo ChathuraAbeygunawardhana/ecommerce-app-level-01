@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import { useCart } from '@/contexts/CartContext';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '@/constants/Colors';
+import { Colors } from '@/themes/Colors';
 import { useTheme } from '@/contexts/ThemeContext';
 
 interface CartItem {

@@ -11,7 +11,7 @@ import {
 import { useRouter } from 'expo-router';
 import { useFavourites } from '@/contexts/FavouritesContext';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '../../constants/Colors';
+import { Colors } from '../../themes/Colors';
 
 type Product = {
   id: string;
@@ -35,13 +35,15 @@ const Favourites = () => {
         <Image source={{ uri: item.mainImage }} style={styles.image} />
         <View style={styles.textContainer}>
           <Text style={styles.name} numberOfLines={1}>
-            {item.name.length > 19 ? `${item.name.substring(0, 19)}...` : item.name}
+            {item.name.length > 19
+              ? `${item.name.substring(0, 19)}...`
+              : item.name}
           </Text>
           <Text style={styles.price}>${item.price}</Text>
         </View>
       </View>
       <TouchableOpacity
-        style={styles.removeButton} 
+        style={styles.removeButton}
         onPress={() => removeFromFavourites(item.id)}
       >
         <Text style={styles.removeButtonText}>Remove</Text>
@@ -97,8 +99,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  imageContainer: {
-  },
+  imageContainer: {},
   textContainer: {
     marginLeft: 10,
     flexShrink: 1,

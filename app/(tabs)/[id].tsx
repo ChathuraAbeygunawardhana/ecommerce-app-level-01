@@ -13,7 +13,7 @@ import sampleData from '../../assets/sample.json';
 import { useRouter } from 'expo-router';
 import { useCart } from '@/contexts/CartContext';
 import { useFonts } from 'expo-font';
-import { Colors } from '../../constants/Colors';
+import { Colors } from '../../themes/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/contexts/ThemeContext';
 
@@ -64,21 +64,39 @@ const ProductDetails = () => {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: currentColors.background_01 }]}>
-      <View style={[styles.customHeader, { backgroundColor: currentColors.background_01 }]}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: currentColors.background_01 },
+      ]}
+    >
+      <View
+        style={[
+          styles.customHeader,
+          { backgroundColor: currentColors.background_01 },
+        ]}
+      >
         <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={24} color={currentColors.text} />
         </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: currentColors.text }]}>Product Details</Text>
+        <Text style={[styles.headerTitle, { color: currentColors.text }]}>
+          Product Details
+        </Text>
         <View style={{ width: 24 }} />
       </View>
 
       <Animated.ScrollView style={[styles.container, { opacity: fadeAnim }]}>
         <Image source={{ uri: product.mainImage }} style={styles.image} />
         <View style={styles.detailsContainer}>
-          <Text style={[styles.name, { color: currentColors.text }]}>{product.name}</Text>
-          <Text style={[styles.price, { color: currentColors.icon }]}>${product.price}</Text>
-          <Text style={[styles.colour, { color: currentColors.icon }]}>Color: {product.colour}</Text>
+          <Text style={[styles.name, { color: currentColors.text }]}>
+            {product.name}
+          </Text>
+          <Text style={[styles.price, { color: currentColors.icon }]}>
+            ${product.price}
+          </Text>
+          <Text style={[styles.colour, { color: currentColors.icon }]}>
+            Color: {product.colour}
+          </Text>
           <Text style={[styles.description, { color: currentColors.text }]}>
             {product.description}
           </Text>

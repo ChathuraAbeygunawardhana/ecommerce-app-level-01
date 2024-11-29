@@ -1,7 +1,7 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, Image, Platform, Text } from 'react-native';
 import { useFonts } from 'expo-font';
-import { Colors } from '../../constants/Colors';
+import { Colors } from '../../themes/Colors';
 
 export default function TabTwoScreen() {
   let [fontsLoaded] = useFonts({

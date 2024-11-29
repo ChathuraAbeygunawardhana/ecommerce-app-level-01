@@ -1,41 +1,24 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput,
-  Image,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import { Ionicons, Feather } from '@expo/vector-icons';
-import { Colors } from '../../constants/Colors';
-import sampleData from '../../assets/sample.json';
+import { Colors } from '../../themes/Colors';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useRouter } from 'expo-router';
 import { useOnboarding } from '../../contexts/OnboardingContext';
 import OnboardingScreen from '../../components/OnboardingScreen';
 import SearchBar from '../../components/home/SearchBar';
 import PopularShoes from '../../components/home/PopularShoes';
+import NewArrivals from '../../components/home/NewArrivals';
+import LogoList from '../../components/home/LogoList';
+import { logos } from '@/constants/logos';
+import Header from '@/components/home/Header';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [selectedLogo, setSelectedLogo] = React.useState('Nike');
   const { theme, toggleTheme } = useTheme();
-  const currentColors = Colors[theme as 'light' | 'dark'];
+  const currentColors = { ...Colors[theme as 'light' | 'dark'], theme };
   const router = useRouter();
   const { isOnboardingVisible, setIsOnboardingVisible } = useOnboarding();
-
-  const logos = [
-    { name: 'Nike', uri: 'https://i.ibb.co/27gF6n7/NikeLogo.png' },
-    { name: 'Puma', uri: 'https://i.ibb.co/4V6MFGf/PumaLogo.png' },
-    {
-      name: 'Under Armour',
-      uri: 'https://i.ibb.co/yF5wdQ4/Under-Armour-Logo.png',
-    },
-    { name: 'Converse', uri: 'https://i.ibb.co/WDQLZmS/Converse-Logo.png' },
-    { name: 'Adidas', uri: 'https://i.ibb.co/Y7nWm7X/Adidas-Logo.png' },
-  ];
 
   if (isOnboardingVisible) {
     return <OnboardingScreen />;
@@ -48,112 +31,17 @@ const Home = () => {
         { backgroundColor: currentColors.background_01 },
       ]}
     >
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.iconBackground} onPress={toggleTheme}>
-          <Ionicons
-            name={theme === 'light' ? 'moon' : 'sunny'}
-            size={24}
-            color={currentColors.text}
-          />
-        </TouchableOpacity>
-        <View style={styles.textContainer}>
-          <Text
-            style={[styles.storeLocationText, { color: currentColors.grey }]}
-          >
-            Store location
-          </Text>
-          <View style={styles.locationContainer}>
-            <Ionicons name="location-sharp" size={18} color={Colors.orange} />
-            <Text style={[styles.locationText, { color: currentColors.text }]}>
-              {' '}
-              Colombo , Sri Lanka
-            </Text>
-          </View>
-        </View>
-        <TouchableOpacity style={styles.iconBackground}>
-          <Feather name="shopping-bag" size={24} color={currentColors.text} />
-        </TouchableOpacity>
-      </View>
+      <Header toggleTheme={toggleTheme} currentColors={currentColors} />
       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <View>
-        <ScrollView
-          horizontal
-          style={styles.logoContainer}
-          showsHorizontalScrollIndicator={false}
-        >
-          {logos.map((logo) => (
-            <TouchableOpacity
-              key={logo.name}
-              onPress={() => setSelectedLogo(logo.name)}
-            >
-              <View
-                style={[
-                  styles.logoItem,
-                  selectedLogo === logo.name && {
-                    backgroundColor: currentColors.lightBlue,
-                    borderRadius: 20,
-                  },
-                ]}
-              >
-                <Image source={{ uri: logo.uri }} style={styles.logo} />
-                {selectedLogo === logo.name && (
-                  <Text
-                    style={[
-                      styles.logoText,
-                      { color: Colors.white },
-                    ]}
-                  >
-                    {logo.name}
-                  </Text>
-                )}
-              </View>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+        <LogoList
+          logos={logos}
+          selectedLogo={selectedLogo}
+          setSelectedLogo={setSelectedLogo}
+          currentColors={currentColors}
+        />
         <PopularShoes />
-        <View style={styles.textRow}>
-          <Text style={[styles.text01, { color: currentColors.text }]}>
-            New Arrivals
-          </Text>
-          <Text style={[styles.text02, { color: currentColors.lightBlue }]}>
-            see all
-          </Text>
-        </View>
-        <View
-          style={[
-            styles.newView,
-            styles.newViewMargin,
-            { backgroundColor: currentColors.background_02 },
-          ]}
-        >
-          <View style={styles.newViewContent}>
-            <View style={styles.newViewTextContainer}>
-              <Text
-                style={[styles.bestChoice, { color: currentColors.lightBlue }]}
-              >
-                BEST CHOICE
-              </Text>
-              <Text
-                style={[styles.newViewSubtitle, { color: currentColors.text }]}
-              >
-                Nike Air Jordan
-              </Text>
-              <Text
-                style={[
-                  styles.newViewPrice,
-                  styles.newViewPriceMargin,
-                  { color: currentColors.grey },
-                ]}
-              >
-                $869.69
-              </Text>
-            </View>
-            <Image
-              source={{ uri: 'https://i.ibb.co/XYd8dkY/Frame-294.png' }}
-              style={styles.newViewImage}
-            />
-          </View>
-        </View>
+        <NewArrivals />
       </View>
     </View>
   );

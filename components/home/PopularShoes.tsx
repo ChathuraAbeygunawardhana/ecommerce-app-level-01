@@ -1,9 +1,15 @@
-
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+} from 'react-native';
 import { useRouter } from 'expo-router';
 import sampleData from '../../assets/sample.json';
-import { Colors } from '../../constants/Colors';
+import { Colors } from '../../themes/Colors';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -15,21 +21,62 @@ const PopularShoes = () => {
   return (
     <View>
       <View style={styles.textRow}>
-        <Text style={[styles.text01, { color: currentColors.text }]}>Popular Shoes</Text>
-        <Text style={[styles.text02, { color: currentColors.lightBlue }]}>see all</Text>
+        <Text style={[styles.text01, { color: currentColors.text }]}>
+          Popular Shoes
+        </Text>
+        <Text style={[styles.text02, { color: currentColors.lightBlue }]}>
+          see all
+        </Text>
       </View>
-      <ScrollView horizontal style={styles.productContainer} showsHorizontalScrollIndicator={false}>
+      <ScrollView
+        horizontal
+        style={styles.productContainer}
+        showsHorizontalScrollIndicator={false}
+      >
         {sampleData.map((product) => (
-          <TouchableOpacity key={product.id} onPress={() => router.push(`/${product.id}`)}>
+          <TouchableOpacity
+            key={product.id}
+            onPress={() => router.push(`/${product.id}`)}
+          >
             <View key={product.id} style={styles.productItem}>
-              <View style={[styles.productContent, { backgroundColor: currentColors.background_02 }]}>
-                <Image source={{ uri: product.mainImage }} style={styles.productImage} />
-                <Text style={[styles.bestSeller, { color: currentColors.lightBlue }]}>BEST SELLER</Text>
-                <Text style={[styles.productName, { color: currentColors.text }]}>
-                  {product.name.split(' ').slice(0, 3).join(' ').substring(0, 15)}
+              <View
+                style={[
+                  styles.productContent,
+                  { backgroundColor: currentColors.background_02 },
+                ]}
+              >
+                <Image
+                  source={{ uri: product.mainImage }}
+                  style={styles.productImage}
+                />
+                <Text
+                  style={[
+                    styles.bestSeller,
+                    { color: currentColors.lightBlue },
+                  ]}
+                >
+                  BEST SELLER
                 </Text>
-                <Text style={[styles.productPrice, { color: currentColors.grey }]}>${product.price}</Text>
-                <TouchableOpacity style={[styles.addIcon, { backgroundColor: currentColors.lightBlue }]}>
+                <Text
+                  style={[styles.productName, { color: currentColors.text }]}
+                >
+                  {product.name
+                    .split(' ')
+                    .slice(0, 3)
+                    .join(' ')
+                    .substring(0, 15)}
+                </Text>
+                <Text
+                  style={[styles.productPrice, { color: currentColors.grey }]}
+                >
+                  ${product.price}
+                </Text>
+                <TouchableOpacity
+                  style={[
+                    styles.addIcon,
+                    { backgroundColor: currentColors.lightBlue },
+                  ]}
+                >
                   <Ionicons name="add" size={20} color="white" />
                 </TouchableOpacity>
               </View>

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { Colors } from '../constants/Colors';
+import { Colors } from '../themes/Colors';
 
 const ThemeContext = createContext({
   theme: 'light',
@@ -15,12 +15,18 @@ interface ThemeProviderProps {
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = useState('light');
-  const [tabBarBackground, setTabBarBackground] = useState(Colors.light.background_02);
+  const [tabBarBackground, setTabBarBackground] = useState(
+    Colors.light.background_02
+  );
 
   const toggleTheme = () => {
     setTheme((prevTheme) => {
       const newTheme = prevTheme === 'light' ? 'dark' : 'light';
-      setTabBarBackground(newTheme === 'light' ? Colors.light.background_02 : Colors.dark.background_02);
+      setTabBarBackground(
+        newTheme === 'light'
+          ? Colors.light.background_02
+          : Colors.dark.background_02
+      );
       return newTheme;
     });
   };

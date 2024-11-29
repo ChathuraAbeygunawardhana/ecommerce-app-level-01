@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useOnboarding } from '../contexts/OnboardingContext';
-import { Colors } from '../constants/Colors';
+import { Colors } from '../themes/Colors';
 import { useTheme } from '../contexts/ThemeContext';
 
 const OnboardingScreen = () => {
@@ -13,10 +12,20 @@ const OnboardingScreen = () => {
   if (!isOnboardingVisible) return null;
 
   return (
-    <View style={[styles.onboardingContainer, { backgroundColor: currentColors.background_01 }]}>
-      <Text style={[styles.onboardingText, { color: currentColors.text }]}>nike</Text>
+    <View
+      style={[
+        styles.onboardingContainer,
+        { backgroundColor: currentColors.background_01 },
+      ]}
+    >
+      <Text style={[styles.onboardingText, { color: currentColors.text }]}>
+        nike
+      </Text>
       <TouchableOpacity
-        style={[styles.onboardingButton, { backgroundColor: currentColors.lightBlue }]}
+        style={[
+          styles.onboardingButton,
+          { backgroundColor: currentColors.lightBlue },
+        ]}
         onPress={() => setIsOnboardingVisible(false)}
       >
         <Text style={styles.onboardingButtonText}>get started</Text>

@@ -1,4 +1,3 @@
-
 import { StyleSheet, View, Text } from 'react-native';
 import React from 'react';
 
@@ -22,7 +21,7 @@ const ProfileFields = ({ currentColors }: { currentColors: Colors }) => {
           ]}
         >
           <Text style={[styles.fieldValue, { color: currentColors.text }]}>
-            John Doe
+            Test user
           </Text>
         </View>
       </View>
@@ -37,7 +36,7 @@ const ProfileFields = ({ currentColors }: { currentColors: Colors }) => {
           ]}
         >
           <Text style={[styles.fieldValue, { color: currentColors.text }]}>
-            johndoe@example.com
+            testuser@example.com
           </Text>
         </View>
       </View>

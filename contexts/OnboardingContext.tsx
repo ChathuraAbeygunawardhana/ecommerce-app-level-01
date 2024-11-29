@@ -18,3 +18,5 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export const useOnboarding = () => useContext(OnboardingContext);
+
+export { OnboardingContext };

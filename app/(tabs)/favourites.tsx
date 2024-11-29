@@ -75,7 +75,7 @@ export default Favourites;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
+    backgroundColor: Colors.light.background_01,
     padding: 10,
   },
   listContainer: {
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 10,
     marginVertical: 5,
-    backgroundColor: Colors.light.background,
+    backgroundColor: Colors.light.background_01,
     borderRadius: 8,
     shadowColor: Colors.light.text,
     shadowOffset: { width: 0, height: 1 },
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   removeButtonText: {
-    color: Colors.light.background,
+    color: Colors.light.background_01,
     fontSize: 12,
     fontWeight: 'bold',
   },

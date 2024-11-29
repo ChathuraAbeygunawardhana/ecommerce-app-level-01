@@ -1,4 +1,12 @@
-import { StyleSheet, View, Animated, Text } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  Animated,
+} from 'react-native';
 import React, { useEffect, useRef } from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import sampleData from '../../assets/sample.json';
@@ -6,22 +14,20 @@ import { useRouter } from 'expo-router';
 import { useCart } from '@/contexts/CartContext';
 import { useFonts } from 'expo-font';
 import { Colors } from '../../themes/Colors';
+import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/contexts/ThemeContext';
-import CustomHeader from '@/components/productdetails/CustomHeader';
-import ProductInfo from '@/components/productdetails/ProductInfo';
-import AddToCartButton from '@/components/productdetails/AddToCartButton';
 
 interface Product {
   id: string;
-  mainImage: string;
   name: string;
   price: number;
+  mainImage: string;
   colour: string;
   description: string;
 }
 
 const ProductDetails = () => {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id } = useLocalSearchParams();
   const product = sampleData.find(
     (item) => item.id === id
   ) as unknown as Product;
@@ -64,22 +70,46 @@ const ProductDetails = () => {
         { backgroundColor: currentColors.background_01 },
       ]}
     >
-      <CustomHeader router={router} currentColors={currentColors} />
+      <View
+        style={[
+          styles.customHeader,
+          { backgroundColor: currentColors.background_01 },
+        ]}
+      >
+        <TouchableOpacity onPress={() => router.back()}>
+          <Ionicons name="chevron-back" size={24} color={currentColors.text} />
+        </TouchableOpacity>
+        <Text style={[styles.headerTitle, { color: currentColors.text }]}>
+          Product Details
+        </Text>
+        <View style={{ width: 24 }} />
+      </View>
+
       <Animated.ScrollView style={[styles.container, { opacity: fadeAnim }]}>
-        <ProductInfo product={product} currentColors={currentColors} />
+        <Image source={{ uri: product.mainImage }} style={styles.image} />
+        <View style={styles.detailsContainer}>
+          <Text style={[styles.name, { color: currentColors.text }]}>
+            {product.name}
+          </Text>
+          <Text style={[styles.price, { color: currentColors.icon }]}>
+            ${product.price}
+          </Text>
+          <Text style={[styles.colour, { color: currentColors.icon }]}>
+            Color: {product.colour}
+          </Text>
+          <Text style={[styles.description, { color: currentColors.text }]}>
+            {product.description}
+          </Text>
+        </View>
       </Animated.ScrollView>
-      <AddToCartButton
-        product={product}
-        addToCart={() =>
-          addToCart({
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            image: '',
-            quantity: 0,
-          })
+      <TouchableOpacity
+        style={styles.addToCartButton}
+        onPress={() =>
+          addToCart({ ...product, image: product.mainImage, quantity: 1 })
         }
-      />
+      >
+        <Text style={styles.addToCartText}>Add to Cart</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -89,5 +119,66 @@ export default ProductDetails;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  image: {
+    width: '100%',
+    height: 300,
+    resizeMode: 'cover',
+  },
+  detailsContainer: {
+    padding: 20,
+  },
+  name: {
+    fontFamily: 'Helvetica',
+    fontSize: 30,
+    marginBottom: 10,
+  },
+  price: {
+    fontFamily: 'Novecentro',
+    fontSize: 20,
+    marginBottom: 10,
+  },
+  colour: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  description: {
+    fontSize: 16,
+    lineHeight: 24,
+    textAlign: 'justify',
+  },
+  addToCartButton: {
+    backgroundColor: Colors.lightBlue,
+    marginHorizontal: 14,
+    marginBottom: 2,
+    padding: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 80,
+    left: 1,
+    right: 1,
+    borderRadius: 10,
+  },
+  addToCartText: {
+    color: Colors.white,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  customHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    paddingTop: 40,
   },
 });

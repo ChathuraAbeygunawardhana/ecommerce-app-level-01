@@ -1,6 +1,7 @@
-
-import { StyleSheet, View, Text } from 'react-native';
+import { View } from 'react-native';
 import React from 'react';
+import ProfileField from './ProfileField';
+import { profileFieldsStyles } from './styles';
 
 interface Colors {
   grey: string;
@@ -10,77 +11,24 @@ interface Colors {
 
 const ProfileFields = ({ currentColors }: { currentColors: Colors }) => {
   return (
-    <View style={styles.fieldsContainer}>
-      <View style={styles.fieldItem}>
-        <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>
-          Full name
-        </Text>
-        <View
-          style={[
-            styles.fieldValueContainer,
-            { backgroundColor: currentColors.background_02 },
-          ]}
-        >
-          <Text style={[styles.fieldValue, { color: currentColors.text }]}>
-            John Doe
-          </Text>
-        </View>
-      </View>
-      <View style={styles.fieldItem}>
-        <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>
-          Email address
-        </Text>
-        <View
-          style={[
-            styles.fieldValueContainer,
-            { backgroundColor: currentColors.background_02 },
-          ]}
-        >
-          <Text style={[styles.fieldValue, { color: currentColors.text }]}>
-            johndoe@example.com
-          </Text>
-        </View>
-      </View>
-      <View style={styles.fieldItem}>
-        <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>
-          Password
-        </Text>
-        <View
-          style={[
-            styles.fieldValueContainer,
-            { backgroundColor: currentColors.background_02 },
-          ]}
-        >
-          <Text style={[styles.fieldValue, { color: currentColors.text }]}>
-            ••••••••
-          </Text>
-        </View>
-      </View>
+    <View style={profileFieldsStyles.fieldsContainer}>
+      <ProfileField
+        label="Full name"
+        value="John Doe"
+        currentColors={currentColors}
+      />
+      <ProfileField
+        label="Email address"
+        value="johndoe@example.com"
+        currentColors={currentColors}
+      />
+      <ProfileField
+        label="Password"
+        value="••••••••"
+        currentColors={currentColors}
+      />
     </View>
   );
 };
 
 export default ProfileFields;
-
-const styles = StyleSheet.create({
-  fieldsContainer: {
-    paddingHorizontal: 20,
-    marginTop: 40,
-  },
-  fieldItem: {
-    marginBottom: 24,
-  },
-  fieldValueContainer: {
-    padding: 16,
-    borderRadius: 12,
-    marginTop: 8,
-  },
-  fieldLabel: {
-    fontSize: 14,
-    marginBottom: 8,
-  },
-  fieldValue: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
-});

@@ -15,6 +15,8 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { useRouter } from 'expo-router';
 import { useOnboarding } from '../../contexts/OnboardingContext';
 import OnboardingScreen from '../../components/OnboardingScreen';
+import SearchBar from '../../components/home/SearchBar';
+import PopularShoes from '../../components/home/PopularShoes';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -72,21 +74,7 @@ const Home = () => {
           <Feather name="shopping-bag" size={24} color={currentColors.text} />
         </TouchableOpacity>
       </View>
-      <View
-        style={[
-          styles.searchBar,
-          { backgroundColor: currentColors.background_02 },
-        ]}
-      >
-        <Ionicons name="search" size={20} color={currentColors.grey} />
-        <TextInput
-          style={[styles.searchInput, { color: currentColors.text }]}
-          placeholder="Looking for shoes"
-          placeholderTextColor={currentColors.grey}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-      </View>
+      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <View>
         <ScrollView
           horizontal
@@ -122,67 +110,7 @@ const Home = () => {
             </TouchableOpacity>
           ))}
         </ScrollView>
-        <View style={styles.textRow}>
-          <Text style={[styles.text01, { color: currentColors.text }]}>
-            Popular Shoes
-          </Text>
-          <Text style={[styles.text02, { color: currentColors.lightBlue }]}>
-            see all
-          </Text>
-        </View>
-        <ScrollView
-          horizontal
-          style={styles.productContainer}
-          showsHorizontalScrollIndicator={false}
-        >
-          {sampleData.map((product) => (
-            <TouchableOpacity key={product.id} onPress={() => router.push(`/${product.id}`)}>
-              <View key={product.id} style={styles.productItem}>
-                <View
-                  style={[
-                    styles.productContent,
-                    { backgroundColor: currentColors.background_02 },
-                  ]}
-                >
-                  <Image
-                    source={{ uri: product.mainImage }}
-                    style={styles.productImage}
-                  />
-                  <Text
-                    style={[
-                      styles.bestSeller,
-                      { color: currentColors.lightBlue },
-                    ]}
-                  >
-                    BEST SELLER
-                  </Text>
-                  <Text
-                    style={[styles.productName, { color: currentColors.text }]}
-                  >
-                    {product.name
-                      .split(' ')
-                      .slice(0, 3)
-                      .join(' ')
-                      .substring(0, 15)}
-                  </Text>
-                  <Text
-                    style={[styles.productPrice, { color: currentColors.grey }]}
-                  >
-                    ${product.price}
-                  </Text>
-                  <TouchableOpacity
-                    style={[
-                      styles.addIcon,
-                      { backgroundColor: currentColors.lightBlue },
-                    ]}
-                  >
-                    <Ionicons name="add" size={20} color="white" />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+        <PopularShoes />
         <View style={styles.textRow}>
           <Text style={[styles.text01, { color: currentColors.text }]}>
             New Arrivals

@@ -13,6 +13,8 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import sampleData from '../../assets/sample.json';
 import useProductSearch from '../../hooks/useProductSearch';
+import { Colors } from '../../constants/Colors';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const { width } = Dimensions.get('window');
 const numColumns = 2;
@@ -29,6 +31,8 @@ export default function TabTwoScreen() {
   const [filteredProducts, setFilteredProducts] = useState(sampleData);
 
   const { searchedProducts } = useProductSearch(filteredProducts, searchQuery);
+  const { theme } = useTheme();
+  const currentColors = Colors[theme as 'light' | 'dark'];
 
   const brands = ['Nike', 'Adidas', 'PUMA', 'New Balance'];
   const colors = ['Black', 'White', 'Red', 'Blue', 'Green'];
@@ -66,29 +70,30 @@ export default function TabTwoScreen() {
   };
 
   const renderItem = ({ item }: any) => (
-    <View style={styles.itemContainer}>
+    <View style={[styles.itemContainer, { backgroundColor: currentColors.background_02 }]}>
       <View style={styles.imageContainer}>
         <Image source={{ uri: item.mainImage }} style={styles.image} />
       </View>
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.price}>${item.price}</Text>
+      <Text style={[styles.name, { color: currentColors.text }]}>{item.name}</Text>
+      <Text style={[styles.price, { color: currentColors.grey }]}>{item.price}</Text>
     </View>
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+    <View style={{ flex: 1, backgroundColor: currentColors.background_01 }}>
       <View style={styles.searchContainer}>
         <TextInput
-          style={styles.searchInput}
+          style={[styles.searchInput, { color: currentColors.text, backgroundColor: currentColors.background_02 }]}
           placeholder="Search products..."
+          placeholderTextColor={currentColors.grey}
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
         <TouchableOpacity
-          style={styles.searchButton}
+          style={[styles.searchButton, { backgroundColor: currentColors.background_02 }]}
           onPress={() => setModalVisible(true)}
         >
-          <Ionicons name="filter" size={24} color="black" />
+          <Ionicons name="filter" size={24} color={currentColors.text} />
         </TouchableOpacity>
       </View>
 
@@ -111,20 +116,20 @@ export default function TabTwoScreen() {
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalOverlay}>
-          <View style={styles.bottomSheet}>
-            <Text style={styles.modalTitle}>Filters</Text>
+          <View style={[styles.bottomSheet, { backgroundColor: currentColors.background_01 }]}>
+            <Text style={[styles.modalTitle, { color: currentColors.text }]}>Filters</Text>
 
-            <Text style={styles.modalText}>Price Range</Text>
+            <Text style={[styles.modalText, { color: currentColors.text }]}>Price Range</Text>
             <View style={styles.priceContainer}>
               <TextInput
-                style={styles.input}
+                style={[styles.input, { color: currentColors.text, borderColor: currentColors.grey }]}
                 placeholder="Min Price"
                 keyboardType="numeric"
                 value={minPrice}
                 onChangeText={setMinPrice}
               />
               <TextInput
-                style={styles.input}
+                style={[styles.input, { color: currentColors.text, borderColor: currentColors.grey }]}
                 placeholder="Max Price"
                 keyboardType="numeric"
                 value={maxPrice}
@@ -132,23 +137,21 @@ export default function TabTwoScreen() {
               />
             </View>
 
-            <Text style={styles.modalText}>Brands</Text>
+            <Text style={[styles.modalText, { color: currentColors.text }]}>Brands</Text>
             <View style={styles.brandContainer}>
               {brands.map((brand) => (
                 <TouchableOpacity
                   key={brand}
                   style={[
                     styles.brandButton,
-                    selectedBrands.includes(brand) &&
-                      styles.selectedBrandButton,
+                    selectedBrands.includes(brand) && { backgroundColor: currentColors.lightBlue },
                   ]}
                   onPress={() => toggleBrand(brand)}
                 >
                   <Text
                     style={[
                       styles.brandButtonText,
-                      selectedBrands.includes(brand) &&
-                        styles.selectedBrandButtonText,
+                      selectedBrands.includes(brand) && { color: Colors.white },
                     ]}
                   >
                     {brand}
@@ -159,13 +162,13 @@ export default function TabTwoScreen() {
 
             <View style={styles.buttonContainer}>
               <TouchableOpacity
-                style={[styles.button, styles.clearButton]}
+                style={[styles.button, styles.clearButton, { backgroundColor: currentColors.lightBlue }]}
                 onPress={clearFilters}
               >
                 <Text style={styles.buttonText}>Clear</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.button, styles.applyButton]}
+                style={[styles.button, styles.applyButton, { backgroundColor: currentColors.lightBlue }]}
                 onPress={applyFilters}
               >
                 <Text style={styles.buttonText}>Apply</Text>
@@ -190,7 +193,7 @@ const styles = StyleSheet.create({
     width: itemWidth,
     marginBottom: 15,
     padding: 8,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff', // This will be overridden by the dynamic color
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -320,14 +323,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
-    backgroundColor: 'white',
+    // backgroundColor: 'white', // This will be overridden by the dynamic color
   },
   searchButton: {
     marginLeft: 10,
     padding: 5,
-    backgroundColor: 'white',
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#ccc',
+    // backgroundColor: 'white', // This will be overridden by the dynamic color
   },
 });

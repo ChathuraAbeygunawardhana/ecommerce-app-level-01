@@ -163,7 +163,14 @@ export default function TabLayout() {
                 borderTopWidth: 0,
                 overflow: 'hidden',
               },
-              tabBarBackground: () => <View style={[styles.tabBarBackground, { backgroundColor: tabBarBackground }]} />,
+              tabBarBackground: () => (
+                <View
+                  style={[
+                    styles.tabBarBackground,
+                    { backgroundColor: tabBarBackground },
+                  ]}
+                />
+              ),
               tabBarShowLabel: false,
             })}
           >
@@ -197,7 +204,7 @@ export default function TabLayout() {
               name="cart"
               options={{
                 title: 'Cart',
-                headerShown: false, 
+                headerShown: false,
                 tabBarIcon: ({ color, focused }) => (
                   <View style={styles.tabIconContainer}>
                     <Ionicons

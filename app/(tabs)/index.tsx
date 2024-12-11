@@ -26,6 +26,7 @@ const Home = () => {
   const { isOnboardingVisible, setIsOnboardingVisible } = useOnboarding();
   const { addToFavourites, removeFromFavourites, isFavourite } =
     useFavourites();
+  const [filteredProducts, setFilteredProducts] = React.useState(sampleData);
 
   const shadowStyle =
     theme === 'light'
@@ -59,6 +60,18 @@ const Home = () => {
     { name: 'Converse', uri: 'https://i.ibb.co/WDQLZmS/Converse-Logo.png' },
     { name: 'Adidas', uri: 'https://i.ibb.co/Y7nWm7X/Adidas-Logo.png' },
   ];
+
+  const handleLogoPress = (logoName: string) => {
+    setSelectedLogo(logoName);
+    const searchTerm = logoName.toUpperCase();
+    if (searchTerm === 'PUMA' || searchTerm === 'NIKE') {
+      setFilteredProducts(
+        sampleData.filter((product) => product.name.split(' ')[0].toUpperCase() === searchTerm)
+      );
+    } else {
+      setFilteredProducts(sampleData);
+    }
+  };
 
   if (isOnboardingVisible) {
     return <OnboardingScreen />;
@@ -121,7 +134,7 @@ const Home = () => {
           {logos.map((logo) => (
             <TouchableOpacity
               key={logo.name}
-              onPress={() => setSelectedLogo(logo.name)}
+              onPress={() => handleLogoPress(logo.name)}
             >
               <View
                 style={[
@@ -155,7 +168,7 @@ const Home = () => {
           style={styles.productContainer}
           showsHorizontalScrollIndicator={false}
         >
-          {sampleData.map((product) => (
+          {filteredProducts.map((product) => (
             <TouchableOpacity
               key={product.id}
               onPress={() => router.push(`/${product.id}`)}

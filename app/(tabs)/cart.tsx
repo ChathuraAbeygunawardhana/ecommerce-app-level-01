@@ -6,7 +6,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { useCart } from '@/contexts/CartContext';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
@@ -35,6 +35,34 @@ const Cart = () => {
 
   const { theme } = useTheme();
   const currentColors = Colors[theme as 'light' | 'dark'];
+
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const brands = ['Brand1', 'Brand2', 'Brand3']; // Example brands
+
+  const toggleBrand = (brand: string) => {
+    setSelectedBrands((prev) =>
+      prev.includes(brand) ? prev.filter((b) => b !== brand) : [...prev, brand]
+    );
+  };
+
+  const clearFilters = () => {
+    setMinPrice('');
+    setMaxPrice('');
+    setSelectedBrands([]);
+  };
+
+  const applyFilters = () => {
+    // Implement filter logic here
+  };
+
+  const shippingCharge = 40.99;
+  const subtotal = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+  const total = subtotal + shippingCharge;
 
   const renderItem = ({ item }: { item: CartItem }) => {
     return (
@@ -92,12 +120,6 @@ const Cart = () => {
     );
   };
 
-  const calculateTotal = () => {
-    return cart
-      .reduce((total, item) => total + item.price * item.quantity, 0)
-      .toFixed(2);
-  };
-
   return (
     <View
       style={[
@@ -111,32 +133,113 @@ const Cart = () => {
       {cart.length === 0 ? (
         <View style={styles.emptyCart}>
           <View>
-            <Text>Your cart is empty</Text>
+            <Text style={{ color: Colors.grey }}>Your cart is empty</Text>
           </View>
         </View>
       ) : (
-        <FlatList
-          data={cart}
-          keyExtractor={(item, index) => `${item.id}-${index}`}
-          renderItem={renderItem}
-        />
+        <>
+          <FlatList
+            data={cart}
+            keyExtractor={(item, index) => `${item.id}-${index}`}
+            renderItem={renderItem}
+          />
+          <View
+            style={[
+              styles.filterContainer,
+              {
+                backgroundColor: currentColors.background_02,
+                marginBottom: 55,
+                borderTopWidth: 0,
+                borderTopLeftRadius: 40,
+                borderTopRightRadius: 40,
+              },
+            ]}
+          >
+            <View style={styles.summaryLine}>
+              <Text
+                style={[
+                  styles.modalText,
+                  { color: currentColors.text, paddingHorizontal: 16 },
+                ]}
+              >
+                Subtotal
+              </Text>
+              <Text
+                style={[
+                  styles.modalText,
+                  { color: currentColors.text, paddingHorizontal: 16 },
+                ]}
+              >
+                ${subtotal.toFixed(2)}
+              </Text>
+            </View>
+
+            <View style={styles.summaryLine}>
+              <Text
+                style={[
+                  styles.modalText,
+                  { color: currentColors.text, paddingHorizontal: 16 },
+                ]}
+              >
+                Shipping
+              </Text>
+              <Text
+                style={[
+                  styles.modalText,
+                  { color: currentColors.text, paddingHorizontal: 16 },
+                ]}
+              >
+                ${shippingCharge.toFixed(2)}
+              </Text>
+            </View>
+
+            <View style={styles.summaryLine}>
+              <Text
+                style={[
+                  styles.modalText,
+                  { color: currentColors.text, paddingHorizontal: 16 },
+                ]}
+              >
+                Total
+              </Text>
+              <Text
+                style={[
+                  styles.modalText,
+                  { color: currentColors.text, paddingHorizontal: 16 },
+                ]}
+              >
+                ${total.toFixed(2)}
+              </Text>
+            </View>
+
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  {
+                    backgroundColor: currentColors.lightBlue,
+                    borderRadius: 60,
+                  },
+                ]}
+                onPress={() => {
+                  // Implement checkout logic here
+                }}
+              >
+                <Text style={styles.buttonText}>Checkout</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </>
       )}
       <View
         style={[
-          styles.totalContainer,
-          { backgroundColor: currentColors.background_01 },
+          styles.newSection,
+          { backgroundColor: currentColors.background_02, borderTopWidth: 0 },
         ]}
       >
-        <View>
-          <Text style={[styles.totalText, { color: currentColors.text }]}>
-            Total Amount:
-          </Text>
-        </View>
-        <View>
-          <Text style={[styles.totalAmount, { color: currentColors.text }]}>
-            ${calculateTotal()}
-          </Text>
-        </View>
+        <Text style={[styles.newSectionText, { color: currentColors.text }]}>
+          Sample Text
+        </Text>
       </View>
     </View>
   );
@@ -156,11 +259,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
     borderRadius: 8,
-    shadowColor: Colors.light.text,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 2,
+    // Removed shadow properties
   },
   image: {
     width: 80,
@@ -207,24 +306,84 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  totalContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 16,
-    backgroundColor: Colors.light.background_02,
-    marginTop: 0,
-    marginBottom: 8,
-  },
-  totalText: {
-    fontSize: 18,
-  },
-  totalAmount: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
   headerText: {
     fontSize: 20,
     fontWeight: 'bold',
     margin: 16,
+  },
+  filterContainer: {
+    padding: 16,
+  },
+  modalTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  modalText: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  input: {
+    flex: 1,
+    height: 40,
+    marginHorizontal: 8,
+    paddingHorizontal: 8,
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+  brandContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 16,
+  },
+  brandButton: {
+    padding: 8,
+    margin: 4,
+    borderRadius: 4,
+  },
+  brandButtonText: {
+    fontSize: 14,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  button: {
+    flex: 1,
+    padding: 12,
+    marginHorizontal: 8,
+    borderRadius: 4,
+    alignItems: 'center',
+  },
+  clearButton: {
+    backgroundColor: Colors.lightBlue,
+  },
+  applyButton: {
+    backgroundColor: Colors.lightBlue,
+  },
+  buttonText: {
+    color: Colors.white,
+    fontSize: 16,
+  },
+  newSection: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  newSectionText: {
+    fontSize: 16,
+  },
+  summaryLine: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
   },
 });

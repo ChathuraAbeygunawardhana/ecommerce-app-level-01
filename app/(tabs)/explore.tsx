@@ -70,12 +70,21 @@ export default function TabTwoScreen() {
   };
 
   const renderItem = ({ item }: any) => (
-    <View style={[styles.itemContainer, { backgroundColor: currentColors.background_02 }]}>
+    <View
+      style={[
+        styles.itemContainer,
+        { backgroundColor: currentColors.background_02 },
+      ]}
+    >
       <View style={styles.imageContainer}>
         <Image source={{ uri: item.mainImage }} style={styles.image} />
       </View>
-      <Text style={[styles.name, { color: currentColors.text }]}>{item.name}</Text>
-      <Text style={[styles.price, { color: currentColors.grey }]}>{item.price}</Text>
+      <Text style={[styles.name, { color: currentColors.text }]}>
+        {item.name}
+      </Text>
+      <Text style={[styles.price, { color: currentColors.grey }]}>
+        {item.price}
+      </Text>
     </View>
   );
 
@@ -83,14 +92,23 @@ export default function TabTwoScreen() {
     <View style={{ flex: 1, backgroundColor: currentColors.background_01 }}>
       <View style={styles.searchContainer}>
         <TextInput
-          style={[styles.searchInput, { color: currentColors.text, backgroundColor: currentColors.background_02 }]}
+          style={[
+            styles.searchInput,
+            {
+              color: currentColors.text,
+              backgroundColor: currentColors.background_02,
+            },
+          ]}
           placeholder="Search products..."
           placeholderTextColor={currentColors.grey}
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
         <TouchableOpacity
-          style={[styles.searchButton, { backgroundColor: currentColors.background_02 }]}
+          style={[
+            styles.searchButton,
+            { backgroundColor: currentColors.background_02 },
+          ]}
           onPress={() => setModalVisible(true)}
         >
           <Ionicons name="filter" size={24} color={currentColors.text} />
@@ -116,20 +134,41 @@ export default function TabTwoScreen() {
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalOverlay}>
-          <View style={[styles.bottomSheet, { backgroundColor: currentColors.background_01 }]}>
-            <Text style={[styles.modalTitle, { color: currentColors.text }]}>Filters</Text>
+          <View
+            style={[
+              styles.bottomSheet,
+              { backgroundColor: currentColors.background_01 },
+            ]}
+          >
+            <Text style={[styles.modalTitle, { color: currentColors.text }]}>
+              Filters
+            </Text>
 
-            <Text style={[styles.modalText, { color: currentColors.text }]}>Price Range</Text>
+            <Text style={[styles.modalText, { color: currentColors.text }]}>
+              Price Range
+            </Text>
             <View style={styles.priceContainer}>
               <TextInput
-                style={[styles.input, { color: currentColors.text, borderColor: currentColors.grey }]}
+                style={[
+                  styles.input,
+                  {
+                    color: currentColors.text,
+                    borderColor: currentColors.grey,
+                  },
+                ]}
                 placeholder="Min Price"
                 keyboardType="numeric"
                 value={minPrice}
                 onChangeText={setMinPrice}
               />
               <TextInput
-                style={[styles.input, { color: currentColors.text, borderColor: currentColors.grey }]}
+                style={[
+                  styles.input,
+                  {
+                    color: currentColors.text,
+                    borderColor: currentColors.grey,
+                  },
+                ]}
                 placeholder="Max Price"
                 keyboardType="numeric"
                 value={maxPrice}
@@ -137,14 +176,18 @@ export default function TabTwoScreen() {
               />
             </View>
 
-            <Text style={[styles.modalText, { color: currentColors.text }]}>Brands</Text>
+            <Text style={[styles.modalText, { color: currentColors.text }]}>
+              Brands
+            </Text>
             <View style={styles.brandContainer}>
               {brands.map((brand) => (
                 <TouchableOpacity
                   key={brand}
                   style={[
                     styles.brandButton,
-                    selectedBrands.includes(brand) && { backgroundColor: currentColors.lightBlue },
+                    selectedBrands.includes(brand) && {
+                      backgroundColor: currentColors.lightBlue,
+                    },
                   ]}
                   onPress={() => toggleBrand(brand)}
                 >
@@ -162,13 +205,21 @@ export default function TabTwoScreen() {
 
             <View style={styles.buttonContainer}>
               <TouchableOpacity
-                style={[styles.button, styles.clearButton, { backgroundColor: currentColors.lightBlue }]}
+                style={[
+                  styles.button,
+                  styles.clearButton,
+                  { backgroundColor: currentColors.lightBlue },
+                ]}
                 onPress={clearFilters}
               >
                 <Text style={styles.buttonText}>Clear</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.button, styles.applyButton, { backgroundColor: currentColors.lightBlue }]}
+                style={[
+                  styles.button,
+                  styles.applyButton,
+                  { backgroundColor: currentColors.lightBlue },
+                ]}
                 onPress={applyFilters}
               >
                 <Text style={styles.buttonText}>Apply</Text>
@@ -323,7 +374,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
-    // backgroundColor: 'white', // This will be overridden by the dynamic color
   },
   searchButton: {
     marginLeft: 10,
@@ -331,6 +381,5 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#ccc',
-    // backgroundColor: 'white', // This will be overridden by the dynamic color
   },
 });

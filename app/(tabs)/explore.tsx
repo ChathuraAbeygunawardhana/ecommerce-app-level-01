@@ -96,7 +96,13 @@ export default function TabTwoScreen() {
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: currentColors.background_01, paddingTop: 40 }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: currentColors.background_01,
+        paddingTop: 40,
+      }}
+    >
       <View
         style={[
           styles.headerContainer,
@@ -113,9 +119,10 @@ export default function TabTwoScreen() {
           <TouchableOpacity onPress={() => setModalVisible(true)}>
             <Feather name="sliders" size={24} color={currentColors.text} />
           </TouchableOpacity>
-          <View style={{ width: 10 }} /> 
+          <View style={{ width: 10 }} />
           <TouchableOpacity
             onPress={() => setIsSearchVisible(!isSearchVisible)}
+            style={{ marginRight: 12 }}
           >
             <Ionicons name="search" size={24} color={currentColors.text} />
           </TouchableOpacity>
@@ -123,20 +130,20 @@ export default function TabTwoScreen() {
       </View>
 
       {isSearchVisible && (
-        <View style={styles.searchContainer}>
+        <View style={[styles.searchBar, { backgroundColor: currentColors.background_02 }]}>
+          <Ionicons name="search" size={20} color={currentColors.grey} />
           <TextInput
-            style={[
-              styles.searchInput,
-              {
-                color: currentColors.text,
-                backgroundColor: currentColors.background_02,
-              },
-            ]}
-            placeholder="Search products..."
+            style={[styles.searchInput, { color: currentColors.text }]}
+            placeholder="Looking for shoes"
             placeholderTextColor={currentColors.grey}
             value={searchQuery}
             onChangeText={setSearchQuery}
           />
+          {searchQuery.length > 0 && (
+            <TouchableOpacity onPress={() => setSearchQuery('')}>
+              <Ionicons name="close" size={20} color={currentColors.grey} />
+            </TouchableOpacity>
+          )}
         </View>
       )}
 
@@ -147,7 +154,7 @@ export default function TabTwoScreen() {
         numColumns={2}
         style={[
           styles.listContainer,
-          { paddingVertical: 20, marginBottom: 60 },
+          { paddingVertical: 10, marginBottom: 60 }, // Reduced paddingVertical
         ]}
         columnWrapperStyle={styles.columnWrapper}
       />
@@ -165,11 +172,21 @@ export default function TabTwoScreen() {
               { backgroundColor: currentColors.background_02 },
             ]}
           >
-            <Text style={[styles.modalTitle, { color: currentColors.text, fontSize: 22 }]}>
+            <Text
+              style={[
+                styles.modalTitle,
+                { color: currentColors.text, fontSize: 22 },
+              ]}
+            >
               Filters
             </Text>
 
-            <Text style={[styles.modalText, { color: currentColors.text, textAlign: 'left' }]}>
+            <Text
+              style={[
+                styles.modalText,
+                { color: currentColors.text, textAlign: 'left' },
+              ]}
+            >
               Price Range
             </Text>
             <View style={styles.priceContainer}>
@@ -179,11 +196,11 @@ export default function TabTwoScreen() {
                   {
                     color: currentColors.text,
                     borderColor: currentColors.grey,
-                    borderRadius: 60, // Updated border radius
+                    borderRadius: 60,
                   },
                 ]}
                 placeholder="Min Price"
-                placeholderTextColor={Colors.grey} // Updated color
+                placeholderTextColor={Colors.grey}
                 keyboardType="numeric"
                 value={minPrice}
                 onChangeText={setMinPrice}
@@ -194,18 +211,23 @@ export default function TabTwoScreen() {
                   {
                     color: currentColors.text,
                     borderColor: currentColors.grey,
-                    borderRadius: 60, // Updated border radius
+                    borderRadius: 60,
                   },
                 ]}
                 placeholder="Max Price"
-                placeholderTextColor={Colors.grey} // Updated color
+                placeholderTextColor={Colors.grey}
                 keyboardType="numeric"
                 value={maxPrice}
                 onChangeText={setMaxPrice}
               />
             </View>
 
-            <Text style={[styles.modalText, { color: currentColors.text, textAlign: 'left' }]}>
+            <Text
+              style={[
+                styles.modalText,
+                { color: currentColors.text, textAlign: 'left' },
+              ]}
+            >
               Brands
             </Text>
             <View style={styles.brandContainer}>
@@ -299,9 +321,8 @@ const styles = StyleSheet.create({
     width: itemWidth,
     marginBottom: 15,
     padding: 8,
-    backgroundColor: '#fff', // This will be overridden by the dynamic color
-    borderRadius: 20, // Increased border radius
-    // Removed shadow properties
+    backgroundColor: '#fff',
+    borderRadius: 20,
   },
   imageContainer: {
     alignItems: 'center',
@@ -419,13 +440,16 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
   },
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 13,
+    borderRadius: 50,
+    margin: 16,
+  },
   searchInput: {
     flex: 1,
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
+    marginLeft: 10,
   },
   searchButton: {
     marginLeft: 10,

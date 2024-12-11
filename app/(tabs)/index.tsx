@@ -15,6 +15,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { useRouter } from 'expo-router';
 import { useOnboarding } from '../../contexts/OnboardingContext';
 import OnboardingScreen from '../../components/OnboardingScreen';
+import { useFavourites } from '../../contexts/FavouritesContext';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -23,6 +24,7 @@ const Home = () => {
   const currentColors = Colors[theme as 'light' | 'dark'];
   const router = useRouter();
   const { isOnboardingVisible, setIsOnboardingVisible } = useOnboarding();
+  const { addToFavourites, removeFromFavourites, isFavourite } = useFavourites();
 
   const shadowStyle =
     theme === 'light'
@@ -195,8 +197,17 @@ const Home = () => {
                       styles.addIcon,
                       { backgroundColor: currentColors.lightBlue },
                     ]}
+                    onPress={() =>
+                      isFavourite(product.id)
+                        ? removeFromFavourites(product.id)
+                        : addToFavourites(product)
+                    }
                   >
-                    <Ionicons name="add" size={20} color="white" />
+                    <Ionicons
+                      name={isFavourite(product.id) ? 'heart' : 'add'}
+                      size={20}
+                      color="white"
+                    />
                   </TouchableOpacity>
                 </View>
               </View>

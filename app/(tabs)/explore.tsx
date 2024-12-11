@@ -15,6 +15,7 @@ import sampleData from '../../assets/sample.json';
 import useProductSearch from '../../hooks/useProductSearch';
 import { Colors } from '../../constants/Colors';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useFavourites } from '../../contexts/FavouritesContext';
 
 const { width } = Dimensions.get('window');
 const numColumns = 2;
@@ -40,6 +41,8 @@ export default function TabTwoScreen() {
       : currentColors.background_02;
   const currentSpecialGrey =
     theme === 'light' ? Colors.light.specialGrey : Colors.dark.specialGrey;
+
+  const { addToFavourites, removeFromFavourites, isFavourite } = useFavourites();
 
   const brands = ['Nike', 'Adidas', 'PUMA', 'NB'];
   const colors = ['Black', 'White', 'Red', 'Blue', 'Green'];
@@ -96,8 +99,17 @@ export default function TabTwoScreen() {
       <View style={styles.addIconContainer}>
         <TouchableOpacity
           style={[styles.addIcon, { backgroundColor: currentColors.lightBlue }]}
+          onPress={() =>
+            isFavourite(item.id)
+              ? removeFromFavourites(item.id)
+              : addToFavourites(item)
+          }
         >
-          <Ionicons name="add" size={20} color="white" />
+          <Ionicons
+            name={isFavourite(item.id) ? 'heart' : 'add'}
+            size={20}
+            color="white"
+          />
         </TouchableOpacity>
       </View>
     </View>

@@ -13,6 +13,7 @@ interface FavouritesContextType {
   favourites: Product[];
   addToFavourites: (product: Product) => void;
   removeFromFavourites: (id: string) => void;
+  isFavourite: (id: string) => boolean;
 }
 
 const FavouritesContext = createContext<FavouritesContextType | undefined>(
@@ -30,9 +31,13 @@ export const FavouritesProvider = ({ children }: { children: ReactNode }) => {
     setFavourites((prev) => prev.filter((item) => item.id !== id));
   };
 
+  const isFavourite = (id: string) => {
+    return favourites.some((item) => item.id === id);
+  };
+
   return (
     <FavouritesContext.Provider
-      value={{ favourites, addToFavourites, removeFromFavourites }}
+      value={{ favourites, addToFavourites, removeFromFavourites, isFavourite }} // Add isFavourite here
     >
       {children}
     </FavouritesContext.Provider>

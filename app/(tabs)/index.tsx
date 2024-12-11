@@ -16,6 +16,7 @@ import { useRouter } from 'expo-router';
 import { useOnboarding } from '../../contexts/OnboardingContext';
 import OnboardingScreen from '../../components/OnboardingScreen';
 import { useFavourites } from '../../contexts/FavouritesContext';
+import { useCart } from '../../contexts/CartContext';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -26,6 +27,7 @@ const Home = () => {
   const { isOnboardingVisible, setIsOnboardingVisible } = useOnboarding();
   const { addToFavourites, removeFromFavourites, isFavourite } =
     useFavourites();
+  const { cart } = useCart();
   const [filteredProducts, setFilteredProducts] = React.useState(sampleData);
 
   const shadowStyle =
@@ -106,9 +108,12 @@ const Home = () => {
             </Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.iconBackground}>
-          <Feather name="shopping-bag" size={24} color={currentColors.text} />
-        </TouchableOpacity>
+        <View>
+          <TouchableOpacity style={styles.iconBackground}>
+            <Feather name="shopping-bag" size={24} color={currentColors.text} />
+          </TouchableOpacity>
+          {cart.length > 0 && <View style={[styles.cartDot, { backgroundColor: Colors.orange }]} />}
+        </View>
       </View>
       <View
         style={[
@@ -474,6 +479,15 @@ const styles = StyleSheet.create({
   bestChoice: {
     fontSize: 12,
     marginBottom: 5,
+  },
+  cartDot: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: Colors.orange,
   },
   onboardingContainer: {
     flex: 1,

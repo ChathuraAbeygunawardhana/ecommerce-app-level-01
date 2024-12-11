@@ -71,8 +71,8 @@ const Cart = () => {
       >
         <Image source={{ uri: item.image }} style={styles.image} />
         <View style={styles.details}>
-          <Text style={[styles.name, { color: currentColors.text }]}>
-            {item.name}
+          <Text style={[styles.name, { color: currentColors.text }]} numberOfLines={1}>
+            {item.name.split(' ').slice(0, 3).join(' ').substring(0, 15)}
           </Text>
           <Text style={[styles.price, { color: currentColors.grey }]}>
             ${item.price}

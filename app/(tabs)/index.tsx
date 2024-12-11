@@ -24,7 +24,8 @@ const Home = () => {
   const currentColors = Colors[theme as 'light' | 'dark'];
   const router = useRouter();
   const { isOnboardingVisible, setIsOnboardingVisible } = useOnboarding();
-  const { addToFavourites, removeFromFavourites, isFavourite } = useFavourites();
+  const { addToFavourites, removeFromFavourites, isFavourite } =
+    useFavourites();
 
   const shadowStyle =
     theme === 'light'
@@ -168,7 +169,14 @@ const Home = () => {
                 >
                   <Image
                     source={{ uri: product.mainImage }}
-                    style={[styles.productImage, { padding: 5 }]}
+                    style={[
+                      styles.productImage,
+                      {
+                        padding: 5,
+                        transform: [{ rotate: '-30deg' }, { scaleX: -1 }],
+                        marginRight: 20,
+                      },
+                    ]}
                   />
                   <Text
                     style={[
@@ -379,12 +387,15 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   productImage: {
-    width: '90%', // Reduced width
-    height: 130, // Reduced height
+    width: '90%',
+    height: 130,
     borderRadius: 10,
     resizeMode: 'cover',
-    margin: 10, // Added margin for padding effect
-    transform: [{ scaleX: -1 }], // Invert the image
+    margin: 10,
+    transform: [{ rotate: '-30deg' }, { scaleX: -1 }],
+    paddingRight: 10,
+    marginRight: 20,
+    alignSelf: 'center',
   },
   productName: {
     marginTop: 2,

@@ -24,6 +24,28 @@ const Home = () => {
   const router = useRouter();
   const { isOnboardingVisible, setIsOnboardingVisible } = useOnboarding();
 
+  const shadowStyle =
+    theme === 'light'
+      ? {
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5,
+        }
+      : {};
+
+  const reducedShadowStyle =
+    theme === 'light'
+      ? {
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 1 },
+          shadowOpacity: 0.15,
+          shadowRadius: 1.92,
+          elevation: 3,
+        }
+      : {};
+
   const logos = [
     { name: 'Nike', uri: 'https://i.ibb.co/27gF6n7/NikeLogo.png' },
     { name: 'Puma', uri: 'https://i.ibb.co/4V6MFGf/PumaLogo.png' },
@@ -109,12 +131,7 @@ const Home = () => {
               >
                 <Image source={{ uri: logo.uri }} style={styles.logo} />
                 {selectedLogo === logo.name && (
-                  <Text
-                    style={[
-                      styles.logoText,
-                      { color: Colors.white },
-                    ]}
-                  >
+                  <Text style={[styles.logoText, { color: Colors.white }]}>
                     {logo.name}
                   </Text>
                 )}
@@ -136,8 +153,11 @@ const Home = () => {
           showsHorizontalScrollIndicator={false}
         >
           {sampleData.map((product) => (
-            <TouchableOpacity key={product.id} onPress={() => router.push(`/${product.id}`)}>
-              <View key={product.id} style={styles.productItem}>
+            <TouchableOpacity
+              key={product.id}
+              onPress={() => router.push(`/${product.id}`)}
+            >
+              <View key={product.id} style={[styles.productItem, shadowStyle]}>
                 <View
                   style={[
                     styles.productContent,
@@ -146,7 +166,7 @@ const Home = () => {
                 >
                   <Image
                     source={{ uri: product.mainImage }}
-                    style={styles.productImage}
+                    style={[styles.productImage, { padding: 5 }]}
                   />
                   <Text
                     style={[
@@ -196,6 +216,7 @@ const Home = () => {
             styles.newView,
             styles.newViewMargin,
             { backgroundColor: currentColors.background_02 },
+            theme === 'light' ? reducedShadowStyle : {},
           ]}
         >
           <View style={styles.newViewContent}>
@@ -334,11 +355,6 @@ const styles = StyleSheet.create({
     height: 250,
     borderRadius: 10,
     overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   productContent: {
     borderRadius: 10,
@@ -352,9 +368,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   productImage: {
-    width: '100%',
-    height: 150,
+    width: '90%', // Reduced width
+    height: 130, // Reduced height
     borderRadius: 10,
+    resizeMode: 'cover',
+    margin: 10, // Added margin for padding effect
   },
   productName: {
     marginTop: 2,

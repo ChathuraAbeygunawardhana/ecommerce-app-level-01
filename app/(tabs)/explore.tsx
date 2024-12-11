@@ -10,7 +10,7 @@ import {
   Modal,
   Dimensions,
 } from 'react-native';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons, Feather } from '@expo/vector-icons';
 import sampleData from '../../assets/sample.json';
 import useProductSearch from '../../hooks/useProductSearch';
 import { Colors } from '../../constants/Colors';
@@ -29,12 +29,17 @@ export default function TabTwoScreen() {
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [filteredProducts, setFilteredProducts] = useState(sampleData);
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
 
   const { searchedProducts } = useProductSearch(filteredProducts, searchQuery);
   const { theme } = useTheme();
   const currentColors = Colors[theme as 'light' | 'dark'];
-  const currentBackgroundColor = theme === 'light' ? Colors.light.background_01 : currentColors.background_02;
-  const currentSpecialGrey = theme === 'light' ? Colors.light.specialGrey : Colors.dark.specialGrey;
+  const currentBackgroundColor =
+    theme === 'light'
+      ? Colors.light.background_01
+      : currentColors.background_02;
+  const currentSpecialGrey =
+    theme === 'light' ? Colors.light.specialGrey : Colors.dark.specialGrey;
 
   const brands = ['Nike', 'Adidas', 'PUMA', 'NB'];
   const colors = ['Black', 'White', 'Red', 'Blue', 'Green'];
@@ -85,41 +90,55 @@ export default function TabTwoScreen() {
         {item.name}
       </Text>
       <Text style={[styles.price, { color: currentColors.grey }]}>
-        {item.price}
+        ${item.price}
       </Text>
     </View>
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: currentColors.background_01 }}>
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={[
-            styles.searchInput,
-            {
-              color: currentColors.text,
-              backgroundColor: currentColors.background_02,
-            },
-          ]}
-          placeholder="Search products..."
-          placeholderTextColor={currentColors.grey}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-        <TouchableOpacity
-          style={[
-            styles.searchButton,
-            { backgroundColor: currentColors.background_02 },
-          ]}
-          onPress={() => setModalVisible(true)}
-        >
-          <MaterialIcons
-            name="filter-alt"
-            size={24}
-            color={currentColors.text}
-          />
+    <View style={{ flex: 1, backgroundColor: currentColors.background_01, paddingTop: 40 }}>
+      <View
+        style={[
+          styles.headerContainer,
+          { backgroundColor: currentColors.background_01 },
+        ]}
+      >
+        <TouchableOpacity>
+          <Ionicons name="arrow-back" size={24} color={currentColors.text} />
         </TouchableOpacity>
+        <Text style={[styles.headerText, { color: currentColors.text }]}>
+          Explore
+        </Text>
+        <View style={styles.headerIcons}>
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <Feather name="sliders" size={24} color={currentColors.text} />
+          </TouchableOpacity>
+          <View style={{ width: 10 }} /> 
+          <TouchableOpacity
+            onPress={() => setIsSearchVisible(!isSearchVisible)}
+          >
+            <Ionicons name="search" size={24} color={currentColors.text} />
+          </TouchableOpacity>
+        </View>
       </View>
+
+      {isSearchVisible && (
+        <View style={styles.searchContainer}>
+          <TextInput
+            style={[
+              styles.searchInput,
+              {
+                color: currentColors.text,
+                backgroundColor: currentColors.background_02,
+              },
+            ]}
+            placeholder="Search products..."
+            placeholderTextColor={currentColors.grey}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+        </View>
+      )}
 
       <FlatList
         data={searchedProducts}
@@ -146,11 +165,11 @@ export default function TabTwoScreen() {
               { backgroundColor: currentColors.background_02 },
             ]}
           >
-            <Text style={[styles.modalTitle, { color: currentColors.text }]}>
+            <Text style={[styles.modalTitle, { color: currentColors.text, fontSize: 22 }]}>
               Filters
             </Text>
 
-            <Text style={[styles.modalText, { color: currentColors.text }]}>
+            <Text style={[styles.modalText, { color: currentColors.text, textAlign: 'left' }]}>
               Price Range
             </Text>
             <View style={styles.priceContainer}>
@@ -160,9 +179,11 @@ export default function TabTwoScreen() {
                   {
                     color: currentColors.text,
                     borderColor: currentColors.grey,
+                    borderRadius: 60, // Updated border radius
                   },
                 ]}
                 placeholder="Min Price"
+                placeholderTextColor={Colors.grey} // Updated color
                 keyboardType="numeric"
                 value={minPrice}
                 onChangeText={setMinPrice}
@@ -173,16 +194,18 @@ export default function TabTwoScreen() {
                   {
                     color: currentColors.text,
                     borderColor: currentColors.grey,
+                    borderRadius: 60, // Updated border radius
                   },
                 ]}
                 placeholder="Max Price"
+                placeholderTextColor={Colors.grey} // Updated color
                 keyboardType="numeric"
                 value={maxPrice}
                 onChangeText={setMaxPrice}
               />
             </View>
 
-            <Text style={[styles.modalText, { color: currentColors.text }]}>
+            <Text style={[styles.modalText, { color: currentColors.text, textAlign: 'left' }]}>
               Brands
             </Text>
             <View style={styles.brandContainer}>
@@ -191,7 +214,11 @@ export default function TabTwoScreen() {
                   key={brand}
                   style={[
                     styles.brandButton,
-                    { borderRadius: 60, backgroundColor: currentSpecialGrey, borderWidth: 0 },
+                    {
+                      borderRadius: 60,
+                      backgroundColor: currentSpecialGrey,
+                      borderWidth: 0,
+                    },
                     selectedBrands.includes(brand) && {
                       backgroundColor: Colors.lightBlue,
                     },
@@ -247,6 +274,20 @@ export default function TabTwoScreen() {
 }
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 10,
+  },
+  headerText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  headerIcons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   listContainer: {
     paddingVertical: 5,
     paddingHorizontal: 10,
@@ -259,12 +300,8 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     padding: 8,
     backgroundColor: '#fff', // This will be overridden by the dynamic color
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
+    borderRadius: 20, // Increased border radius
+    // Removed shadow properties
   },
   imageContainer: {
     alignItems: 'center',
@@ -361,6 +398,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'row',
     borderWidth: 1,
     borderColor: 'black',

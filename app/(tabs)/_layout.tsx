@@ -190,7 +190,7 @@ export default function TabLayout() {
             <Tabs.Screen
               name="explore"
               options={{
-                title: 'Explore',
+                headerShown: false,
                 tabBarIcon: ({ color, focused }) => (
                   <Ionicons
                     name={focused ? 'search' : 'search-outline'}
@@ -254,7 +254,7 @@ export default function TabLayout() {
               name="[id]"
               options={{
                 title: 'Product Details',
-                headerShown: false, // Hide the default header
+                headerShown: false,
                 header: ({ navigation }) => (
                   <Header isProductDetails={true} navigation={navigation} />
                 ),

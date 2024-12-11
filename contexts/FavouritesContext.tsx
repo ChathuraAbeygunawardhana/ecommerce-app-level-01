@@ -37,7 +37,7 @@ export const FavouritesProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <FavouritesContext.Provider
-      value={{ favourites, addToFavourites, removeFromFavourites, isFavourite }} // Add isFavourite here
+      value={{ favourites, addToFavourites, removeFromFavourites, isFavourite }}
     >
       {children}
     </FavouritesContext.Provider>

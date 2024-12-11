@@ -227,6 +227,7 @@ export default function TabLayout() {
               name="favourites"
               options={{
                 title: 'Favourites',
+                headerShown: false,
                 tabBarIcon: ({ color, focused }) => (
                   <Ionicons
                     name={focused ? 'heart' : 'heart-outline'}

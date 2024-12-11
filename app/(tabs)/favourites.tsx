@@ -29,7 +29,10 @@ const Favourites = () => {
 
   const renderItem = ({ item }: { item: Product }) => (
     <Pressable
-      style={[styles.itemContainer, { backgroundColor: currentColors.background_02 }]}
+      style={[
+        styles.itemContainer,
+        { backgroundColor: currentColors.background_02 },
+      ]}
       onPress={() =>
         router.push({ pathname: `/(tabs)/[id]`, params: { id: item.id } })
       }
@@ -37,16 +40,24 @@ const Favourites = () => {
       <View style={styles.leftContainer}>
         <Image source={{ uri: item.mainImage }} style={styles.image} />
         <View style={styles.textContainer}>
-          <Text style={[styles.name, { color: currentColors.text }]} numberOfLines={1}>
+          <Text
+            style={[styles.name, { color: currentColors.text }]}
+            numberOfLines={1}
+          >
             {item.name.length > 19
               ? `${item.name.substring(0, 19)}...`
               : item.name}
           </Text>
-          <Text style={[styles.price, { color: currentColors.grey }]}>${item.price}</Text>
+          <Text style={[styles.price, { color: currentColors.grey }]}>
+            ${item.price}
+          </Text>
         </View>
       </View>
       <TouchableOpacity
-        style={[styles.removeButton, { backgroundColor: currentColors.lightBlue }]}
+        style={[
+          styles.removeButton,
+          { backgroundColor: currentColors.lightBlue },
+        ]}
         onPress={() => removeFromFavourites(item.id)}
       >
         <Text style={styles.removeButtonText}>Remove</Text>
@@ -55,11 +66,27 @@ const Favourites = () => {
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: currentColors.background_01 }]}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: currentColors.background_01 },
+      ]}
+    >
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => router.back()}>
+          <Ionicons name="chevron-back" size={24} color={currentColors.text} />
+        </TouchableOpacity>
+        <Text style={[styles.headerTitle, { color: currentColors.text }]}>
+          Favourites
+        </Text>
+        <View style={{ width: 24 }} />
+      </View>
       {favourites.length === 0 ? (
         <View style={styles.emptyFavourites}>
           <Ionicons name="heart-outline" size={50} color="gray" />
-          <Text style={[styles.emptyText, { color: currentColors.icon }]}>No favourite items</Text>
+          <Text style={[styles.emptyText, { color: currentColors.icon }]}>
+            No favourite items
+          </Text>
         </View>
       ) : (
         <FlatList
@@ -144,5 +171,17 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 18,
     color: Colors.light.icon,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingTop: 60,
+    paddingBottom: 20,
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });

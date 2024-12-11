@@ -384,6 +384,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     resizeMode: 'cover',
     margin: 10, // Added margin for padding effect
+    transform: [{ scaleX: -1 }], // Invert the image
   },
   productName: {
     marginTop: 2,

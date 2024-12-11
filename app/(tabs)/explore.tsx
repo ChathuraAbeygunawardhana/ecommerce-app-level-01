@@ -10,7 +10,7 @@ import {
   Modal,
   Dimensions,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import sampleData from '../../assets/sample.json';
 import useProductSearch from '../../hooks/useProductSearch';
 import { Colors } from '../../constants/Colors';
@@ -33,8 +33,10 @@ export default function TabTwoScreen() {
   const { searchedProducts } = useProductSearch(filteredProducts, searchQuery);
   const { theme } = useTheme();
   const currentColors = Colors[theme as 'light' | 'dark'];
+  const currentBackgroundColor = theme === 'light' ? Colors.light.background_01 : currentColors.background_02;
+  const currentSpecialGrey = theme === 'light' ? Colors.light.specialGrey : Colors.dark.specialGrey;
 
-  const brands = ['Nike', 'Adidas', 'PUMA', 'New Balance'];
+  const brands = ['Nike', 'Adidas', 'PUMA', 'NB'];
   const colors = ['Black', 'White', 'Red', 'Blue', 'Green'];
 
   const toggleBrand = (brand: string) => {
@@ -111,7 +113,11 @@ export default function TabTwoScreen() {
           ]}
           onPress={() => setModalVisible(true)}
         >
-          <Ionicons name="filter" size={24} color={currentColors.text} />
+          <MaterialIcons
+            name="filter-alt"
+            size={24}
+            color={currentColors.text}
+          />
         </TouchableOpacity>
       </View>
 
@@ -137,7 +143,7 @@ export default function TabTwoScreen() {
           <View
             style={[
               styles.bottomSheet,
-              { backgroundColor: currentColors.background_01 },
+              { backgroundColor: currentColors.background_02 },
             ]}
           >
             <Text style={[styles.modalTitle, { color: currentColors.text }]}>
@@ -185,8 +191,9 @@ export default function TabTwoScreen() {
                   key={brand}
                   style={[
                     styles.brandButton,
+                    { borderRadius: 60, backgroundColor: currentSpecialGrey, borderWidth: 0 },
                     selectedBrands.includes(brand) && {
-                      backgroundColor: currentColors.lightBlue,
+                      backgroundColor: Colors.lightBlue,
                     },
                   ]}
                   onPress={() => toggleBrand(brand)}
@@ -194,6 +201,7 @@ export default function TabTwoScreen() {
                   <Text
                     style={[
                       styles.brandButtonText,
+                      { color: Colors.grey },
                       selectedBrands.includes(brand) && { color: Colors.white },
                     ]}
                   >
@@ -208,7 +216,10 @@ export default function TabTwoScreen() {
                 style={[
                   styles.button,
                   styles.clearButton,
-                  { backgroundColor: currentColors.lightBlue },
+                  {
+                    backgroundColor: currentColors.lightBlue,
+                    borderRadius: 60,
+                  },
                 ]}
                 onPress={clearFilters}
               >
@@ -218,7 +229,10 @@ export default function TabTwoScreen() {
                 style={[
                   styles.button,
                   styles.applyButton,
-                  { backgroundColor: currentColors.lightBlue },
+                  {
+                    backgroundColor: currentColors.lightBlue,
+                    borderRadius: 60,
+                  },
                 ]}
                 onPress={applyFilters}
               >

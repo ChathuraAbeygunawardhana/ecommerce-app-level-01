@@ -12,6 +12,8 @@ export const Colors = {
     tabIconSelected: tintColorLight,
     grey: '#707B81',
     lightBlue: '#5B9EE1',
+    specialGrey: '#E9EDEF',
+    modalBgColor: '#FFFFFF',
   },
   dark: {
     text: '#ECEDEE',
@@ -23,6 +25,8 @@ export const Colors = {
     tabIconSelected: tintColorDark,
     grey: '#707B81',
     lightBlue: '#5B9EE1',
+    specialGrey: '#1A242F',
+    modalBgColor: '#1F2C39',
   },
   grey: '#707B81',
   orange: '#F87265',

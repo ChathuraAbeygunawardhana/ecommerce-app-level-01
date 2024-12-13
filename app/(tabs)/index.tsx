@@ -68,7 +68,9 @@ const Home = () => {
     const searchTerm = logoName.toUpperCase();
     if (searchTerm === 'PUMA' || searchTerm === 'NIKE') {
       setFilteredProducts(
-        sampleData.filter((product) => product.name.split(' ')[0].toUpperCase() === searchTerm)
+        sampleData.filter(
+          (product) => product.name.split(' ')[0].toUpperCase() === searchTerm
+        )
       );
     } else {
       setFilteredProducts(sampleData);
@@ -112,7 +114,11 @@ const Home = () => {
           <TouchableOpacity style={styles.iconBackground}>
             <Feather name="shopping-bag" size={24} color={currentColors.text} />
           </TouchableOpacity>
-          {cart.length > 0 && <View style={[styles.cartDot, { backgroundColor: Colors.orange }]} />}
+          {cart.length > 0 && (
+            <View
+              style={[styles.cartDot, { backgroundColor: Colors.orange }]}
+            />
+          )}
         </View>
       </View>
       <View
@@ -388,8 +394,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginVertical: 10,
     marginHorizontal: 3,
-    width: 150,
-    height: 250,
+    width: 170,
+    height: 240,
     borderRadius: 10,
     overflow: 'hidden',
   },
@@ -405,15 +411,15 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   productImage: {
-    width: '90%',
-    height: 130,
+    width: '80%',
+    height: 120,
     borderRadius: 10,
     resizeMode: 'cover',
-    margin: 10,
     transform: [{ rotate: '-30deg' }, { scaleX: -1 }],
     paddingRight: 10,
     marginRight: 20,
     alignSelf: 'center',
+    overflow: 'visible',
   },
   productName: {
     marginTop: 2,

@@ -88,7 +88,7 @@ const ProductDetails = () => {
       <Animated.ScrollView style={[styles.container, { opacity: fadeAnim }]}>
         <View style={styles.imageContainer}>
           <Image
-            source={{ uri: 'https://i.ibb.co/x64vryB/Group-136.png' }}
+            source={{ uri: 'https://i.ibb.co/wsBMks4/Group-136.png' }}
             style={styles.circleImage}
           />
           <Image

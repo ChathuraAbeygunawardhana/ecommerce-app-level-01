@@ -16,6 +16,7 @@ import useProductSearch from '../../hooks/useProductSearch';
 import { Colors } from '../../constants/Colors';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useFavourites } from '../../contexts/FavouritesContext';
+import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 const numColumns = 2;
@@ -43,6 +44,7 @@ export default function TabTwoScreen() {
     theme === 'light' ? Colors.light.specialGrey : Colors.dark.specialGrey;
 
   const { addToFavourites, removeFromFavourites, isFavourite } = useFavourites();
+  const router = useRouter();
 
   const brands = ['Nike', 'Adidas', 'PUMA', 'NB'];
   const colors = ['Black', 'White', 'Red', 'Blue', 'Green'];
@@ -80,39 +82,41 @@ export default function TabTwoScreen() {
   };
 
   const renderItem = ({ item }: any) => (
-    <View
-      style={[
-        styles.itemContainer,
-        { backgroundColor: currentColors.background_02, padding: 10 }, // Added padding
-      ]}
-    >
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: item.mainImage }} style={styles.image} />
+    <TouchableOpacity onPress={() => router.push(`/${item.id}`)}>
+      <View
+        style={[
+          styles.itemContainer,
+          { backgroundColor: currentColors.background_02, padding: 10 },
+        ]}
+      >
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: item.mainImage }} style={styles.image} />
+        </View>
+        <Text style={[styles.name, { color: currentColors.text }]}>
+          {item.name}
+        </Text>
+        <Text style={[styles.price, { color: currentColors.grey }]}>
+          ${item.price}
+        </Text>
+        <View style={{ height: 10 }} />
+        <View style={styles.addIconContainer}>
+          <TouchableOpacity
+            style={[styles.addIcon, { backgroundColor: currentColors.lightBlue }]}
+            onPress={() =>
+              isFavourite(item.id)
+                ? removeFromFavourites(item.id)
+                : addToFavourites(item)
+            }
+          >
+            <Ionicons
+              name={isFavourite(item.id) ? 'heart' : 'add'}
+              size={20}
+              color="white"
+            />
+          </TouchableOpacity>
+        </View>
       </View>
-      <Text style={[styles.name, { color: currentColors.text }]}>
-        {item.name}
-      </Text>
-      <Text style={[styles.price, { color: currentColors.grey }]}>
-        ${item.price}
-      </Text>
-      <View style={{ height: 10 }} />
-      <View style={styles.addIconContainer}>
-        <TouchableOpacity
-          style={[styles.addIcon, { backgroundColor: currentColors.lightBlue }]}
-          onPress={() =>
-            isFavourite(item.id)
-              ? removeFromFavourites(item.id)
-              : addToFavourites(item)
-          }
-        >
-          <Ionicons
-            name={isFavourite(item.id) ? 'heart' : 'add'}
-            size={20}
-            color="white"
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 
   return (

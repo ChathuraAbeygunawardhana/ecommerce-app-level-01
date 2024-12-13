@@ -24,6 +24,9 @@ const OnboardingScreen = () => {
   const slideAnim = useRef(new Animated.Value(0)).current;
   const slideInAnim = useRef(new Animated.Value(500)).current;
   const slideInAnim2 = useRef(new Animated.Value(500)).current;
+  const textAnim = useRef(new Animated.Value(0)).current;
+  const textAnim2 = useRef(new Animated.Value(500)).current;
+  const textAnim3 = useRef(new Animated.Value(500)).current;
 
   const handlePress = () => {
     if (buttonText === 'Get started') {
@@ -34,6 +37,16 @@ const OnboardingScreen = () => {
           useNativeDriver: true,
         }),
         Animated.timing(slideInAnim, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(textAnim, {
+          toValue: -500,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(textAnim2, {
           toValue: 0,
           duration: 500,
           useNativeDriver: true,
@@ -49,6 +62,16 @@ const OnboardingScreen = () => {
           useNativeDriver: true,
         }),
         Animated.timing(slideInAnim2, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(textAnim2, {
+          toValue: -500,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(textAnim3, {
           toValue: 0,
           duration: 500,
           useNativeDriver: true,
@@ -106,22 +129,82 @@ const OnboardingScreen = () => {
               id="img03"
             />
           </View>
-          <Text
+          <View style={styles.textSpacing} />
+          <Animated.View
             style={[
-              styles.onboardingTitle,
-              { fontFamily: 'Airbnb', marginBottom: 5 },
+              styles.textContainer,
+              { transform: [{ translateX: textAnim }] },
             ]}
-            id="title"
           >
-            Start Your
-          </Text>
-          <Text style={[styles.onboardingTitle, { fontFamily: 'Airbnb' }]}>
-            Journey With Us
-          </Text>
-          <Text style={[styles.subtitle, { marginBottom: 10 }]} id="subtitle">
-            Smart Gorgeous & Fashionable
-          </Text>
-          <Text style={styles.subtitle}>Collection</Text>
+            <Text
+              style={[
+                styles.onboardingTitle,
+                { fontFamily: 'Airbnb', marginBottom: 5 },
+              ]}
+              id="title"
+            >
+              Start Your
+            </Text>
+            <Text style={[styles.onboardingTitle, { fontFamily: 'Airbnb' }]}>
+              Journey With Us
+            </Text>
+            <Text style={[styles.subtitle, { marginBottom: 10 }]} id="subtitle">
+              Smart Gorgeous & Fashionable
+            </Text>
+            <Text style={styles.subtitle}>Collection</Text>
+          </Animated.View>
+          <Animated.View
+            style={[
+              styles.textContainer,
+              { transform: [{ translateX: textAnim2 }] },
+            ]}
+          >
+            <Text
+              style={[
+                styles.onboardingTitle,
+                { fontFamily: 'Airbnb', marginBottom: 5 },
+              ]}
+              id="title2"
+            >
+              Follow Latest
+            </Text>
+            <Text style={[styles.onboardingTitle, { fontFamily: 'Airbnb' }]}>
+              Style Shoes
+            </Text>
+            <Text
+              style={[styles.subtitle, { marginBottom: 10 }]}
+              id="subtitle2"
+            >
+              We have an amazing collection
+            </Text>
+            <Text style={styles.subtitle}>that will amaze you</Text>
+          </Animated.View>
+          <Animated.View
+            style={[
+              styles.textContainer,
+              { transform: [{ translateX: textAnim3 }] },
+            ]}
+          >
+            <Text
+              style={[
+                styles.onboardingTitle,
+                { fontFamily: 'Airbnb', marginBottom: 5 },
+              ]}
+              id="title3"
+            >
+              New Summer
+            </Text>
+            <Text style={[styles.onboardingTitle, { fontFamily: 'Airbnb' }]}>
+              Collection
+            </Text>
+            <Text
+              style={[styles.subtitle, { marginBottom: 10 }]}
+              id="subtitle3"
+            >
+              Check out the latest trendy shoes
+            </Text>
+            <Text style={styles.subtitle}>by our store</Text>
+          </Animated.View>
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -198,6 +281,17 @@ const styles = StyleSheet.create({
   imageContainer: {
     position: 'relative',
     width: '100%',
+    height: 250,
+  },
+  textContainer: {
+    position: 'absolute',
+    width: '100%',
+    alignItems: 'flex-start',
+    bottom: 20,
+    paddingLeft: 20,
+    paddingBottom: 40,
+  },
+  textSpacing: {
     height: 250,
   },
 });

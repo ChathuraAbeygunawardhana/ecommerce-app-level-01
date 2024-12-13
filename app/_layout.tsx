@@ -9,9 +9,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import { CartProvider } from '@/contexts/CartContext';
 import { FavouritesProvider } from '@/contexts/FavouritesContext';
 import { ThemeProvider } from '../contexts/ThemeContext';
-import { useState, useEffect, useRef } from 'react';
-import { Animated, View, Text, StyleSheet, Image } from 'react-native';
-import { Colors } from '../constants/Colors';
+import { StyleSheet } from 'react-native';
 import { OnboardingProvider } from '../contexts/OnboardingContext';
 
 export default function RootLayout() {

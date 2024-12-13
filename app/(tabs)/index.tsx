@@ -488,8 +488,8 @@ const styles = StyleSheet.create({
   },
   cartDot: {
     position: 'absolute',
-    top: 5, // moved down
-    right: 5, // moved to the left
+    top: 5, 
+    right: 5, 
     width: 10,
     height: 10,
     borderRadius: 5,

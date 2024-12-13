@@ -39,7 +39,7 @@ const Cart = () => {
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-  const brands = ['Brand1', 'Brand2', 'Brand3']; // Example brands
+  const brands = ['Brand1', 'Brand2', 'Brand3'];
 
   const toggleBrand = (brand: string) => {
     setSelectedBrands((prev) =>
@@ -53,9 +53,7 @@ const Cart = () => {
     setSelectedBrands([]);
   };
 
-  const applyFilters = () => {
-    // Implement filter logic here
-  };
+  const applyFilters = () => {};
 
   const shippingCharge = 40.99;
   const subtotal = cart.reduce(
@@ -71,7 +69,10 @@ const Cart = () => {
       >
         <Image source={{ uri: item.image }} style={styles.image} />
         <View style={styles.details}>
-          <Text style={[styles.name, { color: currentColors.text }]} numberOfLines={1}>
+          <Text
+            style={[styles.name, { color: currentColors.text }]}
+            numberOfLines={1}
+          >
             {item.name.split(' ').slice(0, 3).join(' ').substring(0, 15)}
           </Text>
           <Text style={[styles.price, { color: currentColors.grey }]}>
@@ -221,9 +222,7 @@ const Cart = () => {
                     borderRadius: 60,
                   },
                 ]}
-                onPress={() => {
-                  // Implement checkout logic here
-                }}
+                onPress={() => {}}
               >
                 <Text style={styles.buttonText}>Checkout</Text>
               </TouchableOpacity>
@@ -259,7 +258,6 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
     borderRadius: 8,
-    // Removed shadow properties
   },
   image: {
     width: 80,

@@ -64,21 +64,48 @@ const ProductDetails = () => {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: currentColors.background_01 }]}>
-      <View style={[styles.customHeader, { backgroundColor: currentColors.background_01 }]}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: currentColors.background_01 },
+      ]}
+    >
+      <View
+        style={[
+          styles.customHeader,
+          { backgroundColor: currentColors.background_01 },
+        ]}
+      >
         <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={24} color={currentColors.text} />
         </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: currentColors.text }]}>Product Details</Text>
+        <Text style={[styles.headerTitle, { color: currentColors.text }]}>
+          Product Details
+        </Text>
         <View style={{ width: 24 }} />
       </View>
 
       <Animated.ScrollView style={[styles.container, { opacity: fadeAnim }]}>
-        <Image source={{ uri: product.mainImage }} style={styles.image} />
+        <View style={styles.imageContainer}>
+          <Image
+            source={{ uri: 'https://i.ibb.co/x64vryB/Group-136.png' }}
+            style={styles.circleImage}
+          />
+          <Image
+            source={{ uri: product.mainImage }}
+            style={styles.image}
+          />
+        </View>
         <View style={styles.detailsContainer}>
-          <Text style={[styles.name, { color: currentColors.text }]}>{product.name}</Text>
-          <Text style={[styles.price, { color: currentColors.icon }]}>${product.price}</Text>
-          <Text style={[styles.colour, { color: currentColors.icon }]}>Color: {product.colour}</Text>
+          <Text style={[styles.name, { color: currentColors.text }]}>
+            {product.name}
+          </Text>
+          <Text style={[styles.price, { color: currentColors.icon }]}>
+            ${product.price}
+          </Text>
+          <Text style={[styles.colour, { color: currentColors.icon }]}>
+            Color: {product.colour}
+          </Text>
           <Text style={[styles.description, { color: currentColors.text }]}>
             {product.description}
           </Text>
@@ -112,13 +139,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 10,
   },
+  imageContainer: {
+    position: 'relative',
+    alignItems: 'center',
+  },
   image: {
-    width: '100%',
-    height: 300,
+    width: '80%',
+    height: 200,
     resizeMode: 'cover',
+    marginTop: 50,
+    marginBottom: 65,
+    transform: [{ scaleX: -1 }, { rotate: '20deg' }],
   },
   detailsContainer: {
     padding: 20,
+    marginTop: -10,
   },
   name: {
     fontFamily: 'Helvetica',
@@ -147,7 +182,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    bottom: 80,
+    bottom: 65,
     left: 1,
     right: 1,
     borderRadius: 10,
@@ -162,5 +197,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     paddingTop: 40,
+  },
+  circleImage: {
+    width: 350,
+    height: 300,
+    resizeMode: 'contain',
+    position: 'absolute',
+    top: 130,
   },
 });

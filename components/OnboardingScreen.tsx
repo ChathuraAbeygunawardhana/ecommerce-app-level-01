@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   ImageBackground,
-  Image,
+  Animated,
 } from 'react-native';
 import { useOnboarding } from '../contexts/OnboardingContext';
 import { Colors } from '../constants/Colors';
@@ -20,6 +20,47 @@ const OnboardingScreen = () => {
     Airbnb: require('../assets/fonts/Airbnb.otf'),
   });
 
+  const [buttonText, setButtonText] = useState('Get started');
+  const slideAnim = useRef(new Animated.Value(0)).current;
+  const slideInAnim = useRef(new Animated.Value(500)).current;
+  const slideInAnim2 = useRef(new Animated.Value(500)).current;
+
+  const handlePress = () => {
+    if (buttonText === 'Get started') {
+      Animated.parallel([
+        Animated.timing(slideAnim, {
+          toValue: -500,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(slideInAnim, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+      ]).start(() => {
+        setButtonText('Next');
+      });
+    } else if (buttonText === 'Next') {
+      Animated.parallel([
+        Animated.timing(slideInAnim, {
+          toValue: -500,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(slideInAnim2, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+      ]).start(() => {
+        setButtonText('Finish');
+      });
+    } else {
+      setIsOnboardingVisible(false);
+    }
+  };
+
   if (!fontsLoaded) {
     return null;
   }
@@ -33,13 +74,38 @@ const OnboardingScreen = () => {
     >
       <View style={styles.onboardingContainer}>
         <View style={styles.titleContainer}>
-          <Image
-            source={{
-              uri: 'https://i.ibb.co/tbpRpT5/Digital-Sketches-prev-ui.png',
-            }}
-            style={styles.headerImage}
-            id="shoe"
-          />
+          <View style={styles.imageContainer}>
+            <Animated.Image
+              source={{
+                uri: 'https://i.ibb.co/tbpRpT5/Digital-Sketches-prev-ui.png',
+              }}
+              style={[
+                styles.headerImage,
+                { transform: [{ translateX: slideAnim }] },
+              ]}
+              id="img01"
+            />
+            <Animated.Image
+              source={{
+                uri: 'https://i.ibb.co/JvX0D93/Group-285-1.png',
+              }}
+              style={[
+                styles.newHeaderImage,
+                { transform: [{ translateX: slideInAnim }] },
+              ]}
+              id="img02"
+            />
+            <Animated.Image
+              source={{
+                uri: 'https://i.ibb.co/JrZf6Fg/Spring-prev-ui-1.png',
+              }}
+              style={[
+                styles.newHeaderImage,
+                { transform: [{ translateX: slideInAnim2 }] },
+              ]}
+              id="img03"
+            />
+          </View>
           <Text
             style={[
               styles.onboardingTitle,
@@ -52,10 +118,7 @@ const OnboardingScreen = () => {
           <Text style={[styles.onboardingTitle, { fontFamily: 'Airbnb' }]}>
             Journey With Us
           </Text>
-          <Text
-            style={[styles.subtitle, { marginBottom: 10 }]}
-            id="subtitle"
-          >
+          <Text style={[styles.subtitle, { marginBottom: 10 }]} id="subtitle">
             Smart Gorgeous & Fashionable
           </Text>
           <Text style={styles.subtitle}>Collection</Text>
@@ -66,9 +129,9 @@ const OnboardingScreen = () => {
               styles.onboardingButton,
               { backgroundColor: currentColors.lightBlue },
             ]}
-            onPress={() => setIsOnboardingVisible(false)}
+            onPress={handlePress}
           >
-            <Text style={styles.onboardingButtonText}>Get started</Text>
+            <Text style={styles.onboardingButtonText}>{buttonText}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -90,7 +153,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     flex: 1,
     justifyContent: 'center',
-    marginTop: 200, // moved higher by reducing marginTop from 250 to 200
+    marginTop: 200,
   },
   buttonContainer: {
     alignItems: 'flex-end',
@@ -118,10 +181,24 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   headerImage: {
+    position: 'absolute',
     width: '100%',
-    height: 250, // increased from 200 to 250
+    height: 250,
     resizeMode: 'contain',
     bottom: 140,
+  },
+  newHeaderImage: {
+    position: 'absolute',
+    width: '140%',
+    height: 350,
+    resizeMode: 'contain',
+    bottom: 20,
+    left: -85,
+  },
+  imageContainer: {
+    position: 'relative',
+    width: '100%',
+    height: 250,
   },
 });
 

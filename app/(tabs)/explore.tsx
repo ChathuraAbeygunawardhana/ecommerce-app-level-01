@@ -183,10 +183,10 @@ export default function TabTwoScreen() {
         numColumns={2}
         style={[
           styles.listContainer,
-          { paddingVertical: 10, marginBottom: 60 }, // Reduced paddingVertical
+          { paddingVertical: 10, marginBottom: 60 },
         ]}
         columnWrapperStyle={styles.columnWrapper}
-        showsVerticalScrollIndicator={false} // Added to remove scrollbar
+        showsVerticalScrollIndicator={false}
       />
 
       <Modal
@@ -350,18 +350,18 @@ const styles = StyleSheet.create({
   itemContainer: {
     width: itemWidth,
     marginBottom: 15,
-    borderRadius: 20, // Increased border radius
+    borderRadius: 20,
     overflow: 'hidden',
   },
   imageContainer: {
     alignItems: 'center',
   },
   image: {
-    width: '90%', // Reduced width
-    height: 130, // Reduced height
+    width: '90%',
+    height: 130,
     borderRadius: 10,
     resizeMode: 'cover',
-    margin: 10, // Added margin for padding effect
+    margin: 10,
   },
   name: {
     marginTop: 2,
@@ -490,8 +490,8 @@ const styles = StyleSheet.create({
   },
   addIconContainer: {
     position: 'absolute',
-    bottom: -10, // Moved down
-    right: -10, // Moved to the right
+    bottom: -10,
+    right: -10,
     borderRadius: 10,
     paddingRight: 10,
     paddingBottom: 10,

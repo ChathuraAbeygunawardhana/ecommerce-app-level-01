@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
   ImageBackground,
   Animated,
@@ -14,6 +13,7 @@ import { useFonts } from 'expo-font';
 import { useOnboardingAnimations } from './Onboarding/hooks/useOnboardingAnimations';
 import { OnboardingImages } from './Onboarding/OnboardingImages';
 import { OnboardingTexts } from './Onboarding/OnboardingTexts';
+import { OnboardingButton } from './Onboarding/OnboardingButton';
 
 const OnboardingScreen = () => {
   const { isOnboardingVisible, setIsOnboardingVisible } = useOnboarding();
@@ -125,15 +125,11 @@ const OnboardingScreen = () => {
           </Animated.View>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={[
-              styles.onboardingButton,
-              { backgroundColor: currentColors.lightBlue },
-            ]}
+          <OnboardingButton
+            buttonText={buttonText}
             onPress={onButtonPress}
-          >
-            <Text style={styles.onboardingButtonText}>{buttonText}</Text>
-          </TouchableOpacity>
+            backgroundColor={currentColors.lightBlue}
+          />
         </View>
       </View>
     </ImageBackground>
@@ -158,15 +154,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     alignItems: 'flex-end',
-  },
-  onboardingButton: {
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 50,
-  },
-  onboardingButtonText: {
-    color: Colors.white,
-    fontSize: 16,
   },
   onboardingTitle: {
     fontWeight: 'bold',

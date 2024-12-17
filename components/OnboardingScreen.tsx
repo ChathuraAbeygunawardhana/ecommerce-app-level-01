@@ -12,6 +12,8 @@ import { Colors } from '../constants/Colors';
 import { useTheme } from '../contexts/ThemeContext';
 import { useFonts } from 'expo-font';
 import { useOnboardingAnimations } from './Onboarding/hooks/useOnboardingAnimations';
+import { OnboardingImages } from './Onboarding/OnboardingImages';
+import { OnboardingTexts } from './Onboarding/OnboardingTexts';
 
 const OnboardingScreen = () => {
   const { isOnboardingVisible, setIsOnboardingVisible } = useOnboarding();
@@ -40,38 +42,11 @@ const OnboardingScreen = () => {
     >
       <View style={styles.onboardingContainer}>
         <View style={styles.titleContainer}>
-          <View style={styles.imageContainer}>
-            <Animated.Image
-              source={{
-                uri: 'https://i.ibb.co/tbpRpT5/Digital-Sketches-prev-ui.png',
-              }}
-              style={[
-                styles.headerImage,
-                { transform: [{ translateX: slideAnim }] },
-              ]}
-              id="img01"
-            />
-            <Animated.Image
-              source={{
-                uri: 'https://i.ibb.co/JvX0D93/Group-285-1.png',
-              }}
-              style={[
-                styles.newHeaderImage,
-                { transform: [{ translateX: slideInAnim }] },
-              ]}
-              id="img02"
-            />
-            <Animated.Image
-              source={{
-                uri: 'https://i.ibb.co/JrZf6Fg/Spring-prev-ui-1.png',
-              }}
-              style={[
-                styles.newHeaderImage,
-                { transform: [{ translateX: slideInAnim2 }] },
-              ]}
-              id="img03"
-            />
-          </View>
+          <OnboardingImages
+            slideAnim={slideAnim}
+            slideInAnim={slideInAnim}
+            slideInAnim2={slideInAnim2}
+          />
           <View style={styles.textSpacing} />
           <Animated.View
             style={[
@@ -86,15 +61,15 @@ const OnboardingScreen = () => {
               ]}
               id="title"
             >
-              Start Your
+              {OnboardingTexts.section1.title1}
             </Text>
             <Text style={[styles.onboardingTitle, { fontFamily: 'Airbnb' }]}>
-              Journey With Us
+              {OnboardingTexts.section1.title2}
             </Text>
             <Text style={[styles.subtitle, { marginBottom: 10 }]} id="subtitle">
-              Smart Gorgeous & Fashionable
+              {OnboardingTexts.section1.subtitle1}
             </Text>
-            <Text style={styles.subtitle}>Collection</Text>
+            <Text style={styles.subtitle}>{OnboardingTexts.section1.subtitle2}</Text>
           </Animated.View>
           <Animated.View
             style={[
@@ -109,18 +84,18 @@ const OnboardingScreen = () => {
               ]}
               id="title2"
             >
-              Follow Latest
+              {OnboardingTexts.section2.title1}
             </Text>
             <Text style={[styles.onboardingTitle, { fontFamily: 'Airbnb' }]}>
-              Style Shoes
+              {OnboardingTexts.section2.title2}
             </Text>
             <Text
               style={[styles.subtitle, { marginBottom: 10 }]}
               id="subtitle2"
             >
-              We have an amazing collection
+              {OnboardingTexts.section2.subtitle1}
             </Text>
-            <Text style={styles.subtitle}>that will amaze you</Text>
+            <Text style={styles.subtitle}>{OnboardingTexts.section2.subtitle2}</Text>
           </Animated.View>
           <Animated.View
             style={[
@@ -135,18 +110,18 @@ const OnboardingScreen = () => {
               ]}
               id="title3"
             >
-              New Summer
+              {OnboardingTexts.section3.title1}
             </Text>
             <Text style={[styles.onboardingTitle, { fontFamily: 'Airbnb' }]}>
-              Collection
+              {OnboardingTexts.section3.title2}
             </Text>
             <Text
               style={[styles.subtitle, { marginBottom: 10 }]}
               id="subtitle3"
             >
-              Check out the latest trendy shoes
+              {OnboardingTexts.section3.subtitle1}
             </Text>
-            <Text style={styles.subtitle}>by our store</Text>
+            <Text style={styles.subtitle}>{OnboardingTexts.section3.subtitle2}</Text>
           </Animated.View>
         </View>
         <View style={styles.buttonContainer}>
@@ -205,26 +180,6 @@ const styles = StyleSheet.create({
     color: 'grey',
     textAlign: 'center',
     marginTop: 0,
-  },
-  headerImage: {
-    position: 'absolute',
-    width: '100%',
-    height: 250,
-    resizeMode: 'contain',
-    bottom: 140,
-  },
-  newHeaderImage: {
-    position: 'absolute',
-    width: '140%',
-    height: 350,
-    resizeMode: 'contain',
-    bottom: 20,
-    left: -85,
-  },
-  imageContainer: {
-    position: 'relative',
-    width: '100%',
-    height: 250,
   },
   textContainer: {
     position: 'absolute',

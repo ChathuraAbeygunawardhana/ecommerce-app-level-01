@@ -14,7 +14,7 @@ import sampleData from '../../assets/sample.json';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useRouter } from 'expo-router';
 import { useOnboarding } from '../../contexts/OnboardingContext';
-import OnboardingScreen from '../../components/OnboardingScreen';
+import { OnboardingContainer as OnboardingScreen } from '../../components/Onboarding/OnboardingContainer';
 import { useFavourites } from '../../contexts/FavouritesContext';
 import { useCart } from '../../contexts/CartContext';
 

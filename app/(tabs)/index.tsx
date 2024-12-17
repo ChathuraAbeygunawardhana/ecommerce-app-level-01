@@ -111,7 +111,10 @@ const Home = () => {
           </View>
         </View>
         <View>
-          <TouchableOpacity style={styles.iconBackground}>
+          <TouchableOpacity 
+            style={styles.iconBackground} 
+            onPress={() => router.push('/cart')}
+          >
             <Feather name="shopping-bag" size={24} color={currentColors.text} />
           </TouchableOpacity>
           {cart.length > 0 && (

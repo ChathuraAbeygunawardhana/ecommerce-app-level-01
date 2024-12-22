@@ -16,6 +16,10 @@ import { useFonts } from 'expo-font';
 import { Colors } from '../../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/contexts/ThemeContext';
+import Header from '../../components/productDetails/Header';
+import ImageContainer from '../../components/productDetails/ImageContainer';
+import ProductDetailsSection from '../../components/productDetails/ProductDetailsSection';
+import AddToCartButton from '../../components/productDetails/AddToCartButton';
 
 interface Product {
   id: string;
@@ -70,55 +74,17 @@ const ProductDetails = () => {
         { backgroundColor: currentColors.background_01 },
       ]}
     >
-      <View
-        style={[
-          styles.customHeader,
-          { backgroundColor: currentColors.background_01 },
-        ]}
-      >
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="chevron-back" size={24} color={currentColors.text} />
-        </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: currentColors.text }]}>
-          Product Details
-        </Text>
-        <View style={{ width: 24 }} />
-      </View>
-
+      <Header />
       <Animated.ScrollView style={[styles.container, { opacity: fadeAnim }]}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={{ uri: 'https://i.ibb.co/wsBMks4/Group-136.png' }}
-            style={styles.circleImage}
-          />
-          <Image
-            source={{ uri: product.mainImage }}
-            style={styles.image}
-          />
-        </View>
-        <View style={styles.detailsContainer}>
-          <Text style={[styles.name, { color: currentColors.text }]}>
-            {product.name}
-          </Text>
-          <Text style={[styles.price, { color: currentColors.icon }]}>
-            ${product.price}
-          </Text>
-          <Text style={[styles.colour, { color: currentColors.icon }]}>
-            Color: {product.colour}
-          </Text>
-          <Text style={[styles.description, { color: currentColors.text }]}>
-            {product.description}
-          </Text>
-        </View>
+        <ImageContainer mainImage={product.mainImage} />
+        <ProductDetailsSection
+          name={product.name}
+          price={product.price}
+          colour={product.colour}
+          description={product.description}
+        />
       </Animated.ScrollView>
-      <TouchableOpacity
-        style={styles.addToCartButton}
-        onPress={() =>
-          addToCart({ ...product, image: product.mainImage, quantity: 1 })
-        }
-      >
-        <Text style={styles.addToCartText}>Add to Cart</Text>
-      </TouchableOpacity>
+      <AddToCartButton onPress={() => addToCart({ ...product, image: product.mainImage, quantity: 1 })} />
     </View>
   );
 };
@@ -133,76 +99,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginLeft: 10,
-  },
-  imageContainer: {
-    position: 'relative',
-    alignItems: 'center',
-  },
-  image: {
-    width: '80%',
-    height: 200,
-    resizeMode: 'cover',
-    marginTop: 50,
-    marginBottom: 65,
-    transform: [{ scaleX: -1 }, { rotate: '20deg' }],
-  },
-  detailsContainer: {
-    padding: 20,
-    marginTop: -10,
-  },
-  name: {
-    fontFamily: 'Helvetica',
-    fontSize: 30,
-    marginBottom: 10,
-  },
-  price: {
-    fontFamily: 'Novecentro',
-    fontSize: 20,
-    marginBottom: 10,
-  },
-  colour: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  description: {
-    fontSize: 16,
-    lineHeight: 24,
-    textAlign: 'justify',
-  },
-  addToCartButton: {
-    backgroundColor: Colors.lightBlue,
-    marginHorizontal: 14,
-    marginBottom: 2,
-    padding: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    bottom: 65,
-    left: 1,
-    right: 1,
-    borderRadius: 10,
-  },
-  addToCartText: {
-    color: Colors.white,
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  customHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-    paddingTop: 40,
-  },
-  circleImage: {
-    width: 350,
-    height: 300,
-    resizeMode: 'contain',
-    position: 'absolute',
-    top: 130,
   },
 });

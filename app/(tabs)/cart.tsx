@@ -11,6 +11,9 @@ import { useCart } from '@/contexts/CartContext';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
 import { useTheme } from '@/contexts/ThemeContext';
+import CartItem from '@/components/cart/CartItem';
+import CartSummary from '@/components/cart/CartSummary';
+import EmptyCart from '@/components/cart/EmptyCart';
 
 interface CartItem {
   id: string;
@@ -36,24 +39,7 @@ const Cart = () => {
   const { theme } = useTheme();
   const currentColors = Colors[theme as 'light' | 'dark'];
 
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-  const brands = ['Brand1', 'Brand2', 'Brand3'];
-
-  const toggleBrand = (brand: string) => {
-    setSelectedBrands((prev) =>
-      prev.includes(brand) ? prev.filter((b) => b !== brand) : [...prev, brand]
-    );
-  };
-
-  const clearFilters = () => {
-    setMinPrice('');
-    setMaxPrice('');
-    setSelectedBrands([]);
-  };
-
-  const applyFilters = () => {};
+  
 
   const shippingCharge = 40.99;
   const subtotal = cart.reduce(
@@ -64,60 +50,13 @@ const Cart = () => {
 
   const renderItem = ({ item }: { item: CartItem }) => {
     return (
-      <View
-        style={[styles.item, { backgroundColor: currentColors.background_02 }]}
-      >
-        <Image source={{ uri: item.image }} style={styles.image} />
-        <View style={styles.details}>
-          <Text
-            style={[styles.name, { color: currentColors.text }]}
-            numberOfLines={1}
-          >
-            {item.name.split(' ').slice(0, 3).join(' ').substring(0, 15)}
-          </Text>
-          <Text style={[styles.price, { color: currentColors.grey }]}>
-            ${item.price}
-          </Text>
-          <View style={styles.quantityContainer}>
-            <TouchableOpacity
-              onPress={() => decreaseQuantity(item.id)}
-              disabled={item.quantity === 1}
-            >
-              <View
-                style={[
-                  styles.iconContainer,
-                  { backgroundColor: currentColors.background_01 },
-                ]}
-              >
-                <Ionicons name="remove" size={15} color={currentColors.text} />
-              </View>
-            </TouchableOpacity>
-            <Text style={[styles.quantity, { color: currentColors.text }]}>
-              {item.quantity}
-            </Text>
-            <TouchableOpacity onPress={() => increaseQuantity(item.id)}>
-              <View
-                style={[
-                  styles.iconContainer,
-                  { backgroundColor: Colors.lightBlue },
-                ]}
-              >
-                <Ionicons name="add" size={15} color={Colors.white} />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity
-            onPress={() => removeFromCart(item.id)}
-            style={styles.deleteButton}
-          >
-            <Ionicons
-              name="trash-outline"
-              size={24}
-              color={currentColors.grey}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
+      <CartItem
+        item={item}
+        currentColors={currentColors}
+        increaseQuantity={increaseQuantity}
+        decreaseQuantity={decreaseQuantity}
+        removeFromCart={removeFromCart}
+      />
     );
   };
 
@@ -132,11 +71,7 @@ const Cart = () => {
         Your Cart
       </Text>
       {cart.length === 0 ? (
-        <View style={styles.emptyCart}>
-          <View>
-            <Text style={{ color: Colors.grey }}>Your cart is empty</Text>
-          </View>
-        </View>
+        <EmptyCart />
       ) : (
         <>
           <FlatList
@@ -144,90 +79,12 @@ const Cart = () => {
             keyExtractor={(item, index) => `${item.id}-${index}`}
             renderItem={renderItem}
           />
-          <View
-            style={[
-              styles.filterContainer,
-              {
-                backgroundColor: currentColors.background_02,
-                marginBottom: 55,
-                borderTopWidth: 0,
-                borderTopLeftRadius: 40,
-                borderTopRightRadius: 40,
-              },
-            ]}
-          >
-            <View style={styles.summaryLine}>
-              <Text
-                style={[
-                  styles.modalText,
-                  { color: currentColors.text, paddingHorizontal: 16 },
-                ]}
-              >
-                Subtotal
-              </Text>
-              <Text
-                style={[
-                  styles.modalText,
-                  { color: currentColors.text, paddingHorizontal: 16 },
-                ]}
-              >
-                ${subtotal.toFixed(2)}
-              </Text>
-            </View>
-
-            <View style={styles.summaryLine}>
-              <Text
-                style={[
-                  styles.modalText,
-                  { color: currentColors.text, paddingHorizontal: 16 },
-                ]}
-              >
-                Shipping
-              </Text>
-              <Text
-                style={[
-                  styles.modalText,
-                  { color: currentColors.text, paddingHorizontal: 16 },
-                ]}
-              >
-                ${shippingCharge.toFixed(2)}
-              </Text>
-            </View>
-
-            <View style={styles.summaryLine}>
-              <Text
-                style={[
-                  styles.modalText,
-                  { color: currentColors.text, paddingHorizontal: 16 },
-                ]}
-              >
-                Total
-              </Text>
-              <Text
-                style={[
-                  styles.modalText,
-                  { color: currentColors.text, paddingHorizontal: 16 },
-                ]}
-              >
-                ${total.toFixed(2)}
-              </Text>
-            </View>
-
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={[
-                  styles.button,
-                  {
-                    backgroundColor: currentColors.lightBlue,
-                    borderRadius: 60,
-                  },
-                ]}
-                onPress={() => {}}
-              >
-                <Text style={styles.buttonText}>Checkout</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          <CartSummary
+            subtotal={subtotal}
+            shippingCharge={shippingCharge}
+            total={total}
+            currentColors={currentColors}
+          />
         </>
       )}
       <View

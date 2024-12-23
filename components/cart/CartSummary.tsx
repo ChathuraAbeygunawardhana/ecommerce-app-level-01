@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Colors } from '@/constants/Colors';
+import CheckoutButton from '@/components/cart/CheckoutButton';
 
 interface CartSummaryProps {
   subtotal: number;
@@ -60,18 +61,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            {
-              backgroundColor: currentColors.lightBlue,
-              borderRadius: 60,
-            },
-          ]}
-          onPress={() => {}}
-        >
-          <Text style={styles.buttonText}>Checkout</Text>
-        </TouchableOpacity>
+        <CheckoutButton currentColors={currentColors} />
       </View>
     </View>
   );

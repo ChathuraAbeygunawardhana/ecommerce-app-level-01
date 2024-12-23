@@ -17,6 +17,7 @@ import { useOnboarding } from '../../contexts/OnboardingContext';
 import { OnboardingContainer as OnboardingScreen } from '../../components/Onboarding/OnboardingContainer';
 import { useFavourites } from '../../contexts/FavouritesContext';
 import { useCart } from '../../contexts/CartContext';
+import Header from '../../components/home/Header';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -88,42 +89,7 @@ const Home = () => {
         { backgroundColor: currentColors.background_01 },
       ]}
     >
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.iconBackground} onPress={toggleTheme}>
-          <Ionicons
-            name={theme === 'light' ? 'moon' : 'sunny'}
-            size={24}
-            color={currentColors.text}
-          />
-        </TouchableOpacity>
-        <View style={styles.textContainer}>
-          <Text
-            style={[styles.storeLocationText, { color: currentColors.grey }]}
-          >
-            Store location
-          </Text>
-          <View style={styles.locationContainer}>
-            <Ionicons name="location-sharp" size={18} color={Colors.orange} />
-            <Text style={[styles.locationText, { color: currentColors.text }]}>
-              {' '}
-              Colombo , Sri Lanka
-            </Text>
-          </View>
-        </View>
-        <View>
-          <TouchableOpacity 
-            style={styles.iconBackground} 
-            onPress={() => router.push('/cart')}
-          >
-            <Feather name="shopping-bag" size={24} color={currentColors.text} />
-          </TouchableOpacity>
-          {cart.length > 0 && (
-            <View
-              style={[styles.cartDot, { backgroundColor: Colors.orange }]}
-            />
-          )}
-        </View>
-      </View>
+      <Header />
       <View
         style={[
           styles.searchBar,
@@ -303,13 +269,6 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 16,
-    marginTop: 30,
   },
   textContainer: {
     alignItems: 'center',

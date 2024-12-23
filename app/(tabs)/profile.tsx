@@ -4,6 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constants/Colors';
 import { useRouter } from 'expo-router';
 import { useTheme } from '../../contexts/ThemeContext';
+import Header from '../../components/profile/Header';
+import ProfileImage from '../../components/profile/ProfileImage';
 
 const Profile = () => {
   const router = useRouter();
@@ -12,21 +14,8 @@ const Profile = () => {
 
   return (
     <View style={[styles.container, { backgroundColor: currentColors.background_01 }]}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="chevron-back" size={24} color={currentColors.text} />
-        </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: currentColors.text }]}>Profile</Text>
-        <TouchableOpacity>
-          <Ionicons name="create-outline" size={24} color={Colors.lightBlue} />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.profileImageContainer}>
-        <Image 
-          source={{ uri: 'https://i.ibb.co/FbpDqkM/image.png' }}
-          style={styles.profileImage}
-        />
-      </View>
+      <Header />
+      <ProfileImage />
       <View style={styles.fieldsContainer}>
         <View style={styles.fieldItem}>
           <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>Full name</Text>
@@ -43,7 +32,7 @@ const Profile = () => {
         <View style={styles.fieldItem}>
           <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>Password</Text>
           <View style={[styles.fieldValueContainer, { backgroundColor: currentColors.background_02 }]}>
-            <Text style={[styles.fieldValue, { color: currentColors.text }]}>••••••••</Text>
+            <Text style={[styles.fieldValue, { color: currentColors.text }]}>•••••••��</Text>
           </View>
         </View>
       </View>

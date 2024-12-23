@@ -18,6 +18,7 @@ import { OnboardingContainer as OnboardingScreen } from '../../components/Onboar
 import { useFavourites } from '../../contexts/FavouritesContext';
 import { useCart } from '../../contexts/CartContext';
 import Header from '../../components/home/Header';
+import SearchBar from '../../components/home/SearchBar';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -90,21 +91,7 @@ const Home = () => {
       ]}
     >
       <Header />
-      <View
-        style={[
-          styles.searchBar,
-          { backgroundColor: currentColors.background_02 },
-        ]}
-      >
-        <Ionicons name="search" size={20} color={currentColors.grey} />
-        <TextInput
-          style={[styles.searchInput, { color: currentColors.text }]}
-          placeholder="Looking for shoes"
-          placeholderTextColor={currentColors.grey}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-      </View>
+      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <View>
         <ScrollView
           horizontal

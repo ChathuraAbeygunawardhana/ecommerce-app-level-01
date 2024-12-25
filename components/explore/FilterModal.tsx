@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 import { Colors } from '../../constants/Colors';
 import { useTheme } from '../../contexts/ThemeContext';
+import sampleData from '../../assets/sample.json';
 
 interface FilterModalProps {
   modalVisible: boolean;
@@ -32,6 +33,20 @@ const FilterModal: React.FC<FilterModalProps> = ({
   const currentColors = Colors[theme as 'light' | 'dark'];
   const currentSpecialGrey = theme === 'light' ? Colors.light.specialGrey : Colors.dark.specialGrey;
   const brands = ['Nike', 'Adidas', 'PUMA', 'NB'];
+
+  const [isPriceValid, setIsPriceValid] = useState(true);
+
+  useEffect(() => {
+    const min = minPrice ? parseFloat(minPrice) : 0;
+    const max = maxPrice ? parseFloat(maxPrice) : Infinity;
+
+    setIsPriceValid(min <= max);
+  }, [minPrice, maxPrice]);
+
+  const handleApplyFilters = () => {
+    if (!isPriceValid) return;
+    applyFilters();
+  };
 
   return (
     <Modal
@@ -101,6 +116,11 @@ const FilterModal: React.FC<FilterModalProps> = ({
                 onChangeText={setMaxPrice}
               />
             </View>
+            {!isPriceValid && (
+              <Text style={{ color: 'red', textAlign: 'center' }}>
+                Min value should be less than max value
+              </Text>
+            )}
 
             <Text
               style={[
@@ -163,7 +183,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
                     borderRadius: 60,
                   },
                 ]}
-                onPress={applyFilters}
+                onPress={handleApplyFilters}
               >
                 <Text style={styles.buttonText}>Apply</Text>
               </TouchableOpacity>

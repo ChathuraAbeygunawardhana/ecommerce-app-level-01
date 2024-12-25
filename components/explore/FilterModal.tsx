@@ -40,131 +40,137 @@ const FilterModal: React.FC<FilterModalProps> = ({
       visible={modalVisible}
       onRequestClose={() => setModalVisible(false)}
     >
-      <View style={styles.modalOverlay}>
+      <TouchableOpacity
+        style={styles.modalOverlay}
+        activeOpacity={1}
+        onPressOut={() => setModalVisible(false)}
+      >
         <View
           style={[
             styles.bottomSheet,
             { backgroundColor: currentColors.background_02 },
           ]}
         >
-          <Text
-            style={[
-              styles.modalTitle,
-              { color: currentColors.text, fontSize: 22 },
-            ]}
-          >
-            Filters
-          </Text>
-
-          <Text
-            style={[
-              styles.modalText,
-              { color: currentColors.text, textAlign: 'left' },
-            ]}
-          >
-            Price Range
-          </Text>
-          <View style={styles.priceContainer}>
-            <TextInput
+          <TouchableOpacity activeOpacity={1}>
+            <Text
               style={[
-                styles.input,
-                {
-                  color: currentColors.text,
-                  borderColor: currentColors.grey,
-                  borderRadius: 60,
-                },
+                styles.modalTitle,
+                { color: currentColors.text, fontSize: 22 },
               ]}
-              placeholder="Min Price"
-              placeholderTextColor={Colors.grey}
-              keyboardType="numeric"
-              value={minPrice}
-              onChangeText={setMinPrice}
-            />
-            <TextInput
-              style={[
-                styles.input,
-                {
-                  color: currentColors.text,
-                  borderColor: currentColors.grey,
-                  borderRadius: 60,
-                },
-              ]}
-              placeholder="Max Price"
-              placeholderTextColor={Colors.grey}
-              keyboardType="numeric"
-              value={maxPrice}
-              onChangeText={setMaxPrice}
-            />
-          </View>
+            >
+              Filters
+            </Text>
 
-          <Text
-            style={[
-              styles.modalText,
-              { color: currentColors.text, textAlign: 'left' },
-            ]}
-          >
-            Brands
-          </Text>
-          <View style={styles.brandContainer}>
-            {brands.map((brand) => (
-              <TouchableOpacity
-                key={brand}
+            <Text
+              style={[
+                styles.modalText,
+                { color: currentColors.text, textAlign: 'left' },
+              ]}
+            >
+              Price Range
+            </Text>
+            <View style={styles.priceContainer}>
+              <TextInput
                 style={[
-                  styles.brandButton,
+                  styles.input,
                   {
+                    color: currentColors.text,
+                    borderColor: currentColors.grey,
                     borderRadius: 60,
-                    backgroundColor: currentSpecialGrey,
-                    borderWidth: 0,
-                  },
-                  selectedBrands.includes(brand) && {
-                    backgroundColor: Colors.lightBlue,
                   },
                 ]}
-                onPress={() => toggleBrand(brand)}
-              >
-                <Text
-                  style={[
-                    styles.brandButtonText,
-                    { color: Colors.grey },
-                    selectedBrands.includes(brand) && { color: Colors.white },
-                  ]}
-                >
-                  {brand}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+                placeholder="Min Price"
+                placeholderTextColor={Colors.grey}
+                keyboardType="numeric"
+                value={minPrice}
+                onChangeText={setMinPrice}
+              />
+              <TextInput
+                style={[
+                  styles.input,
+                  {
+                    color: currentColors.text,
+                    borderColor: currentColors.grey,
+                    borderRadius: 60,
+                  },
+                ]}
+                placeholder="Max Price"
+                placeholderTextColor={Colors.grey}
+                keyboardType="numeric"
+                value={maxPrice}
+                onChangeText={setMaxPrice}
+              />
+            </View>
 
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
+            <Text
               style={[
-                styles.button,
-                styles.clearButton,
-                {
-                  backgroundColor: currentColors.lightBlue,
-                  borderRadius: 60,
-                },
+                styles.modalText,
+                { color: currentColors.text, textAlign: 'left' },
               ]}
-              onPress={clearFilters}
             >
-              <Text style={styles.buttonText}>Clear</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.button,
-                styles.applyButton,
-                {
-                  backgroundColor: currentColors.lightBlue,
-                  borderRadius: 60,
-                },
-              ]}
-              onPress={applyFilters}
-            >
-              <Text style={styles.buttonText}>Apply</Text>
-            </TouchableOpacity>
-          </View>
+              Brands
+            </Text>
+            <View style={styles.brandContainer}>
+              {brands.map((brand) => (
+                <TouchableOpacity
+                  key={brand}
+                  style={[
+                    styles.brandButton,
+                    {
+                      borderRadius: 60,
+                      backgroundColor: currentSpecialGrey,
+                      borderWidth: 0,
+                    },
+                    selectedBrands.includes(brand) && {
+                      backgroundColor: Colors.lightBlue,
+                    },
+                  ]}
+                  onPress={() => toggleBrand(brand)}
+                >
+                  <Text
+                    style={[
+                      styles.brandButtonText,
+                      { color: Colors.grey },
+                      selectedBrands.includes(brand) && { color: Colors.white },
+                    ]}
+                  >
+                    {brand}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  styles.clearButton,
+                  {
+                    backgroundColor: currentColors.lightBlue,
+                    borderRadius: 60,
+                  },
+                ]}
+                onPress={clearFilters}
+              >
+                <Text style={styles.buttonText}>Clear</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  styles.applyButton,
+                  {
+                    backgroundColor: currentColors.lightBlue,
+                    borderRadius: 60,
+                  },
+                ]}
+                onPress={applyFilters}
+              >
+                <Text style={styles.buttonText}>Apply</Text>
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
         </View>
-      </View>
+      </TouchableOpacity>
     </Modal>
   );
 };

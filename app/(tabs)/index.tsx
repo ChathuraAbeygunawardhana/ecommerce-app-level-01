@@ -114,7 +114,7 @@ const Home = () => {
               >
                 <Image source={{ uri: logo.uri }} style={styles.logo} />
                 {selectedLogo === logo.name && (
-                  <Text style={[styles.logoText, { color: Colors.white }]}>
+                  <Text style={[styles.logoText, { color: Colors.white, paddingRight: 10 }]}>
                     {logo.name}
                   </Text>
                 )}

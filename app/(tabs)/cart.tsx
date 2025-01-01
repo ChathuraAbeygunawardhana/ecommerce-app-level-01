@@ -11,6 +11,7 @@ import { useCart } from '@/contexts/CartContext';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
 import { useTheme } from '@/contexts/ThemeContext';
+import sampleData from '../../assets/sample.json';
 import CartItem from '@/components/cart/CartItem';
 import CartSummary from '@/components/cart/CartSummary';
 import EmptyCart from '@/components/cart/EmptyCart';
@@ -38,8 +39,6 @@ const Cart = () => {
 
   const { theme } = useTheme();
   const currentColors = Colors[theme as 'light' | 'dark'];
-
-  
 
   const shippingCharge = 40.99;
   const subtotal = cart.reduce(

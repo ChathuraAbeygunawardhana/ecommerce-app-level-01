@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
+import sampleData from '../../assets/sample.json';
 
 interface CartItemProps {
   item: {
@@ -29,6 +30,8 @@ const CartItem: React.FC<CartItemProps> = ({
   decreaseQuantity,
   removeFromCart,
 }) => {
+  const product = sampleData.find(p => p.id === item.id);
+
   return (
     <View style={[styles.item, { backgroundColor: currentColors.background_02 }]}>
       <Image source={{ uri: item.image }} style={styles.image} />
@@ -46,9 +49,13 @@ const CartItem: React.FC<CartItemProps> = ({
             </View>
           </TouchableOpacity>
           <Text style={[styles.quantity, { color: currentColors.text }]}>
-            {item.quantity}
+            {item.quantity > 0 ? item.quantity : 'Out of Stock'}
           </Text>
-          <TouchableOpacity onPress={() => increaseQuantity(item.id)}>
+          <TouchableOpacity onPress={() => {
+            if (product && item.quantity < product.quantity) {
+              increaseQuantity(item.id);
+            }
+          }} disabled={product && item.quantity >= product.quantity}>
             <View style={[styles.iconContainer, { backgroundColor: Colors.lightBlue }]}>
               <Ionicons name="add" size={15} color={Colors.white} />
             </View>

@@ -28,6 +28,7 @@ interface Product {
   mainImage: string;
   colour: string;
   description: string;
+  quantity: number;
 }
 
 const ProductDetails = () => {
@@ -36,10 +37,13 @@ const ProductDetails = () => {
     (item) => item.id === id
   ) as unknown as Product;
   const router = useRouter();
-  const { addToCart } = useCart();
+  const { addToCart, cart } = useCart();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const { theme } = useTheme();
   const currentColors = Colors[theme as 'light' | 'dark'];
+
+  const cartItem = cart.find(item => item.id === product.id);
+  const availableQuantity = product.quantity - (cartItem ? cartItem.quantity : 0);
 
   useEffect(() => {
     fadeAnim.setValue(0);
@@ -82,6 +86,7 @@ const ProductDetails = () => {
           price={product.price}
           colour={product.colour}
           description={product.description}
+          quantity={availableQuantity}
         />
       </Animated.ScrollView>
       <AddToCartButton onPress={() => addToCart({ ...product, image: product.mainImage, quantity: 1 })} />
@@ -99,5 +104,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
+  },
+  priceQuantityContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
   },
 });

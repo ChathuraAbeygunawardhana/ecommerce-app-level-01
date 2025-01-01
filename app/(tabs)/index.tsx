@@ -114,7 +114,7 @@ const Home = () => {
               >
                 <Image source={{ uri: logo.uri }} style={styles.logo} />
                 {selectedLogo === logo.name && (
-                  <Text style={[styles.logoText, { color: Colors.white }]}>
+                  <Text style={[styles.logoText, { color: Colors.white, paddingRight: 10 }]}>
                     {logo.name}
                   </Text>
                 )}
@@ -437,8 +437,8 @@ const styles = StyleSheet.create({
   },
   cartDot: {
     position: 'absolute',
-    top: 5, 
-    right: 5, 
+    top: 10,
+    right: 10,
     width: 10,
     height: 10,
     borderRadius: 5,

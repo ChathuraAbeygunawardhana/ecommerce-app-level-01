@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, FlatList, Dimensions } from 'react-native';
+import { StyleSheet, View, FlatList, Dimensions, Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import sampleData from '../../assets/sample.json';
 import useProductSearch from '../../hooks/useProductSearch';
 import { Colors } from '../../constants/Colors';
@@ -44,9 +45,14 @@ export default function TabTwoScreen() {
   const applyFilters = () => {
     const filtered = sampleData.filter((product) => {
       const productBrand = product.name.split(' ')[0];
-      return selectedBrands.length > 0
-        ? selectedBrands.includes(productBrand)
-        : true;
+      const productPrice = parseFloat(product.price);
+      const min = minPrice ? parseFloat(minPrice) : 0;
+      const max = maxPrice ? parseFloat(maxPrice) : Infinity;
+
+      const isBrandMatch = selectedBrands.length > 0 ? selectedBrands.includes(productBrand) : true;
+      const isPriceMatch = productPrice >= min && productPrice <= max;
+
+      return isBrandMatch && isPriceMatch;
     });
     setFilteredProducts(filtered);
     setModalVisible(false);
@@ -83,18 +89,27 @@ export default function TabTwoScreen() {
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       )}
 
-      <FlatList
-        data={searchedProducts}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={2}
-        style={[
-          styles.listContainer,
-          { paddingVertical: 10, marginBottom: 60 },
-        ]}
-        columnWrapperStyle={styles.columnWrapper}
-        showsVerticalScrollIndicator={false}
-      />
+      {searchedProducts.length === 0 ? (
+        <View style={styles.noProductsContainer}>
+          <Ionicons name="alert-circle-outline" size={50} color={Colors.grey} />
+          <Text style={[styles.noProductsText, { color: Colors.grey }]}>
+            No matching products
+          </Text>
+        </View>
+      ) : (
+        <FlatList
+          data={searchedProducts}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+          style={[
+            styles.listContainer,
+            { paddingVertical: 10, marginBottom: 60 },
+          ]}
+          columnWrapperStyle={styles.columnWrapper}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
 
       <FilterModal
         modalVisible={modalVisible}
@@ -119,5 +134,14 @@ const styles = StyleSheet.create({
   },
   columnWrapper: {
     justifyContent: 'space-between',
+  },
+  noProductsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noProductsText: {
+    marginTop: 10,
+    fontSize: 18,
   },
 });

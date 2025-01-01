@@ -32,7 +32,7 @@ const Profile = () => {
         <View style={styles.fieldItem}>
           <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>Password</Text>
           <View style={[styles.fieldValueContainer, { backgroundColor: currentColors.background_02 }]}>
-            <Text style={[styles.fieldValue, { color: currentColors.text }]}>•••••••��</Text>
+            <Text style={[styles.fieldValue, { color: currentColors.text }]}>••••••••</Text>
           </View>
         </View>
       </View>

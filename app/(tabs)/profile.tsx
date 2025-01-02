@@ -10,28 +10,30 @@ const Profile = () => {
   const { theme } = useTheme();
   const currentColors = Colors[theme as 'light' | 'dark'];
   const [isEditable, setIsEditable] = useState(false);
-  const { userDetails, saveUserDetails } = useUserDetails();
+  const { userDetails, saveUserDetails, uploadImage } = useUserDetails();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
+  const [imageUri, setImageUri] = useState('');
 
   useEffect(() => {
     setFullName(userDetails.fullName);
     setEmail(userDetails.email);
+    setImageUri(userDetails.imageUri || '');
   }, [userDetails]);
 
   const toggleEdit = () => {
     setIsEditable(!isEditable);
   };
 
-  const saveChanges = () => {
-    saveUserDetails({ fullName, email });
+  const saveChanges = async () => {
+    await saveUserDetails({ fullName, email, imageUri });
     setIsEditable(false);
   };
 
   return (
     <View style={[styles.container, { backgroundColor: currentColors.background_01 }]}>
       <Header onEditPress={toggleEdit} />
-      <ProfileImage />
+      <ProfileImage isEditable={isEditable} setImageUri={setImageUri} />
       <View style={styles.fieldsContainer}>
         <View style={styles.fieldItem}>
           <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>Full name</Text>

@@ -1,20 +1,30 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Colors } from '../../constants/Colors';
 import { useTheme } from '../../contexts/ThemeContext';
 import Header from '../../components/profile/Header';
 import ProfileImage from '../../components/profile/ProfileImage';
+import useUserDetails from '@/hooks/useUserDetails';
 
 const Profile = () => {
   const { theme } = useTheme();
   const currentColors = Colors[theme as 'light' | 'dark'];
   const [isEditable, setIsEditable] = useState(false);
+  const { userDetails, saveUserDetails } = useUserDetails();
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    setFullName(userDetails.fullName);
+    setEmail(userDetails.email);
+  }, [userDetails]);
 
   const toggleEdit = () => {
     setIsEditable(!isEditable);
   };
 
   const saveChanges = () => {
+    saveUserDetails({ fullName, email });
     setIsEditable(false);
   };
 
@@ -27,7 +37,8 @@ const Profile = () => {
           <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>Full name</Text>
           <TextInput
             style={[styles.fieldValueContainer, { backgroundColor: currentColors.background_02, color: currentColors.text }]}
-            value="John Doe"
+            value={fullName}
+            onChangeText={setFullName}
             editable={isEditable}
           />
         </View>
@@ -35,19 +46,12 @@ const Profile = () => {
           <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>Email address</Text>
           <TextInput
             style={[styles.fieldValueContainer, { backgroundColor: currentColors.background_02, color: currentColors.text }]}
-            value="johndoe@example.com"
+            value={email}
+            onChangeText={setEmail}
             editable={isEditable}
           />
         </View>
-        <View style={styles.fieldItem}>
-          <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>Password</Text>
-          <TextInput
-            style={[styles.fieldValueContainer, { backgroundColor: currentColors.background_02, color: currentColors.text }]}
-            value="••••••••"
-            secureTextEntry
-            editable={isEditable}
-          />
-        </View>
+        
       </View>
       {isEditable && (
         <TouchableOpacity style={styles.saveButton} onPress={saveChanges}>

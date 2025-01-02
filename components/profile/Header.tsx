@@ -5,7 +5,11 @@ import { Colors } from '../../constants/Colors';
 import { useRouter } from 'expo-router';
 import { useTheme } from '../../contexts/ThemeContext';
 
-const Header = () => {
+interface HeaderProps {
+  onEditPress: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onEditPress }) => {
   const router = useRouter();
   const { theme } = useTheme();
   const currentColors = Colors[theme as 'light' | 'dark'];
@@ -16,7 +20,7 @@ const Header = () => {
         <Ionicons name="chevron-back" size={24} color={currentColors.text} />
       </TouchableOpacity>
       <Text style={[styles.headerTitle, { color: currentColors.text }]}>Profile</Text>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onEditPress}>
         <Ionicons name="create-outline" size={24} color={Colors.lightBlue} />
       </TouchableOpacity>
     </View>

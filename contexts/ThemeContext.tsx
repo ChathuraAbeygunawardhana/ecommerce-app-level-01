@@ -14,7 +14,7 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('light');// TODO: 'light' or 'dark' values should be constants and define in separate file
   const [tabBarBackground, setTabBarBackground] = useState(
     Colors.light.background_02
   );

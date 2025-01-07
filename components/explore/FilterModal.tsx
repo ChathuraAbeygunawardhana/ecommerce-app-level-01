@@ -8,9 +8,9 @@ interface FilterModalProps {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
   minPrice: string;
-  setMinPrice: (price: string) => void;
-  maxPrice: string;
-  setMaxPrice: (price: string) => void;
+  setMinPrice: (price: string) => void;//TODO: change to number
+  maxPrice: string; //TODO: change to number
+  setMaxPrice: (price: string) => void; //TODO: change to number
   selectedBrands: string[];
   toggleBrand: (brand: string) => void;
   clearFilters: () => void;
@@ -70,7 +70,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
             <Text
               style={[
                 styles.modalTitle,
-                { color: currentColors.text, fontSize: 22 },
+                { color: currentColors.text, fontSize: 22 },//TODO: font size can move to modalTitle styles
               ]}
             >
               Filters
@@ -79,7 +79,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
             <Text
               style={[
                 styles.modalText,
-                { color: currentColors.text, textAlign: 'left' },
+                { color: currentColors.text, textAlign: 'left' }, //TODO: text align can move to modalText styles
               ]}
             >
               Price Range

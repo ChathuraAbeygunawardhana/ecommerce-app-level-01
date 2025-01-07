@@ -38,6 +38,7 @@ const CartItem: React.FC<CartItemProps> = ({
       <View style={styles.details}>
         <Text style={[styles.name, { color: currentColors.text }]} numberOfLines={1}>
           {item.name.split(' ').slice(0, 3).join(' ').substring(0, 15)}
+              {/* TODO: These kind of small logics should move to utility functions */}
         </Text>
         <Text style={[styles.price, { color: currentColors.grey }]}>
           ${item.price}

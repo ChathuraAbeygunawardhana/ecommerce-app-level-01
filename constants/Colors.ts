@@ -1,3 +1,5 @@
+// TODO: This file should move to theme folder
+
 const tintColorLight = '#5B9EE1';
 const tintColorDark = '#fff';
 

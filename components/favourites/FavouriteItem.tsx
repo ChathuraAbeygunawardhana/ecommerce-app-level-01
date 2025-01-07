@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Pressable, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';//TODO: remove unused imports
 import { Colors } from '../../constants/Colors';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useFavourites } from '@/contexts/FavouritesContext';
@@ -9,8 +9,8 @@ import { useFavourites } from '@/contexts/FavouritesContext';
 type Product = {
   id: string;
   name: string;
-  price: string;
-  mainImage: string;
+  price: string;//TODO: change to number
+  mainImage: string; 
 };
 
 const FavouriteItem = ({ item }: { item: Product }) => {
@@ -39,6 +39,8 @@ const FavouriteItem = ({ item }: { item: Product }) => {
             {item.name.length > 19
               ? `${item.name.substring(0, 19)}...`
               : item.name}
+
+              {/* TODO: These kind of small logics should move to utility functions */}
           </Text>
           <Text style={[styles.price, { color: currentColors.grey }]}>
             ${item.price}

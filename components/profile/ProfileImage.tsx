@@ -1,14 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constants/Colors';
 import { useTheme } from '../../contexts/ThemeContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const ProfileImage = () => {
-  const [imageUri, setImageUri] = useState('');
+interface ProfileImageProps {
+  isEditable: boolean;
+  setImageUri: (uri: string) => void;
+}
+
+const ProfileImage: React.FC<ProfileImageProps> = ({ isEditable, setImageUri }) => {
+  const [localImageUri, setLocalImageUri] = useState('');
   const { theme } = useTheme();
   const currentColors = Colors[theme as 'light' | 'dark'];
+
+  useEffect(() => {
+    const loadImageUri = async () => {
+      try {
+        const storedUserDetails = await AsyncStorage.getItem('userDetails');
+        if (storedUserDetails) {
+          const userDetails = JSON.parse(storedUserDetails);
+          if (userDetails.imageUri) {
+            setLocalImageUri(userDetails.imageUri);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to load image URI', error);
+      }
+    };
+
+    loadImageUri();
+  }, []);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -19,23 +43,26 @@ const ProfileImage = () => {
     });
 
     if (!result.canceled) {
+      setLocalImageUri(result.assets[0].uri);
       setImageUri(result.assets[0].uri);
     }
   };
 
   return (
     <View style={styles.profileImageContainer}>
-      {imageUri ? (
+      {localImageUri ? (
         <Image 
-          source={{ uri: imageUri }}
+          source={{ uri: localImageUri }}
           style={styles.profileImage}
         />
       ) : (
         <Ionicons name="person-circle-outline" size={120} color="gray" />
       )}
-      <TouchableOpacity style={[styles.cameraIconContainer, { backgroundColor: currentColors.background_02 }]} onPress={pickImage}>
-        <Ionicons name="camera" size={24} color={Colors.lightBlue} />
-      </TouchableOpacity>
+      {isEditable && (
+        <TouchableOpacity style={[styles.cameraIconContainer, { backgroundColor: currentColors.background_02 }]} onPress={pickImage}>
+          <Ionicons name="camera" size={24} color={Colors.lightBlue} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

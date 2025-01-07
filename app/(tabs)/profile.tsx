@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Colors } from '../../constants/Colors';
 import { useTheme } from '../../contexts/ThemeContext';
 import Header from '../../components/profile/Header';
 import ProfileImage from '../../components/profile/ProfileImage';
 import useUserDetails from '@/hooks/useUserDetails';
+import { toggleEdit, saveChanges } from '../../utils/profileUtils';
 
 const Profile = () => {
   const { theme } = useTheme();
@@ -14,6 +15,8 @@ const Profile = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [imageUri, setImageUri] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isImageEdited, setIsImageEdited] = useState(false);
 
   useEffect(() => {
     setFullName(userDetails.fullName);
@@ -21,19 +24,10 @@ const Profile = () => {
     setImageUri(userDetails.imageUri || '');
   }, [userDetails]);
 
-  const toggleEdit = () => {
-    setIsEditable(!isEditable);
-  };
-
-  const saveChanges = async () => {
-    await saveUserDetails({ fullName, email, imageUri });
-    setIsEditable(false);
-  };
-
   return (
     <View style={[styles.container, { backgroundColor: currentColors.background_01 }]}>
-      <Header onEditPress={toggleEdit} />
-      <ProfileImage isEditable={isEditable} setImageUri={setImageUri} />
+      <Header onEditPress={() => toggleEdit(isEditable, setIsEditable)} />
+      <ProfileImage isEditable={isEditable} setImageUri={(uri) => { setImageUri(uri); setIsImageEdited(true); }} />
       <View style={styles.fieldsContainer}>
         <View style={styles.fieldItem}>
           <Text style={[styles.fieldLabel, { color: currentColors.grey }]}>Full name</Text>
@@ -56,8 +50,12 @@ const Profile = () => {
         
       </View>
       {isEditable && (
-        <TouchableOpacity style={styles.saveButton} onPress={saveChanges}>
-          <Text style={styles.saveButtonText}>Save</Text>
+        <TouchableOpacity style={styles.saveButton} onPress={() => saveChanges(fullName, email, imageUri, isImageEdited, setIsLoading, saveUserDetails, setIsEditable, setIsImageEdited, Alert)} disabled={isLoading}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={styles.saveButtonText}>Save</Text>
+          )}
         </TouchableOpacity>
       )}
     </View>

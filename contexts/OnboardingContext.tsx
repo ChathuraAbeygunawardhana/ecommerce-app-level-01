@@ -8,7 +8,7 @@ const OnboardingContext = createContext({
 import { ReactNode } from 'react';
 
 export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
-  const [isOnboardingVisible, setIsOnboardingVisible] = useState(false);
+  const [isOnboardingVisible, setIsOnboardingVisible] = useState(true);
 
   return (
     <OnboardingContext.Provider value={{ isOnboardingVisible, setIsOnboardingVisible }}>

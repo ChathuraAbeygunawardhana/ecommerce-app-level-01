@@ -48,9 +48,9 @@ const useUserDetails = () => {
     }
   };
 
-  const saveUserDetails = async (details: { fullName: string; email: string; imageUri?: string }) => {
+  const saveUserDetails = async (details: { fullName: string; email: string; imageUri?: string }, isImageEdited: boolean) => {
     try {
-      if (details.imageUri) {
+      if (isImageEdited && details.imageUri) {
         const imageUrl = await uploadImage(details.imageUri);
         if (imageUrl) {
           details.imageUri = imageUrl;
